@@ -1,3 +1,4 @@
+import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
@@ -50,10 +51,34 @@ def generate_sample_data():
 
 
 def load_data():
-    if "smartfresh_df" not in __import__("streamlit").session_state:
-        __import__("streamlit").session_state.smartfresh_df = generate_sample_data()
+    if "smartfresh_df" not in st.session_state:
+        st.session_state.smartfresh_df = generate_sample_data()
 
-    df = __import__("streamlit").session_state.smartfresh_df.copy()
+    df = st.session_state.smartfresh_df.copy()
     df["date"] = pd.to_datetime(df["date"])
     df["expiry_date"] = pd.to_datetime(df["expiry_date"])
     return df
+
+
+def calculate_kpis(df):
+    total_production = df["quantity_produced"].sum()
+    total_sales = df["quantity_sold"].sum()
+    total_waste = df["waste_quantity"].sum()
+    revenue = df["revenue"].sum()
+    delayed = (df["delivery_status"] == "Delayed").sum()
+    total_defects = df["defect_count"].sum()
+
+    waste_rate = (total_waste / total_production) * 100 if total_production else 0
+    defect_rate = (total_defects / total_production) * 100 if total_production else 0
+
+    return {
+        "total_production": total_production,
+        "total_sales": total_sales,
+        "total_waste": total_waste,
+        "waste_rate": waste_rate,
+        "revenue": revenue,
+        "delayed": delayed,
+        "total_defects": total_defects,
+        "defect_rate": defect_rate,
+        "stock_remaining": df["stock_remaining"].sum()
+    }
