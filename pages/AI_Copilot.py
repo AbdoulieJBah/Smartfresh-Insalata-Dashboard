@@ -10,7 +10,7 @@ st.title("🤖 SmartFresh AI Copilot")
 df = load_data()
 kpis = calculate_kpis(df)
 
-API_URL = "http://127.0.0.1:8000/risk-score"
+API_URL = "https://smartfresh-insalata-dashboard.onrender.com/risk-score"
 
 # ---------------- BACKEND RISK ANALYSIS ----------------
 st.subheader("🔍 Backend Risk Analyzer")
