@@ -7,7 +7,9 @@ def get_gemini_model():
         return None
 
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-    return genai.GenerativeModel("gemini-1.5-flash-latest")
+
+    # Current Gemini API model
+    return genai.GenerativeModel("gemini-2.5-flash")
 
 
 def generate_ai_response(prompt):
