@@ -2,9 +2,18 @@ import streamlit as st
 import plotly.express as px
 from data_utils import load_data
 
-st.title("📦 Orders & Deliveries")
+st.set_page_config(page_title="Orders & Deliveries", layout="wide")
+
+st.title("📦 Orders & Deliveries — Logistics Monitoring")
 
 df = load_data()
+
+delayed_df = df[df["delivery_status"] == "Delayed"]
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Total Orders", len(df))
+c2.metric("Delayed Deliveries", len(delayed_df))
+c3.metric("Avg Delay Days", f"{df['delivery_delay_days'].mean():.2f}")
 
 delivery_counts = df["delivery_status"].value_counts().reset_index()
 delivery_counts.columns = ["Delivery Status", "Count"]
@@ -20,8 +29,6 @@ fig = px.pie(
 st.plotly_chart(fig, use_container_width=True)
 
 st.subheader("Delayed Deliveries")
-
-delayed_df = df[df["delivery_status"] == "Delayed"]
 
 st.dataframe(
     delayed_df[[
