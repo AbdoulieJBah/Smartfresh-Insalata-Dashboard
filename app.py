@@ -33,14 +33,12 @@ else:
 st.sidebar.title("🥬 SmartFresh AI")
 st.sidebar.caption("Insalata dell’Orto Operations Dashboard")
 
-st.markdown("""
-### Welcome
+st.sidebar.markdown("""
+Operations Intelligence Platform
 
-Use the sidebar to navigate:
-
-- 📊 Executive Dashboard  
-- 🥬 Inventory & Expiry  
-- ✅ Quality Control  
-- 📦 Orders & Deliveries  
-- 🔎 Batch Traceability  
+- 📊 Executive Insights
+- 🥬 Inventory Monitoring
+- ✅ Quality Control
+- 📦 Logistics Tracking
+- 🔎 Traceability
 """)
