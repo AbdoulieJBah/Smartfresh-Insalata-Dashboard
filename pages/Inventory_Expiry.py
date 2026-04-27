@@ -3,13 +3,22 @@ import pandas as pd
 from datetime import datetime
 from data_utils import load_data
 
-st.title("🥬 Inventory & Expiry")
+st.set_page_config(page_title="Inventory & Expiry", layout="wide")
+
+st.title("🥬 Inventory & Expiry — Stock Monitoring")
 
 df = load_data()
-
 today = pd.Timestamp(datetime.today().date())
 
 df["days_to_expiry"] = (df["expiry_date"] - today).dt.days
+
+near_expiry = df[df["days_to_expiry"] <= 2]
+expired = df[df["days_to_expiry"] < 0]
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Total Stock", f"{df['stock_remaining'].sum():,}")
+c2.metric("Near Expiry", len(near_expiry))
+c3.metric("Expired Records", len(expired))
 
 st.subheader("Inventory Overview")
 
@@ -26,8 +35,6 @@ st.dataframe(
 )
 
 st.subheader("⚠️ Products Near Expiry")
-
-near_expiry = df[df["days_to_expiry"] <= 2]
 
 st.dataframe(
     near_expiry[[
