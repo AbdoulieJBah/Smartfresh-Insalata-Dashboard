@@ -150,7 +150,7 @@ if uploaded_file is not None:
 
 elif "smartfresh_df" not in st.session_state:
     try:
-        st.session_state.smartfresh_df = pd.read_csv("smartfresh_full_dataset_500.csv")
+        st.session_state.smartfresh_df = pd.read_csv("smartfresh_insalata_real_workflow_dataset.csv")
         st.info("ℹ️ Using default SmartFresh dataset from repository")
     except Exception:
         st.session_state.smartfresh_df = generate_sample_data()
