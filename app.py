@@ -128,7 +128,8 @@ It supports:
 
 uploaded_file = st.file_uploader(
     "Upload Insalata CSV/Excel dataset",
-    type=["csv", "xlsx"]
+    type=["csv", "xlsx"],
+    key="main_dataset_uploader"
 )
 
 if uploaded_file is not None:
