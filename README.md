@@ -10,6 +10,9 @@ An AI-powered business intelligence dashboard for monitoring production, invento
 - 📦 Orders & delivery tracking
 - 🔎 Batch traceability
 - 🤖 AI-ready architecture (for future Copilot integration)
+-  💬 Supplier Feedback Sentiment Analysis
+- ⚠️ Negative Feedback Alerts
+- 🏭 Supplier Sentiment Ranking
 
 ## 🧠 Tech Stack
 
