@@ -77,6 +77,7 @@ st.sidebar.markdown("""
 - 🔎 Traceability & Risk  
 - 🏭 ERP Production Planner  
 - 🤖 AI Copilot  
+- 🧠 AI Production Agent
 """)
 
 # -----------------------------
