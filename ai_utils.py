@@ -7,8 +7,6 @@ def get_gemini_model():
         return None
 
     genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-
-    # Current Gemini API model
     return genai.GenerativeModel("gemini-2.5-flash")
 
 
