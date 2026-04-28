@@ -197,7 +197,7 @@ AI Engineer • Data Scientist • Business Intelligence Developer
 
 <a href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#0ea5e9; color:white; font-weight:600;">LinkedIn</a>
 
-<a href="https://https://github.com/AbdoulieJBah/GPPA-PROCUREMENT--AUDIT-SYSTEM-/tree/main" target="_blank" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#1f2937; color:white; font-weight:600; border:1px solid rgba(255,255,255,0.1);">GitHub</a>
+<a href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#1f2937; color:white; font-weight:600; border:1px solid rgba(255,255,255,0.1);">GitHub</a>
 
 <a href="mailto:21722285bah@gmail.com" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#2563eb; color:white; font-weight:600;">Contact</a>
 
