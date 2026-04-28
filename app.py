@@ -62,6 +62,7 @@ st.sidebar.markdown("""
 - 📦 Logistics Tracking  
 - 🔎 Batch Traceability  
 - 🤖 AI Copilot  
+- 💬 Supplier Sentiment Analysis
 """)
 
 st.markdown("""
