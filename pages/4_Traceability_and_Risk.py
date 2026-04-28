@@ -1,74 +1,92 @@
 import streamlit as st
-import plotly.express as px
+import requests
 from data_utils import load_data
 
-st.set_page_config(page_title="Orders & Deliveries", layout="wide")
+st.set_page_config(page_title="Traceability & Risk", layout="wide")
 
-st.title("📦 Orders & Deliveries — Logistics Monitoring")
+st.title("🔎 Traceability & Backend Risk Scoring")
 
 df = load_data()
-
-# Clean column names
 df.columns = df.columns.str.strip().str.lower()
 
-# Create missing order_quantity if dataset does not have it
-if "order_quantity" not in df.columns and "quantity_sold" in df.columns:
-    df["order_quantity"] = df["quantity_sold"]
+API_URL = "https://smartfresh-insalata-dashboard.onrender.com/risk-score"
 
-required_columns = [
-    "date",
-    "customer",
-    "product_name",
-    "order_quantity",
-    "delivery_status",
-    "delivery_delay_days"
-]
-
-missing_columns = [col for col in required_columns if col not in df.columns]
-
-if missing_columns:
-    st.error(f"Missing required columns: {', '.join(missing_columns)}")
-    st.write("Available columns:", list(df.columns))
-    st.stop()
-
-# Normalize delivery status values
-df["delivery_status"] = df["delivery_status"].astype(str).str.strip().str.title()
-
-delayed_df = df[df["delivery_status"] == "Delayed"]
-
-avg_delay = df["delivery_delay_days"].mean()
-
-c1, c2, c3 = st.columns(3)
-c1.metric("Total Orders", len(df))
-c2.metric("Delayed Deliveries", len(delayed_df))
-c3.metric("Avg Delay Days", f"{avg_delay:.2f}")
-
-delivery_counts = df["delivery_status"].value_counts().reset_index()
-delivery_counts.columns = ["Delivery Status", "Count"]
-
-fig = px.pie(
-    delivery_counts,
-    names="Delivery Status",
-    values="Count",
-    title="Delivery Status Distribution",
-    hole=0.4
+selected_batch = st.selectbox(
+    "Select Batch ID",
+    df["batch_id"].dropna().unique()
 )
 
-st.plotly_chart(fig, use_container_width=True)
+batch_info = df[df["batch_id"] == selected_batch]
 
-st.subheader("Delayed Deliveries")
+st.subheader("📦 Batch Record")
+st.dataframe(batch_info, use_container_width=True)
 
-if len(delayed_df) > 0:
-    st.dataframe(
-        delayed_df[[
-            "date",
-            "customer",
-            "product_name",
-            "order_quantity",
-            "delivery_status",
-            "delivery_delay_days"
-        ]],
-        use_container_width=True
-    )
-else:
-    st.success("✅ No delayed deliveries found.")
+if len(batch_info) > 0:
+    row = batch_info.iloc[0]
+
+    st.subheader("Batch Details")
+
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Product", row["product_name"])
+    c2.metric("Supplier", row["supplier"])
+    c3.metric("Client", row.get("client", row.get("customer", "N/A")))
+
+    c4, c5, c6 = st.columns(3)
+    c4.metric("Expiry Date", str(row["expiry_date"].date()))
+    c5.metric("Delivery Status", row["delivery_status"])
+    c6.metric("Temperature", f"{row['temperature']}°C")
+
+    st.markdown("---")
+
+    st.subheader("⚠️ Backend Risk Analyzer")
+
+    payload = {
+        "product_name": str(row["product_name"]),
+        "supplier": str(row["supplier"]),
+        "quantity_produced": float(row["quantity_produced"]),
+        "quantity_sold": float(row["quantity_sold"]),
+        "stock_remaining": float(row["stock_remaining"]),
+        "waste_quantity": float(row["waste_quantity"]),
+        "defect_count": int(row["defect_count"]),
+        "temperature": float(row["temperature"]),
+        "delivery_status": str(row["delivery_status"]),
+        "delivery_delay_days": int(row["delivery_delay_days"])
+    }
+
+    if st.button("🔍 Analyze Batch Risk"):
+        try:
+            response = requests.post(API_URL, json=payload, timeout=15)
+
+            if response.status_code == 200:
+                result = response.json()
+
+                r1, r2 = st.columns(2)
+                r1.metric("Risk Score", result["risk_score"])
+                r2.metric("Risk Category", result["risk_category"])
+
+                st.markdown("### Risk Reasons")
+                for reason in result["risk_reasons"]:
+                    st.write(f"- ⚠️ {reason}")
+            else:
+                st.error("Backend API request failed.")
+                st.write(response.text)
+
+        except Exception as e:
+            st.error("⚠️ Backend unavailable or sleeping. Try again in a few seconds.")
+            st.caption(str(e))
+
+    st.markdown("---")
+
+    st.subheader("🧭 Traceability Summary")
+
+    st.info(f"""
+    **Batch {selected_batch}** contains **{row['product_name']}** supplied by **{row['supplier']}**
+    for **{row.get('client', row.get('customer', 'N/A'))}**.
+
+    - Produced quantity: **{row['quantity_produced']}**
+    - Sold quantity: **{row['quantity_sold']}**
+    - Stock remaining: **{row['stock_remaining']}**
+    - Waste quantity: **{row['waste_quantity']}**
+    - Defects: **{row['defect_count']}**
+    - Delivery status: **{row['delivery_status']}**
+    """)
