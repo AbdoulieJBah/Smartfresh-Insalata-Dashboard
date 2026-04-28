@@ -1,3 +1,7 @@
+## 🌐 Live Demo
+https://smartfresh-insalata-dashboard-q7kkr8vgaj2zfgggkra8sf.streamlit.app
+
+
 # 🥬 SmartFresh AI — Operations Intelligence Platform
 
 ## 🚀 Overview
