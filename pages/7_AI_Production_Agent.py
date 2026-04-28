@@ -1,148 +1,187 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
+from datetime import datetime
 from data_utils import load_data
+from ai_utils import generate_ai_response
 
-st.set_page_config(page_title="Supplier Feedback Sentiment", layout="wide")
+st.set_page_config(page_title="AI Production Agent", layout="wide")
 
-st.title("💬 Supplier Feedback Sentiment Analysis")
+st.title("🧠 SmartFresh AI Production Agent")
+
+st.write(
+    "This agent monitors operations, detects risks, recommends actions, "
+    "and simulates autonomous production decisions."
+)
 
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
-# Create rating if missing
-if "rating" not in df.columns:
-    df["rating"] = 3
+# -----------------------------
+# AGENT RULES
+# -----------------------------
+def detect_agent_risks(df):
+    alerts = []
 
-required_columns = ["date", "supplier", "product_name", "feedback_text", "rating"]
-missing_columns = [col for col in required_columns if col not in df.columns]
+    for _, row in df.iterrows():
+        batch = row.get("batch_id", "Unknown")
+        client = row.get("client", row.get("customer", "Unknown"))
+        product = row.get("product_name", "Unknown")
 
-if missing_columns:
-    st.error(f"Missing required columns: {', '.join(missing_columns)}")
-    st.write("Available columns:", list(df.columns))
-    st.stop()
+        waste_rate = 0
+        if row.get("quantity_produced", 0) > 0:
+            waste_rate = (row.get("waste_quantity", 0) / row.get("quantity_produced", 1)) * 100
 
-feedback_df = df.copy()
-feedback_df["date"] = pd.to_datetime(feedback_df["date"], errors="coerce")
+        if waste_rate > 8:
+            alerts.append({
+                "risk_type": "High Waste",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "High",
+                "issue": f"Waste rate is {waste_rate:.2f}%",
+                "recommended_action": "Review raw product quality, supplier, and machine settings."
+            })
 
-positive_words = [
-    "good", "fresh", "excellent", "clean", "fast", "satisfied",
-    "great", "quality", "acceptable", "reliable"
-]
+        if row.get("temperature", 0) > 6:
+            alerts.append({
+                "risk_type": "Cold Chain Risk",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "High",
+                "issue": f"Temperature is {row.get('temperature')}°C",
+                "recommended_action": "Check cold storage and transport temperature control."
+            })
 
-negative_words = [
-    "bad", "late", "damaged", "poor", "spoiled", "dirty",
-    "complaint", "smell", "defect", "delay", "problem"
-]
+        if str(row.get("delivery_status", "")).lower() == "delayed":
+            alerts.append({
+                "risk_type": "Delivery Delay",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "Medium",
+                "issue": "Delivery is delayed",
+                "recommended_action": "Prioritize dispatch review and notify logistics team."
+            })
+
+        if row.get("defect_count", 0) > 25:
+            alerts.append({
+                "risk_type": "Quality Defect",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "High",
+                "issue": f"Defect count is {row.get('defect_count')}",
+                "recommended_action": "Inspect packaging line and supplier quality."
+            })
+
+        if "slack_minutes" in df.columns and row.get("slack_minutes", 999) < 60:
+            alerts.append({
+                "risk_type": "Schedule Risk",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "High",
+                "issue": "Order has less than 60 minutes slack before departure",
+                "recommended_action": "Reassign to faster machine or prioritize in current shift."
+            })
+
+    return pd.DataFrame(alerts)
 
 
-def analyze_sentiment(text):
-    text = str(text).lower()
-    positive_score = sum(word in text for word in positive_words)
-    negative_score = sum(word in text for word in negative_words)
+alerts_df = detect_agent_risks(df)
 
-    if positive_score > negative_score:
-        return "Positive"
-    elif negative_score > positive_score:
-        return "Negative"
-    return "Neutral"
+# -----------------------------
+# KPIs
+# -----------------------------
+c1, c2, c3, c4 = st.columns(4)
 
+c1.metric("Records Monitored", len(df))
+c2.metric("Agent Alerts", len(alerts_df))
+c3.metric("High Severity", (alerts_df["severity"] == "High").sum() if len(alerts_df) else 0)
+c4.metric("Medium Severity", (alerts_df["severity"] == "Medium").sum() if len(alerts_df) else 0)
 
-def sentiment_score(sentiment):
-    if sentiment == "Positive":
-        return 1
-    if sentiment == "Negative":
-        return -1
-    return 0
+st.markdown("---")
 
+# -----------------------------
+# ALERTS
+# -----------------------------
+st.subheader("🚨 Agent Risk Alerts")
 
-feedback_df["Sentiment"] = feedback_df["feedback_text"].apply(analyze_sentiment)
-feedback_df["Sentiment Score"] = feedback_df["Sentiment"].apply(sentiment_score)
-
-total_feedback = len(feedback_df)
-positive_count = (feedback_df["Sentiment"] == "Positive").sum()
-neutral_count = (feedback_df["Sentiment"] == "Neutral").sum()
-negative_count = (feedback_df["Sentiment"] == "Negative").sum()
-avg_rating = feedback_df["rating"].mean()
-
-c1, c2, c3, c4, c5 = st.columns(5)
-c1.metric("Total Feedback", total_feedback)
-c2.metric("Positive", positive_count)
-c3.metric("Neutral", neutral_count)
-c4.metric("Negative", negative_count)
-c5.metric("Avg Rating", f"{avg_rating:.2f}")
-
-st.subheader("📊 Sentiment Overview")
-
-sentiment_counts = feedback_df["Sentiment"].value_counts().reset_index()
-sentiment_counts.columns = ["Sentiment", "Count"]
-
-fig_sentiment = px.pie(
-    sentiment_counts,
-    names="Sentiment",
-    values="Count",
-    title="Feedback Sentiment Distribution",
-    hole=0.4,
-    color="Sentiment",
-    color_discrete_map={
-        "Positive": "green",
-        "Neutral": "orange",
-        "Negative": "red"
-    }
-)
-
-st.plotly_chart(fig_sentiment, use_container_width=True)
-
-st.subheader("🏭 Supplier Sentiment Ranking")
-
-supplier_sentiment = (
-    feedback_df.groupby("supplier")
-    .agg(
-        avg_sentiment_score=("Sentiment Score", "mean"),
-        avg_rating=("rating", "mean"),
-        negative_feedback=("Sentiment", lambda x: (x == "Negative").sum()),
-        total_feedback=("Sentiment", "count")
-    )
-    .reset_index()
-    .sort_values("avg_sentiment_score")
-)
-
-st.dataframe(supplier_sentiment, use_container_width=True)
-
-fig_supplier = px.bar(
-    supplier_sentiment,
-    x="supplier",
-    y="avg_sentiment_score",
-    title="Average Sentiment Score by Supplier"
-)
-
-st.plotly_chart(fig_supplier, use_container_width=True)
-
-st.subheader("⚠️ Negative Feedback Alerts")
-
-negative_df = feedback_df[feedback_df["Sentiment"] == "Negative"]
-
-if len(negative_df) > 0:
-    st.dataframe(
-        negative_df[[
-            "date",
-            "supplier",
-            "product_name",
-            "feedback_text",
-            "rating",
-            "Sentiment"
-        ]],
-        use_container_width=True
-    )
+if len(alerts_df) > 0:
+    st.dataframe(alerts_df, use_container_width=True)
 else:
-    st.success("No negative feedback detected.")
+    st.success("✅ No major operational risks detected.")
 
-with st.expander("📄 View Full Feedback Dataset"):
-    st.dataframe(feedback_df, use_container_width=True)
+# -----------------------------
+# AGENT DECISION SUMMARY
+# -----------------------------
+st.subheader("🧠 Agent Decision Summary")
 
-st.download_button(
-    "Download Sentiment Analysis Report",
-    feedback_df.to_csv(index=False),
-    "supplier_feedback_sentiment_report.csv",
-    "text/csv"
-)
+if st.button("Run AI Agent Analysis"):
+    if len(alerts_df) == 0:
+        st.success("No risks detected. Operations appear stable.")
+    else:
+        top_alerts = alerts_df.head(20).to_dict(orient="records")
+
+        prompt = f"""
+You are an autonomous AI production agent for a fresh produce company.
+
+You monitor production, quality, delivery, temperature, waste, and schedule risks.
+
+Current detected alerts:
+{top_alerts}
+
+Act like an AI agent.
+
+Provide:
+1. Overall operational status
+2. Highest priority risks
+3. Recommended immediate actions
+4. What should be reassigned or prioritized
+5. What should be escalated to management
+6. Final action plan
+
+Use clear bullet points.
+Highlight critical issues with ⚠️.
+"""
+
+        with st.spinner("AI Agent is reasoning..."):
+            response = generate_ai_response(prompt)
+            st.markdown(response)
+
+# -----------------------------
+# SIMULATED AUTONOMOUS ACTIONS
+# -----------------------------
+st.subheader("⚙️ Simulated Agent Actions")
+
+if len(alerts_df) > 0:
+    for _, alert in alerts_df.head(10).iterrows():
+        if alert["risk_type"] == "Schedule Risk":
+            st.warning(
+                f"⚠️ Agent Action: Prioritize batch {alert['batch_id']} "
+                f"for faster machine assignment."
+            )
+
+        elif alert["risk_type"] == "Cold Chain Risk":
+            st.error(
+                f"🌡️ Agent Action: Escalate batch {alert['batch_id']} "
+                f"for cold-chain inspection."
+            )
+
+        elif alert["risk_type"] == "High Waste":
+            st.warning(
+                f"📦 Agent Action: Review supplier/product quality for batch {alert['batch_id']}."
+            )
+
+        elif alert["risk_type"] == "Delivery Delay":
+            st.info(
+                f"🚚 Agent Action: Notify logistics team for client {alert['client']}."
+            )
+
+        elif alert["risk_type"] == "Quality Defect":
+            st.error(
+                f"🧪 Agent Action: Trigger quality inspection for batch {alert['batch_id']}."
+            )
+else:
+    st.success("✅ No agent actions required.")
