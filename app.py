@@ -10,6 +10,14 @@ st.set_page_config(
 # -----------------------------
 # CUSTOM STYLE
 # -----------------------------
+
+st.markdown("""
+<style>
+body {
+    background-color: white;
+}
+</style>
+""", unsafe_allow_html=True)
 st.markdown("""
 <style>
 [data-testid="stSidebar"] {
