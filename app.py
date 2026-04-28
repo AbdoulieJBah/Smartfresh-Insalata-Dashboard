@@ -13,13 +13,6 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-body {
-    background-color: white;
-}
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
 [data-testid="stSidebar"] {
     background: linear-gradient(180deg, #f8fafc, #ecfdf5);
 }
