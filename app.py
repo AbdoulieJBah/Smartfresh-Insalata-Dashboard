@@ -130,6 +130,11 @@ uploaded_file = st.file_uploader(
     type=["csv", "xlsx"]
 )
 
+uploaded_file = st.file_uploader(
+    "Upload Insalata CSV/Excel dataset",
+    type=["csv", "xlsx"]
+)
+
 if uploaded_file is not None:
     if uploaded_file.name.endswith(".csv"):
         st.session_state.smartfresh_df = pd.read_csv(uploaded_file)
@@ -137,10 +142,14 @@ if uploaded_file is not None:
         st.session_state.smartfresh_df = pd.read_excel(uploaded_file)
 
     st.success("✅ Uploaded dataset loaded successfully")
-else:
-    if "smartfresh_df" not in st.session_state:
+
+elif "smartfresh_df" not in st.session_state:
+    try:
+        st.session_state.smartfresh_df = pd.read_csv("smartfresh_full_dataset_500.csv")
+        st.info("ℹ️ Using default SmartFresh dataset from repository")
+    except Exception:
         st.session_state.smartfresh_df = generate_sample_data()
-        st.info("ℹ️ Using sample Insalata dell’Orto dataset")
+        st.warning("⚠️ Default dataset not found — using sample data")
 
 st.markdown("---")
 
