@@ -125,10 +125,6 @@ It supports:
 - FastAPI backend risk scoring
 """)
 
-uploaded_file = st.file_uploader(
-    "Upload Insalata CSV/Excel dataset",
-    type=["csv", "xlsx"]
-)
 
 uploaded_file = st.file_uploader(
     "Upload Insalata CSV/Excel dataset",
