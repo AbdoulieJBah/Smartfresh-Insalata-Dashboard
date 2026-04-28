@@ -52,11 +52,21 @@ def generate_sample_data():
 
 def load_data():
     if "smartfresh_df" not in st.session_state:
-        st.session_state.smartfresh_df = generate_sample_data()
+        try:
+            st.session_state.smartfresh_df = pd.read_csv("smartfresh_full_dataset_500.csv")
+        except FileNotFoundError:
+            st.session_state.smartfresh_df = generate_sample_data()
 
     df = st.session_state.smartfresh_df.copy()
-    df["date"] = pd.to_datetime(df["date"])
-    df["expiry_date"] = pd.to_datetime(df["expiry_date"])
+
+    df.columns = df.columns.str.strip().str.lower()
+
+    if "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+    if "expiry_date" in df.columns:
+        df["expiry_date"] = pd.to_datetime(df["expiry_date"], errors="coerce")
+
     return df
 
 
