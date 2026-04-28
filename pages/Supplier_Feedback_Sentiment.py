@@ -1,67 +1,30 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from data_utils import load_data
 
 st.set_page_config(page_title="Supplier Feedback Sentiment", layout="wide")
 
 st.title("💬 Supplier Feedback Sentiment Analysis")
 
-st.write(
-    "Analyze supplier/customer feedback to detect quality concerns, delivery complaints, "
-    "freshness issues, and supplier reputation trends."
-)
+df = load_data()
+df.columns = df.columns.str.strip().str.lower()
 
-# -----------------------------
-# SAMPLE FEEDBACK DATA
-# -----------------------------
-def generate_feedback_data():
-    return pd.DataFrame({
-        "date": [
-            "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-04",
-            "2026-04-05", "2026-04-06", "2026-04-07", "2026-04-08"
-        ],
-        "supplier": [
-            "Farm A", "Farm B", "Farm C", "Farm A",
-            "Farm C", "Farm D", "Farm B", "Farm C"
-        ],
-        "product_name": [
-            "Spinach", "Rucola", "Mixed Salad", "Lettuce",
-            "Baby Leaf", "Carrots", "Radicchio", "Spinach"
-        ],
-        "feedback_text": [
-            "Fresh product and good packaging",
-            "Delivery was late but product quality was acceptable",
-            "Poor freshness and damaged packaging",
-            "Excellent quality and fast delivery",
-            "Spoiled leaves and bad smell reported",
-            "Clean product and satisfied customer",
-            "Packaging was damaged during transport",
-            "Late delivery and poor product freshness"
-        ],
-        "rating": [5, 3, 1, 5, 1, 4, 2, 1]
-    })
+# Create rating if missing
+if "rating" not in df.columns:
+    df["rating"] = 3
 
+required_columns = ["date", "supplier", "product_name", "feedback_text", "rating"]
+missing_columns = [col for col in required_columns if col not in df.columns]
 
-uploaded_file = st.file_uploader(
-    "Upload supplier feedback CSV/Excel file",
-    type=["csv", "xlsx"]
-)
+if missing_columns:
+    st.error(f"Missing required columns: {', '.join(missing_columns)}")
+    st.write("Available columns:", list(df.columns))
+    st.stop()
 
-if uploaded_file is not None:
-    if uploaded_file.name.endswith(".csv"):
-        feedback_df = pd.read_csv(uploaded_file)
-    else:
-        feedback_df = pd.read_excel(uploaded_file)
+feedback_df = df.copy()
+feedback_df["date"] = pd.to_datetime(feedback_df["date"], errors="coerce")
 
-    st.success("✅ Feedback dataset uploaded successfully")
-else:
-    feedback_df = generate_feedback_data()
-    st.info("ℹ️ Using sample supplier feedback dataset")
-
-
-# -----------------------------
-# SENTIMENT FUNCTION
-# -----------------------------
 positive_words = [
     "good", "fresh", "excellent", "clean", "fast", "satisfied",
     "great", "quality", "acceptable", "reliable"
@@ -75,7 +38,6 @@ negative_words = [
 
 def analyze_sentiment(text):
     text = str(text).lower()
-
     positive_score = sum(word in text for word in positive_words)
     negative_score = sum(word in text for word in negative_words)
 
@@ -83,37 +45,20 @@ def analyze_sentiment(text):
         return "Positive"
     elif negative_score > positive_score:
         return "Negative"
-    else:
-        return "Neutral"
+    return "Neutral"
 
 
 def sentiment_score(sentiment):
     if sentiment == "Positive":
         return 1
-    elif sentiment == "Negative":
+    if sentiment == "Negative":
         return -1
     return 0
 
 
-# -----------------------------
-# VALIDATION
-# -----------------------------
-required_cols = ["date", "supplier", "product_name", "feedback_text", "rating"]
-missing_cols = [c for c in required_cols if c not in feedback_df.columns]
-
-if missing_cols:
-    st.error(f"Missing required columns: {', '.join(missing_cols)}")
-    st.stop()
-
-
-feedback_df["date"] = pd.to_datetime(feedback_df["date"], errors="coerce")
 feedback_df["Sentiment"] = feedback_df["feedback_text"].apply(analyze_sentiment)
 feedback_df["Sentiment Score"] = feedback_df["Sentiment"].apply(sentiment_score)
 
-
-# -----------------------------
-# KPIs
-# -----------------------------
 total_feedback = len(feedback_df)
 positive_count = (feedback_df["Sentiment"] == "Positive").sum()
 neutral_count = (feedback_df["Sentiment"] == "Neutral").sum()
@@ -121,17 +66,12 @@ negative_count = (feedback_df["Sentiment"] == "Negative").sum()
 avg_rating = feedback_df["rating"].mean()
 
 c1, c2, c3, c4, c5 = st.columns(5)
-
 c1.metric("Total Feedback", total_feedback)
 c2.metric("Positive", positive_count)
 c3.metric("Neutral", neutral_count)
 c4.metric("Negative", negative_count)
 c5.metric("Avg Rating", f"{avg_rating:.2f}")
 
-
-# -----------------------------
-# CHARTS
-# -----------------------------
 st.subheader("📊 Sentiment Overview")
 
 sentiment_counts = feedback_df["Sentiment"].value_counts().reset_index()
@@ -152,7 +92,6 @@ fig_sentiment = px.pie(
 )
 
 st.plotly_chart(fig_sentiment, use_container_width=True)
-
 
 st.subheader("🏭 Supplier Sentiment Ranking")
 
@@ -179,10 +118,6 @@ fig_supplier = px.bar(
 
 st.plotly_chart(fig_supplier, use_container_width=True)
 
-
-# -----------------------------
-# NEGATIVE FEEDBACK PANEL
-# -----------------------------
 st.subheader("⚠️ Negative Feedback Alerts")
 
 negative_df = feedback_df[feedback_df["Sentiment"] == "Negative"]
@@ -202,17 +137,9 @@ if len(negative_df) > 0:
 else:
     st.success("No negative feedback detected.")
 
-
-# -----------------------------
-# RAW DATA
-# -----------------------------
 with st.expander("📄 View Full Feedback Dataset"):
     st.dataframe(feedback_df, use_container_width=True)
 
-
-# -----------------------------
-# DOWNLOAD
-# -----------------------------
 st.download_button(
     "Download Sentiment Analysis Report",
     feedback_df.to_csv(index=False),
