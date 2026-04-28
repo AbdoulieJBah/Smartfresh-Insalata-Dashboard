@@ -7,8 +7,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# -----------------------------
+# CUSTOM STYLE
+# -----------------------------
 st.markdown("""
 <style>
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #f8fafc, #ecfdf5);
+}
+
 .hero-card {
     padding: 32px;
     border-radius: 22px;
@@ -17,17 +24,20 @@ st.markdown("""
     box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     margin-bottom: 25px;
 }
+
 .hero-title {
     font-size: 42px;
     font-weight: 800;
     color: #14532d;
     margin-bottom: 10px;
 }
+
 .hero-subtitle {
     font-size: 18px;
     color: #334155;
     line-height: 1.6;
 }
+
 .feature-card {
     padding: 20px;
     border-radius: 16px;
@@ -36,12 +46,14 @@ st.markdown("""
     min-height: 150px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.05);
 }
+
 .feature-title {
     font-size: 20px;
     font-weight: 700;
     color: #166534;
     margin-bottom: 8px;
 }
+
 .feature-text {
     font-size: 15px;
     color: #475569;
@@ -50,39 +62,48 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# -----------------------------
+# SIDEBAR
+# -----------------------------
 st.sidebar.title("🥬 SmartFresh AI")
 st.sidebar.caption("Insalata dell’Orto Platform")
 
 st.sidebar.markdown("""
 ### Operations Intelligence
 
-- 📊 Executive Insights  
-- 🥬 Inventory Monitoring  
-- ✅ Quality Control  
-- 📦 Logistics Tracking  
-- 🔎 Batch Traceability  
+- 📊 Executive Dashboard  
+- 🥬 Operations Control  
+- ✅ Quality & Sentiment  
+- 🔎 Traceability & Risk  
+- 🏭 ERP Production Planner  
 - 🤖 AI Copilot  
-- 💬 Supplier Sentiment Analysis
 """)
 
+# -----------------------------
+# HERO
+# -----------------------------
 st.markdown("""
 <div class="hero-card">
     <div class="hero-title">🥬 SmartFresh AI</div>
     <div class="hero-subtitle">
-        A full-stack operations intelligence platform for Insalata dell’Orto, designed to monitor
-        production, inventory, waste, quality, expiry risk, deliveries, traceability, and AI-powered insights.
+        A full-stack operations intelligence platform for fresh produce companies.
+        Monitor production, inventory, waste, quality, expiry risk, deliveries, traceability,
+        AI insights, and ERP-style production planning.
     </div>
 </div>
 """, unsafe_allow_html=True)
 
+# -----------------------------
+# FEATURE CARDS
+# -----------------------------
 c1, c2, c3 = st.columns(3)
 
 with c1:
     st.markdown("""
     <div class="feature-card">
-        <div class="feature-title">📊 Executive Dashboard</div>
+        <div class="feature-title">📊 Operations Intelligence</div>
         <div class="feature-text">
-            Monitor production, sales, waste rate, revenue, stock levels, defects, and delivery performance.
+            Track production, sales, stock, waste, delivery delays, quality, and supplier performance.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -90,9 +111,9 @@ with c1:
 with c2:
     st.markdown("""
     <div class="feature-card">
-        <div class="feature-title">🥬 Inventory & Expiry</div>
+        <div class="feature-title">🏭 ERP Production Planning</div>
         <div class="feature-text">
-            Track stock, expiry dates, near-expiry products, and batches requiring urgent attention.
+            Optimize machines, shifts, production time, pallets, incoming cases, and departure deadlines.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -102,30 +123,16 @@ with c3:
     <div class="feature-card">
         <div class="feature-title">🤖 AI Copilot</div>
         <div class="feature-text">
-            Ask natural-language questions and generate operational insights using AI and backend risk scoring.
+            Ask questions, run real production tools, and generate operational recommendations.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-st.markdown("### 🚀 Platform Overview")
-
-st.markdown("""
-SmartFresh AI helps fresh produce companies transform operational data into actionable intelligence.
-
-It supports:
-
-- Waste reduction and stock optimization
-- Inventory and expiry monitoring
-- Supplier quality analysis
-- Delivery tracking and delay detection
-- Batch traceability
-- AI-powered operational decision support
-- FastAPI backend risk scoring
-""")
-
-
+# -----------------------------
+# DATA UPLOAD / DEFAULT DATA
+# -----------------------------
 uploaded_file = st.file_uploader(
     "Upload Insalata CSV/Excel dataset",
     type=["csv", "xlsx"],
@@ -146,10 +153,33 @@ elif "smartfresh_df" not in st.session_state:
         st.info("ℹ️ Using default SmartFresh dataset from repository")
     except Exception:
         st.session_state.smartfresh_df = generate_sample_data()
-        st.warning("⚠️ Default dataset not found — using sample data")
+        st.warning("⚠️ Default dataset not found — using generated sample data")
+
+# -----------------------------
+# PLATFORM OVERVIEW
+# -----------------------------
+st.markdown("### 🚀 Platform Overview")
+
+st.markdown("""
+SmartFresh AI helps fresh produce companies transform operational data into decision-ready intelligence.
+
+It supports:
+
+- Production and sales monitoring
+- Inventory and expiry control
+- Waste and defect analysis
+- Supplier sentiment analysis
+- Delivery delay tracking
+- Batch traceability and backend risk scoring
+- ERP-style production scheduling and shift optimization
+- AI-assisted production planning
+""")
 
 st.markdown("---")
 
+# -----------------------------
+# FOOTER
+# -----------------------------
 st.markdown("""
 <center>
 Built by <b>Abdoulie J Bah</b> 🚀  
