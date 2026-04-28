@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from typing import Optional
 
 app = FastAPI(title="SmartFresh AI Backend API")
 
@@ -47,9 +46,13 @@ def risk_score(data: RiskInput):
         score += 20
         reasons.append("Delivery delay detected")
 
+    if data.delivery_delay_days > 1:
+        score += 10
+        reasons.append("Delivery delay is above acceptable level")
+
     if data.stock_remaining > data.quantity_sold:
         score += 15
-        reasons.append("Stock remaining is high compared to sales")
+        reasons.append("High remaining stock compared to sales")
 
     score = min(score, 100)
 
