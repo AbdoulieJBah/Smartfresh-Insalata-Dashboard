@@ -73,7 +73,7 @@ st.sidebar.markdown("""
 ### Operations Intelligence
 
 - 📊 Executive Dashboard  
-- 🥬 Business Intelligence  
+- 📊 Business Intelligence  
 - 🥬 Operations Control    
 - 🏭 ERP Production Planner  
 - 🤖 AI Copilot  
@@ -162,18 +162,20 @@ elif "smartfresh_df" not in st.session_state:
 st.markdown("### 🚀 Platform Overview")
 
 st.markdown("""
-SmartFresh AI helps fresh produce companies transform operational data into decision-ready intelligence.
+SmartFresh AI is an operations intelligence platform designed to help fresh produce companies transform raw operational data into actionable, decision-ready insights.
 
 It supports:
 
-- Production and sales monitoring
-- Inventory and expiry control
-- Waste and defect analysis
-- Supplier sentiment analysis
-- Delivery delay tracking
-- Batch traceability and backend risk scoring
-- ERP-style production scheduling and shift optimization
-- AI-assisted production planning
+- Real-time production and sales monitoring
+- Inventory management and expiry risk control
+- Waste, defect, and quality performance analysis
+- Supplier performance and feedback sentiment insights
+- Delivery tracking and delay risk detection
+- End-to-end batch traceability and risk scoring
+- ERP-style production planning, packaging logic, and resource optimization
+- Shift scheduling and machine allocation optimization
+- AI-powered Copilot for operational insights and queries
+- Autonomous AI Agent for risk detection, decision support, and action recommendations
 """)
 
 st.markdown("---")
