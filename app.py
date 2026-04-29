@@ -372,35 +372,71 @@ decision-ready intelligence across production, logistics, quality, and business 
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# FINAL RESPONSIVE FOOTER
+# FINAL PREMIUM FOOTER
 # -----------------------------
+st.markdown("""
+<style>
+.footer-box {
+    text-align: center;
+    padding: 22px 10px 10px 10px;
+}
+
+.footer-title {
+    color: #14532d;
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.footer-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.footer-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-top: 12px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.markdown("---")
 
-st.markdown(
-    """
-    <div style="text-align:center; padding: 10px 0;">
-        <h4 style="color:#14532d; margin-bottom:5px;">
-            🥬 SmartFresh AI • Abdoulie J Bah
-        </h4>
-        <p style="color:#64748b; margin-bottom:15px; font-size:0.9rem;">
-            AI Engineer • Data Scientist • BI Developer
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div class="footer-box">
+    <div class="footer-title">🥬 SmartFresh AI • Abdoulie J Bah</div>
+    <div class="footer-subtitle">AI Engineer • Data Scientist • BI Developer</div>
+    <div class="footer-badge">Built with Streamlit • AI-powered operations intelligence</div>
+</div>
+""", unsafe_allow_html=True)
 
-# Centered compact layout
 left, center, right = st.columns([1, 2, 1])
 
 with center:
-    col1, col2, col3 = st.columns(3, gap="small")
+    c1, c2, c3 = st.columns(3, gap="small")
 
-    with col1:
-        st.link_button("LinkedIn", "https://www.linkedin.com/in/abdoulie-j-bah-b71263244")
+    with c1:
+        st.link_button(
+            "🔗 LinkedIn",
+            "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
+        )
 
-    with col2:
-        st.link_button("GitHub", "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main")
+    with c2:
+        st.link_button(
+            "💻 GitHub",
+            "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
+        )
 
-    with col3:
-        st.link_button("Contact", "mailto:21722285bah@gmail.com")
+    with c3:
+        st.link_button(
+            "✉️ Contact",
+            "mailto:21722285bah@gmail.com"
+        )
