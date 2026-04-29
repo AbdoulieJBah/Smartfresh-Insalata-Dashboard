@@ -372,70 +372,32 @@ decision-ready intelligence across production, logistics, quality, and business 
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# COLORED PREMIUM FOOTER
+# FOOTER FINAL SAFE VERSION
 # -----------------------------
-st.markdown("""
-<style>
-.footer-box {
-    text-align: center;
-    padding: 22px 10px 10px 10px;
-}
-
-.footer-title {
-    color: #14532d;
-    font-size: 1.15rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-}
-
-.footer-subtitle {
-    color: #64748b;
-    font-size: 0.9rem;
-    margin-bottom: 18px;
-}
-
-/* Buttons */
-.footer-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.footer-btn {
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 999px;
-    color: white !important;
-    font-size: 0.85rem;
-    font-weight: 700;
-    transition: all 0.2s ease;
-}
-
-/* Colors */
-.btn-linkedin { background: #0ea5e9; }
-.btn-github { background: #111827; }
-.btn-contact { background: #16a34a; }
-
-/* Hover */
-.footer-btn:hover {
-    transform: translateY(-2px);
-    opacity: 0.9;
-}
-</style>
-""", unsafe_allow_html=True)
-
 st.markdown("---")
 
-st.markdown("""
-<div class="footer-box">
-    <div class="footer-title">🥬 SmartFresh AI • Abdoulie J Bah</div>
-    <div class="footer-subtitle">AI Engineer • Data Scientist • BI Developer</div>
+st.markdown("### 🥬 SmartFresh AI • Abdoulie J Bah")
+st.caption("AI Engineer • Data Scientist • BI Developer")
 
-    <div class="footer-buttons">
-        <a class="footer-btn btn-linkedin" href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank">🔗 LinkedIn</a>
-        <a class="footer-btn btn-github" href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank">💻 GitHub</a>
-        <a class="footer-btn btn-contact" href="mailto:21722285bah@gmail.com">✉️ Contact</a>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+left, center, right = st.columns([1, 2, 1])
+
+with center:
+    b1, b2, b3 = st.columns(3)
+
+    with b1:
+        st.link_button(
+            "LinkedIn",
+            "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
+        )
+
+    with b2:
+        st.link_button(
+            "GitHub",
+            "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
+        )
+
+    with b3:
+        st.link_button(
+            "Contact",
+            "mailto:21722285bah@gmail.com"
+        )
