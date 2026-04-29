@@ -384,7 +384,7 @@ with footer_title_col2:
         unsafe_allow_html=True
     )
     st.markdown(
-        "<p style='text-align:center; color:#64748b;'>AI Engineer • Data Scientist • BI Developer</p>",
+        "<p style='text-align:center; color:#64748b;'>AI Engineer • Data Scientist • Business Intelligence Developer</p>",
         unsafe_allow_html=True
     )
 
