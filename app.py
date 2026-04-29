@@ -4,61 +4,226 @@ from data_utils import generate_sample_data
 
 st.set_page_config(
     page_title="SmartFresh AI",
-    layout="wide"
+    page_icon="🥬",
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
 # -----------------------------
 # CUSTOM STYLE
 # -----------------------------
-
 st.markdown("""
 <style>
-[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #f8fafc, #ecfdf5);
+/* Hide default Streamlit page navigation */
+section[data-testid="stSidebarNav"] {
+    display: none;
 }
 
+/* Keep app light/system-friendly */
+.stApp {
+    background: #f8fafc;
+}
+
+/* Enterprise sidebar */
+[data-testid="stSidebar"] {
+    background: #ffffff;
+    border-right: 1px solid #e5e7eb;
+}
+
+.sidebar-header {
+    padding: 14px 10px 18px 10px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 16px;
+}
+
+.sidebar-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #14532d;
+    margin-bottom: 4px;
+}
+
+.sidebar-subtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.sidebar-section {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    font-weight: 700;
+    margin: 18px 0 8px 0;
+}
+
+.sidebar-item {
+    padding: 9px 10px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    color: #1f2937;
+    font-weight: 600;
+    background: #f8fafc;
+    border: 1px solid #eef2f7;
+}
+
+.sidebar-item:hover {
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+}
+
+/* Hero */
 .hero-card {
-    padding: 32px;
-    border-radius: 22px;
+    padding: 36px;
+    border-radius: 24px;
     background: linear-gradient(135deg, #ecfdf5, #ffffff);
     border: 1px solid #bbf7d0;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    margin-bottom: 25px;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+    margin-bottom: 26px;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 14px;
 }
 
 .hero-title {
-    font-size: 42px;
-    font-weight: 800;
+    font-size: 44px;
+    font-weight: 850;
     color: #14532d;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    line-height: 1.12;
 }
 
 .hero-subtitle {
     font-size: 18px;
     color: #334155;
-    line-height: 1.6;
+    line-height: 1.65;
+    max-width: 1050px;
 }
 
-.feature-card {
-    padding: 20px;
-    border-radius: 16px;
+/* Status banner */
+.status-banner {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.status-pill {
+    padding: 10px 14px;
+    border-radius: 14px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    min-height: 150px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #334155;
+}
+
+.status-green {
+    color: #166534;
+}
+
+/* Feature cards */
+.feature-card {
+    padding: 22px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    min-height: 175px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    transition: all 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
 .feature-title {
     font-size: 20px;
-    font-weight: 700;
-    color: #166534;
-    margin-bottom: 8px;
+    font-weight: 800;
+    color: #14532d;
+    margin-bottom: 10px;
 }
 
 .feature-text {
     font-size: 15px;
     color: #475569;
-    line-height: 1.5;
+    line-height: 1.55;
+}
+
+.overview-card {
+    padding: 24px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.footer-card {
+    text-align: center;
+    margin-top: 32px;
+    padding: 22px;
+    border-radius: 18px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.footer-name {
+    font-size: 1.05rem;
+    color: #14532d;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.footer-role {
+    font-size: 0.92rem;
+    color: #64748b;
+    margin-bottom: 14px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    color: white !important;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .hero-card {
+        padding: 24px;
+        border-radius: 20px;
+    }
+
+    .hero-title {
+        font-size: 30px;
+    }
+
+    .hero-subtitle {
+        font-size: 15px;
+    }
+
+    .feature-card {
+        min-height: auto;
+        margin-bottom: 12px;
+    }
 }
 </style>
 """, unsafe_allow_html=True)
@@ -66,31 +231,48 @@ st.markdown("""
 # -----------------------------
 # SIDEBAR
 # -----------------------------
-st.sidebar.title("🥬 SmartFresh AI")
-st.sidebar.caption("Insalata dell’Orto Platform")
-
 st.sidebar.markdown("""
-### Operations Intelligence
+<div class="sidebar-header">
+    <div class="sidebar-title">🥬 SmartFresh AI</div>
+    <div class="sidebar-subtitle">Insalata dell’Orto Operations Platform</div>
+</div>
 
-- 📊 Executive Dashboard  
-- 📊 Business Intelligence  
-- 🥬 Operations Control    
-- 🏭 ERP Production Planner  
-- 🤖 AI Copilot  
-- 🧠 AI Production Agent
-""")
+<div class="sidebar-section">Strategic Layer</div>
+<div class="sidebar-item">📊 Executive Dashboard</div>
+<div class="sidebar-item">📈 Business Intelligence</div>
+
+<div class="sidebar-section">Operations Layer</div>
+<div class="sidebar-item">🥬 Operations Control</div>
+<div class="sidebar-item">🏭 ERP Production Planner</div>
+
+<div class="sidebar-section">AI Layer</div>
+<div class="sidebar-item">🤖 AI Copilot</div>
+<div class="sidebar-item">🧠 AI Production Agent</div>
+""", unsafe_allow_html=True)
 
 # -----------------------------
 # HERO
 # -----------------------------
 st.markdown("""
 <div class="hero-card">
+    <div class="hero-badge">AI-Powered Fresh Produce Operations</div>
     <div class="hero-title">🥬 SmartFresh AI</div>
     <div class="hero-subtitle">
-        A full-stack operations intelligence platform for fresh produce companies.
-        Monitor production, inventory, waste, quality, expiry risk, deliveries, traceability,
-        AI insights, and ERP-style production planning.
+        Unifies production, inventory, quality, and logistics into a single intelligent system—enabling
+        real-time monitoring, traceability, risk detection, and AI-driven decision support.
     </div>
+</div>
+""", unsafe_allow_html=True)
+
+# -----------------------------
+# SYSTEM STATUS
+# -----------------------------
+st.markdown("""
+<div class="status-banner">
+    <div class="status-pill"><span class="status-green">●</span> System Status: Operational</div>
+    <div class="status-pill"><span class="status-green">●</span> Data Layer: Ready</div>
+    <div class="status-pill"><span class="status-green">●</span> AI Layer: Connected</div>
+    <div class="status-pill"><span class="status-green">●</span> ERP Planner: Active</div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -104,7 +286,8 @@ with c1:
     <div class="feature-card">
         <div class="feature-title">📊 Operations Intelligence</div>
         <div class="feature-text">
-            Track production, sales, stock, waste, delivery delays, quality, and supplier performance.
+            Monitor production, sales, stock, waste, quality, expiry risks, delivery delays,
+            and supplier performance from one unified view.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -114,7 +297,8 @@ with c2:
     <div class="feature-card">
         <div class="feature-title">🏭 ERP Production Planning</div>
         <div class="feature-text">
-            Optimize machines, shifts, production time, pallets, incoming cases, and departure deadlines.
+            Plan colli, buste, kg, incoming cases, pedane, machines, shifts, and departure deadlines
+            with ERP-style scheduling logic.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -122,13 +306,15 @@ with c2:
 with c3:
     st.markdown("""
     <div class="feature-card">
-        <div class="feature-title">🤖 AI Copilot</div>
+        <div class="feature-title">🧠 AI Decision Layer</div>
         <div class="feature-text">
-            Ask questions, run real production tools, and generate operational recommendations.
+            Use an AI Copilot for operational questions and an AI Agent for risk detection,
+            decision support, and action recommendations.
         </div>
     </div>
     """, unsafe_allow_html=True)
 
+st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
 
 # -----------------------------
@@ -151,57 +337,52 @@ if uploaded_file is not None:
 elif "smartfresh_df" not in st.session_state:
     try:
         st.session_state.smartfresh_df = pd.read_csv("smartfresh_insalata_real_workflow_dataset.csv")
-        st.info("ℹ️ Using default SmartFresh dataset from repository")
+        st.info("ℹ️ Using default SmartFresh workflow dataset from repository")
     except Exception:
         st.session_state.smartfresh_df = generate_sample_data()
         st.warning("⚠️ Default dataset not found — using generated sample data")
 
+st.markdown("<br>", unsafe_allow_html=True)
+
 # -----------------------------
 # PLATFORM OVERVIEW
 # -----------------------------
-st.markdown("### 🚀 Platform Overview")
-
 st.markdown("""
-SmartFresh AI is an operations intelligence platform designed to help fresh produce companies transform raw operational data into actionable, decision-ready insights.
+<div class="overview-card">
+<h3>🚀 Platform Overview</h3>
 
-It supports:
+<p>
+SmartFresh AI helps fresh produce companies transform raw operational data into actionable,
+decision-ready intelligence across production, logistics, quality, and business performance.
+</p>
 
-- Real-time production and sales monitoring
-- Inventory management and expiry risk control
-- Waste, defect, and quality performance analysis
-- Supplier performance and feedback sentiment insights
-- Delivery tracking and delay risk detection
-- End-to-end batch traceability and risk scoring
-- ERP-style production planning, packaging logic, and resource optimization
-- Shift scheduling and machine allocation optimization
-- AI-powered Copilot for operational insights and queries
-- Autonomous AI Agent for risk detection, decision support, and action recommendations
-""")
-
-st.markdown("---")
+<ul>
+<li>Real-time production and sales monitoring</li>
+<li>Inventory management and expiry risk control</li>
+<li>Waste, defect, and quality performance analysis</li>
+<li>Supplier performance and feedback sentiment insights</li>
+<li>Delivery tracking and delay risk detection</li>
+<li>End-to-end batch traceability and risk scoring</li>
+<li>ERP-style production planning, packaging logic, and resource optimization</li>
+<li>Shift scheduling and machine allocation optimization</li>
+<li>AI-powered Copilot for operational questions and insights</li>
+<li>Autonomous AI Agent for risk detection, decision support, and action recommendations</li>
+</ul>
+</div>
+""", unsafe_allow_html=True)
 
 # -----------------------------
 # FOOTER
 # -----------------------------
 st.markdown("""
-<div style="text-align:center; margin-top:30px; padding:18px; border-radius:16px; background:linear-gradient(180deg, rgba(30,41,59,0.7), rgba(15,23,42,0.9)); border:1px solid rgba(59,130,246,0.25);">
+<div class="footer-card">
+    <div class="footer-name">Built by Abdoulie J Bah 🚀</div>
+    <div class="footer-role">AI Engineer • Data Scientist • Business Intelligence Developer</div>
 
-<div style="font-size:1.05rem; color:#e5e7eb; margin-bottom:6px;">
-Built by <strong style="color:#3b82f6;">Abdoulie J Bah</strong> 🚀
-</div>
-
-<div style="font-size:0.9rem; color:#94a3b8; margin-bottom:12px;">
-AI Engineer • Data Scientist • Business Intelligence Developer
-</div>
-
-<div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
-
-<a href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#0ea5e9; color:white; font-weight:600;">LinkedIn</a>
-
-<a href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#1f2937; color:white; font-weight:600; border:1px solid rgba(255,255,255,0.1);">GitHub</a>
-
-<a href="mailto:21722285bah@gmail.com" style="text-decoration:none; padding:8px 14px; border-radius:10px; background:#2563eb; color:white; font-weight:600;">Contact</a>
-
-</div>
+    <div class="footer-links">
+        <a class="footer-link" href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank" style="background:#0ea5e9;">LinkedIn</a>
+        <a class="footer-link" href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank" style="background:#1f2937;">GitHub</a>
+        <a class="footer-link" href="mailto:21722285bah@gmail.com" style="background:#2563eb;">Contact</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)
