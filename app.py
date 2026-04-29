@@ -349,7 +349,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # -----------------------------
 st.markdown("""
 <div class="overview-card">
-<h3>🚀 Platform Overview</h3>
+<h3> Platform Overview</h3>
 
 <p>
 SmartFresh AI helps fresh produce companies transform raw operational data into actionable,
