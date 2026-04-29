@@ -372,36 +372,57 @@ decision-ready intelligence across production, logistics, quality, and business 
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# FOOTER
+# FOOTER (FINAL CLEAN VERSION)
 # -----------------------------
 st.markdown("---")
 
 st.markdown(
     """
-    <div style="text-align:center;">
-        <h4>🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀</h4>
-        <p>AI Engineer • Data Scientist • Business Intelligence Developer</p>
+    <div style="
+        text-align:center;
+        padding: 25px 10px 10px 10px;
+    ">
+        <div style="
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #14532d;
+            margin-bottom: 6px;
+        ">
+            🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀
+        </div>
+
+        <div style="
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 18px;
+        ">
+            AI Engineer • Data Scientist • Business Intelligence Developer
+        </div>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-f1, f2, f3 = st.columns([1, 1, 1])
+# Centered buttons
+sp1, center, sp2 = st.columns([2, 3, 2])
 
-with f1:
-    st.link_button(
-        "LinkedIn",
-        "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
-    )
+with center:
+    c1, c2, c3 = st.columns(3)
 
-with f2:
-    st.link_button(
-        "GitHub",
-        "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
-    )
+    with c1:
+        st.link_button(
+            "🔗 LinkedIn",
+            "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
+        )
 
-with f3:
-    st.link_button(
-        "Contact",
-        "mailto:21722285bah@gmail.com"
-    )
+    with c2:
+        st.link_button(
+            "💻 GitHub",
+            "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
+        )
+
+    with c3:
+        st.link_button(
+            "✉️ Contact",
+            "mailto:21722285bah@gmail.com"
+        )
