@@ -374,47 +374,17 @@ decision-ready intelligence across production, logistics, quality, and business 
 # -----------------------------
 # FOOTER
 # -----------------------------
+st.markdown("<br><br>", unsafe_allow_html=True)
+
 st.markdown("""
-<style>
-.sticky-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: #ffffff;
-    border-top: 1px solid #e5e7eb;
-    padding: 12px 20px;
-    z-index: 999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
-}
+<div class="footer-card">
+    <div class="footer-name">🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀</div>
+    <div class="footer-role">AI Engineer • Data Scientist • Business Intelligence Developer</div>
 
-.main > div {
-    padding-bottom: 90px;
-}
-
-.footer-right a {
-    margin-left: 10px;
-    text-decoration: none;
-    padding: 6px 12px;
-    border-radius: 8px;
-    color: white !important;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-</style>
-
-<div class="sticky-footer">
-<div>
-🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀
-</div>
-
-<div class="footer-right">
-<a href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank" style="background:#0ea5e9;">LinkedIn</a>
-<a href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank" style="background:#111827;">GitHub</a>
-<a href="mailto:21722285bah@gmail.com" style="background:#16a34a;">Contact</a>
-</div>
+    <div class="footer-links">
+        <a class="footer-link" href="https://www.linkedin.com/in/abdoulie-j-bah-b71263244" target="_blank" style="background:#0ea5e9;">LinkedIn</a>
+        <a class="footer-link" href="https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main" target="_blank" style="background:#111827;">GitHub</a>
+        <a class="footer-link" href="mailto:21722285bah@gmail.com" style="background:#16a34a;">Contact</a>
+    </div>
 </div>
 """, unsafe_allow_html=True)
