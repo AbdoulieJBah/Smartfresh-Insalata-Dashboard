@@ -73,9 +73,8 @@ st.sidebar.markdown("""
 ### Operations Intelligence
 
 - 📊 Executive Dashboard  
-- 🥬 Operations Control  
-- ✅ Quality & Sentiment  
-- 🔎 Traceability & Risk  
+- 🥬 Business Intelligence  
+- 🥬 Operations Control    
 - 🏭 ERP Production Planner  
 - 🤖 AI Copilot  
 - 🧠 AI Production Agent
