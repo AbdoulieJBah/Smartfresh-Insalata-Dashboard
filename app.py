@@ -380,7 +380,7 @@ footer_title_col1, footer_title_col2, footer_title_col3 = st.columns([1, 3, 1])
 
 with footer_title_col2:
     st.markdown(
-        "<h4 style='text-align:center; color:#14532d;'>🥬 SmartFresh AI • Abdoulie J Bah</h4>",
+        "<h4 style='text-align:center; color:#14532d;'>🥬 SmartFresh AI • Built by Abdoulie J Bah</h4>",
         unsafe_allow_html=True
     )
     st.markdown(
