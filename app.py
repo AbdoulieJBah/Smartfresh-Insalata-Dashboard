@@ -372,57 +372,35 @@ decision-ready intelligence across production, logistics, quality, and business 
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# FOOTER (FINAL CLEAN VERSION)
+# FOOTER (FINAL FIXED VERSION)
 # -----------------------------
 st.markdown("---")
 
 st.markdown(
     """
-    <div style="
-        text-align:center;
-        padding: 25px 10px 10px 10px;
-    ">
-        <div style="
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: #14532d;
-            margin-bottom: 6px;
-        ">
+    <div style="text-align:center;">
+        <h4 style="color:#14532d; margin-bottom:5px;">
             🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀
-        </div>
-
-        <div style="
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 18px;
-        ">
+        </h4>
+        <p style="color:#64748b; margin-bottom:20px;">
             AI Engineer • Data Scientist • Business Intelligence Developer
-        </div>
+        </p>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# Centered buttons
-sp1, center, sp2 = st.columns([2, 3, 2])
+# Center buttons
+col1, col2, col3 = st.columns([1,2,1])
 
-with center:
-    c1, c2, c3 = st.columns(3)
+with col2:
+    b1, b2, b3 = st.columns(3)
 
-    with c1:
-        st.link_button(
-            "🔗 LinkedIn",
-            "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
-        )
+    with b1:
+        st.link_button("🔗 LinkedIn", "https://www.linkedin.com/in/abdoulie-j-bah-b71263244")
 
-    with c2:
-        st.link_button(
-            "💻 GitHub",
-            "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
-        )
+    with b2:
+        st.link_button("💻 GitHub", "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main")
 
-    with c3:
-        st.link_button(
-            "✉️ Contact",
-            "mailto:21722285bah@gmail.com"
-        )
+    with b3:
+        st.link_button("✉️ Contact", "mailto:21722285bah@gmail.com")
