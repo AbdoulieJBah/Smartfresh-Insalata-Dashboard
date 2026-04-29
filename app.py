@@ -376,12 +376,21 @@ decision-ready intelligence across production, logistics, quality, and business 
 # -----------------------------
 st.markdown("---")
 
-st.markdown("### 🥬 SmartFresh AI • Abdoulie J Bah")
-st.caption("AI Engineer • Data Scientist • BI Developer")
+footer_title_col1, footer_title_col2, footer_title_col3 = st.columns([1, 3, 1])
 
-left, center, right = st.columns([1, 2, 1])
+with footer_title_col2:
+    st.markdown(
+        "<h4 style='text-align:center; color:#14532d;'>🥬 SmartFresh AI • Abdoulie J Bah</h4>",
+        unsafe_allow_html=True
+    )
+    st.markdown(
+        "<p style='text-align:center; color:#64748b;'>AI Engineer • Data Scientist • BI Developer</p>",
+        unsafe_allow_html=True
+    )
 
-with center:
+footer_left, footer_center, footer_right = st.columns([1, 2, 1])
+
+with footer_center:
     b1, b2, b3 = st.columns(3)
 
     with b1:
