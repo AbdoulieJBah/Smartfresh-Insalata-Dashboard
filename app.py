@@ -380,7 +380,7 @@ st.markdown(
     """
     <div style="text-align:center;">
         <h4 style="color:#14532d; margin-bottom:5px;">
-            🥬 SmartFresh AI • Built by Abdoulie J Bah 🚀
+            🥬 SmartFresh AI • Built by Abdoulie J Bah 
         </h4>
         <p style="color:#64748b; margin-bottom:20px;">
             AI Engineer • Data Scientist • Business Intelligence Developer
