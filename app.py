@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 from data_utils import generate_sample_data
+from database import init_db
+
+init_db()
 
 st.set_page_config(
     page_title="SmartFresh AI",
