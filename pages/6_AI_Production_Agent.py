@@ -2,11 +2,15 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
+
 from data_utils import load_data
 from ai_utils import generate_ai_response
-from database import save_agent_action
-from database import save_alert, save_agent_log
-from database import load_alerts
+from database import (
+    save_agent_action,
+    save_alert,
+    save_agent_log,
+    load_alerts
+)
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
 
@@ -17,10 +21,17 @@ st.write(
     "and recommends autonomous production decisions."
 )
 
+# -----------------------------
+# AUTO MONITORING MODE
+# -----------------------------
+auto_mode = st.toggle("⚙️ Auto Monitoring Mode", value=True)
+st.caption("When enabled, the AI Agent automatically monitors risks and updates alerts.")
+
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
 API_URL = "https://smartfresh-insalata-dashboard.onrender.com/risk-score"
+
 
 # -----------------------------
 # AGENT RULES
@@ -107,6 +118,14 @@ def detect_revenue_drop(df):
     rev_df = df.copy()
     rev_df[date_col] = pd.to_datetime(rev_df[date_col], errors="coerce")
     rev_df = rev_df.dropna(subset=[date_col])
+
+    required_cols = ["batch_id", "quantity_sold", "waste_quantity", "defect_count", "delivery_status", "temperature"]
+    for col in required_cols:
+        if col not in rev_df.columns:
+            if col == "delivery_status":
+                rev_df[col] = "Unknown"
+            else:
+                rev_df[col] = 0
 
     daily_revenue = (
         rev_df.groupby(date_col)
@@ -222,8 +241,10 @@ def predict_future_revenue_drop(daily_revenue):
     else:
         risk_level = "Low"
 
+    latest_date_value = revenue_df.iloc[-1, 0]
+
     return {
-        "latest_date": str(latest.iloc[0].date()) if hasattr(latest.iloc[0], "date") else str(latest.iloc[0]),
+        "latest_date": str(latest_date_value.date()) if hasattr(latest_date_value, "date") else str(latest_date_value),
         "rolling_3_day_revenue": round(short_term, 2),
         "rolling_7_day_revenue": round(normal_level, 2),
         "predicted_revenue_drop_risk_percent": round(risk_percent, 2),
@@ -233,9 +254,13 @@ def predict_future_revenue_drop(daily_revenue):
     }
 
 
+# -----------------------------
+# RUN DETECTION
+# -----------------------------
 alerts_df = detect_agent_risks(df)
 revenue_alert, daily_revenue = detect_revenue_drop(df)
 future_revenue_risk = predict_future_revenue_drop(daily_revenue)
+
 
 # -----------------------------
 # SAVE ALERTS TO DATABASE
@@ -243,7 +268,9 @@ future_revenue_risk = predict_future_revenue_drop(daily_revenue)
 if "alerts_saved" not in st.session_state:
     st.session_state.alerts_saved = False
 
-if not st.session_state.alerts_saved:
+should_save_alerts = auto_mode and not st.session_state.alerts_saved
+
+if should_save_alerts:
     if len(alerts_df) > 0:
         for _, alert in alerts_df.head(50).iterrows():
             save_alert(alert.to_dict(), status="Open")
@@ -289,6 +316,7 @@ if not st.session_state.alerts_saved:
 
     st.session_state.alerts_saved = True
 
+
 # -----------------------------
 # KPIs
 # -----------------------------
@@ -304,6 +332,7 @@ if st.button("🔄 Save Latest Alerts Again"):
     st.rerun()
 
 st.markdown("---")
+
 
 # -----------------------------
 # REVENUE DROP MONITOR
@@ -339,6 +368,7 @@ else:
 
 st.markdown("---")
 
+
 # -----------------------------
 # FUTURE REVENUE DROP PREDICTION
 # -----------------------------
@@ -367,6 +397,7 @@ else:
 
 st.markdown("---")
 
+
 # -----------------------------
 # AGENT ALERTS
 # -----------------------------
@@ -377,7 +408,7 @@ if len(alerts_df) > 0:
 
     st.markdown("### ⚙️ Convert Alerts to Actions")
 
-    for i, alert in alerts_df.iterrows():
+    for i, alert in alerts_df.head(25).iterrows():
         with st.expander(f"{alert['risk_type']} — Batch {alert['batch_id']}"):
 
             st.write(f"**Issue:** {alert['issue']}")
@@ -389,7 +420,7 @@ if len(alerts_df) > 0:
                 key=f"team_{i}"
             )
 
-            if st.button(f"Create Action {i}"):
+            if st.button(f"Create Action {i}", key=f"create_action_{i}"):
                 save_agent_action(alert.to_dict(), assigned_team=team)
                 st.success("✅ Action saved to system")
 else:
@@ -397,71 +428,78 @@ else:
 
 st.markdown("---")
 
+
 # -----------------------------
 # TRACEABILITY + BACKEND RISK
 # -----------------------------
 st.subheader("🔎 Batch Traceability & Risk Analysis")
 
-selected_batch = st.selectbox(
-    "Select Batch ID",
-    df["batch_id"].dropna().unique()
-)
+if "batch_id" in df.columns:
+    selected_batch = st.selectbox(
+        "Select Batch ID",
+        df["batch_id"].dropna().unique()
+    )
 
-batch_info = df[df["batch_id"] == selected_batch]
+    batch_info = df[df["batch_id"] == selected_batch]
 
-if len(batch_info) > 0:
-    row = batch_info.iloc[0]
+    if len(batch_info) > 0:
+        row = batch_info.iloc[0]
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Product", row["product_name"])
-    c2.metric("Supplier", row["supplier"])
-    c3.metric("Client", row.get("client", row.get("customer", "N/A")))
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Product", row.get("product_name", "N/A"))
+        c2.metric("Supplier", row.get("supplier", "N/A"))
+        c3.metric("Client", row.get("client", row.get("customer", "N/A")))
 
-    c4, c5, c6 = st.columns(3)
-    c4.metric("Delivery Status", row["delivery_status"])
-    c5.metric("Temperature", f"{row['temperature']:.1f}°C")
-    c6.metric("Defects", row["defect_count"])
+        c4, c5, c6 = st.columns(3)
+        c4.metric("Delivery Status", row.get("delivery_status", "N/A"))
+        c5.metric("Temperature", f"{float(row.get('temperature', 0)):.1f}°C")
+        c6.metric("Defects", row.get("defect_count", 0))
 
-    payload = {
-        "product_name": str(row["product_name"]),
-        "supplier": str(row["supplier"]),
-        "quantity_produced": float(row["quantity_produced"]),
-        "quantity_sold": float(row["quantity_sold"]),
-        "stock_remaining": float(row["stock_remaining"]),
-        "waste_quantity": float(row["waste_quantity"]),
-        "defect_count": int(row["defect_count"]),
-        "temperature": float(row["temperature"]),
-        "delivery_status": str(row["delivery_status"]),
-        "delivery_delay_days": int(row["delivery_delay_days"])
-    }
+        payload = {
+            "product_name": str(row.get("product_name", "")),
+            "supplier": str(row.get("supplier", "")),
+            "quantity_produced": float(row.get("quantity_produced", 0)),
+            "quantity_sold": float(row.get("quantity_sold", 0)),
+            "stock_remaining": float(row.get("stock_remaining", 0)),
+            "waste_quantity": float(row.get("waste_quantity", 0)),
+            "defect_count": int(row.get("defect_count", 0)),
+            "temperature": float(row.get("temperature", 0)),
+            "delivery_status": str(row.get("delivery_status", "")),
+            "delivery_delay_days": int(row.get("delivery_delay_days", 0))
+        }
 
-    if st.button("🔍 Analyze Batch Risk"):
-        try:
-            response = requests.post(API_URL, json=payload, timeout=10)
+        if st.button("🔍 Analyze Batch Risk"):
+            try:
+                response = requests.post(API_URL, json=payload, timeout=10)
 
-            if response.status_code == 200:
-                result = response.json()
+                if response.status_code == 200:
+                    result = response.json()
 
-                r1, r2 = st.columns(2)
-                r1.metric("Risk Score", result["risk_score"])
-                r2.metric("Risk Category", result["risk_category"])
+                    r1, r2 = st.columns(2)
+                    r1.metric("Risk Score", result["risk_score"])
+                    r2.metric("Risk Category", result["risk_category"])
 
-                for reason in result["risk_reasons"]:
-                    st.warning(f"⚠️ {reason}")
-            else:
-                st.error("Backend API failed.")
+                    for reason in result["risk_reasons"]:
+                        st.warning(f"⚠️ {reason}")
+                else:
+                    st.error("Backend API failed.")
 
-        except Exception:
-            st.error("⚠️ Backend unavailable.")
+            except Exception:
+                st.error("⚠️ Backend unavailable.")
+else:
+    st.warning("Dataset does not contain batch_id column.")
 
 st.markdown("---")
+
 
 # -----------------------------
 # AI AGENT ANALYSIS
 # -----------------------------
 st.subheader("🧠 Agent Decision Summary")
 
-if st.button("Run AI Agent Analysis"):
+run_agent = auto_mode or st.button("Run AI Agent Analysis")
+
+if run_agent:
     top_alerts = alerts_df.head(20).to_dict(orient="records") if len(alerts_df) else []
 
     prompt = f"""
@@ -494,6 +532,7 @@ Highlight critical issues with ⚠️.
 
 st.markdown("---")
 
+
 # -----------------------------
 # SIMULATED AUTONOMOUS ACTIONS
 # -----------------------------
@@ -524,6 +563,7 @@ if len(alerts_df) > 0:
 else:
     if not revenue_alert and not future_revenue_risk:
         st.success("✅ No agent actions required.")
+
 
 # -----------------------------
 # LIVE ALERTS FEED
