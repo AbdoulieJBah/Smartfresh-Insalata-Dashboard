@@ -1,6 +1,7 @@
 import sqlite3
 import pandas as pd
 from datetime import datetime
+from database import save_alert, save_agent_log, load_alerts
 
 DB_NAME = "smartfresh.db"
 
