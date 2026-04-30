@@ -3,6 +3,9 @@ import pandas as pd
 from data_utils import generate_sample_data
 from database import init_db
 
+# -----------------------------
+# INIT DATABASE (VERY IMPORTANT)
+# -----------------------------
 init_db()
 
 st.set_page_config(
@@ -17,17 +20,10 @@ st.set_page_config(
 # -----------------------------
 st.markdown("""
 <style>
-/* Hide default Streamlit page navigation */
-section[data-testid="stSidebarNav"] {
-    display: none;
-}
+section[data-testid="stSidebarNav"] { display: none; }
 
-/* Keep app light/system-friendly */
-.stApp {
-    background: #f8fafc;
-}
+.stApp { background: #f8fafc; }
 
-/* Enterprise sidebar */
 [data-testid="stSidebar"] {
     background: #ffffff;
     border-right: 1px solid #e5e7eb;
@@ -43,7 +39,6 @@ section[data-testid="stSidebarNav"] {
     font-size: 1.35rem;
     font-weight: 800;
     color: #14532d;
-    margin-bottom: 4px;
 }
 
 .sidebar-subtitle {
@@ -54,7 +49,6 @@ section[data-testid="stSidebarNav"] {
 .sidebar-section {
     font-size: 0.78rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
     color: #64748b;
     font-weight: 700;
     margin: 18px 0 8px 0;
@@ -82,162 +76,34 @@ section[data-testid="stSidebarNav"] {
     background: linear-gradient(135deg, #ecfdf5, #ffffff);
     border: 1px solid #bbf7d0;
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
-    margin-bottom: 26px;
-}
-
-.hero-badge {
-    display: inline-block;
-    padding: 7px 14px;
-    border-radius: 999px;
-    background: #dcfce7;
-    color: #166534;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 14px;
 }
 
 .hero-title {
     font-size: 44px;
     font-weight: 850;
     color: #14532d;
-    margin-bottom: 12px;
-    line-height: 1.12;
 }
 
 .hero-subtitle {
     font-size: 18px;
     color: #334155;
     line-height: 1.65;
-    max-width: 1050px;
 }
 
-/* Status banner */
-.status-banner {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-}
-
-.status-pill {
-    padding: 10px 14px;
-    border-radius: 14px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04);
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #334155;
-}
-
-.status-green {
-    color: #166534;
-}
-
-/* Feature cards */
-.feature-card {
-    padding: 22px;
-    border-radius: 18px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    min-height: 175px;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
-    transition: all 0.25s ease;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
-}
-
-.feature-title {
-    font-size: 20px;
-    font-weight: 800;
-    color: #14532d;
-    margin-bottom: 10px;
-}
-
-.feature-text {
-    font-size: 15px;
-    color: #475569;
-    line-height: 1.55;
-}
-
-.overview-card {
-    padding: 24px;
-    border-radius: 18px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-}
-
-.footer-card {
-    text-align: center;
-    margin-top: 32px;
-    padding: 22px;
-    border-radius: 18px;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
-}
-
-.footer-name {
-    font-size: 1.05rem;
-    color: #14532d;
-    font-weight: 800;
-    margin-bottom: 6px;
-}
-
-.footer-role {
-    font-size: 0.92rem;
-    color: #64748b;
-    margin-bottom: 14px;
-}
-
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.footer-link {
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 10px;
-    color: white !important;
-    font-weight: 700;
-}
-
-@media (max-width: 768px) {
-    .hero-card {
-        padding: 24px;
-        border-radius: 20px;
-    }
-
-    .hero-title {
-        font-size: 30px;
-    }
-
-    .hero-subtitle {
-        font-size: 15px;
-    }
-
-    .feature-card {
-        min-height: auto;
-        margin-bottom: 12px;
-    }
+/* Footer spacing fix */
+.main > div {
+    padding-bottom: 50px;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# SIDEBAR
+# SIDEBAR (UPDATED)
 # -----------------------------
 st.sidebar.markdown("""
 <div class="sidebar-header">
     <div class="sidebar-title">🥬 SmartFresh AI</div>
-    <div class="sidebar-subtitle">Insalata dell’Orto Operations Platform</div>
+    <div class="sidebar-subtitle">Insalata Operations Platform</div>
 </div>
 
 <div class="sidebar-section">Strategic Layer</div>
@@ -251,6 +117,9 @@ st.sidebar.markdown("""
 <div class="sidebar-section">AI Layer</div>
 <div class="sidebar-item">🤖 AI Copilot</div>
 <div class="sidebar-item">🧠 AI Production Agent</div>
+
+<div class="sidebar-section">Execution Layer</div>
+<div class="sidebar-item">📋 Agent Actions</div>
 """, unsafe_allow_html=True)
 
 # -----------------------------
@@ -258,75 +127,22 @@ st.sidebar.markdown("""
 # -----------------------------
 st.markdown("""
 <div class="hero-card">
-    <div class="hero-badge">AI-Powered Fresh Produce Operations</div>
     <div class="hero-title">🥬 SmartFresh AI</div>
     <div class="hero-subtitle">
-        Unifies production, inventory, quality, and logistics into a single intelligent system—enabling
-        real-time monitoring, traceability, risk detection, and AI-driven decision support.
+        End-to-end operations intelligence platform combining business intelligence,
+        AI-driven risk detection, and action tracking to support real production decisions.
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# -----------------------------
-# SYSTEM STATUS
-# -----------------------------
-st.markdown("""
-<div class="status-banner">
-    <div class="status-pill"><span class="status-green">●</span> System Status: Operational</div>
-    <div class="status-pill"><span class="status-green">●</span> Data Layer: Ready</div>
-    <div class="status-pill"><span class="status-green">●</span> AI Layer: Connected</div>
-    <div class="status-pill"><span class="status-green">●</span> ERP Planner: Active</div>
-</div>
-""", unsafe_allow_html=True)
-
-# -----------------------------
-# FEATURE CARDS
-# -----------------------------
-c1, c2, c3 = st.columns(3)
-
-with c1:
-    st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">📊 Operations Intelligence</div>
-        <div class="feature-text">
-            Monitor production, sales, stock, waste, quality, expiry risks, delivery delays,
-            and supplier performance from one unified view.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c2:
-    st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">🏭 ERP Production Planning</div>
-        <div class="feature-text">
-            Plan colli, buste, kg, incoming cases, pedane, machines, shifts, and departure deadlines
-            with ERP-style scheduling logic.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-with c3:
-    st.markdown("""
-    <div class="feature-card">
-        <div class="feature-title">🧠 AI Decision Layer</div>
-        <div class="feature-text">
-            Use an AI Copilot for operational questions and an AI Agent for risk detection,
-            decision support, and action recommendations.
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
 
 # -----------------------------
-# DATA UPLOAD / DEFAULT DATA
+# DATA LAYER
 # -----------------------------
 uploaded_file = st.file_uploader(
-    "Upload Insalata CSV/Excel dataset",
-    type=["csv", "xlsx"],
-    key="main_dataset_uploader"
+    "Upload dataset",
+    type=["csv", "xlsx"]
 )
 
 if uploaded_file is not None:
@@ -335,81 +151,51 @@ if uploaded_file is not None:
     else:
         st.session_state.smartfresh_df = pd.read_excel(uploaded_file)
 
-    st.success("✅ Uploaded dataset loaded successfully")
+    st.success("Dataset loaded")
 
 elif "smartfresh_df" not in st.session_state:
     try:
-        st.session_state.smartfresh_df = pd.read_csv("smartfresh_insalata_real_workflow_dataset.csv")
-        st.info("ℹ️ Using default SmartFresh workflow dataset from repository")
-    except Exception:
+        st.session_state.smartfresh_df = pd.read_csv("smartfresh_dataset_v2.csv")
+        st.info("Using SmartFresh dataset v2")
+    except:
         st.session_state.smartfresh_df = generate_sample_data()
-        st.warning("⚠️ Default dataset not found — using generated sample data")
-
-st.markdown("<br>", unsafe_allow_html=True)
+        st.warning("Using generated sample data")
 
 # -----------------------------
 # PLATFORM OVERVIEW
 # -----------------------------
 st.markdown("""
-<div class="overview-card">
-<h3> Platform Overview</h3>
+### 🚀 Platform Overview
 
-<p>
-SmartFresh AI helps fresh produce companies transform raw operational data into actionable,
-decision-ready intelligence across production, logistics, quality, and business performance.
-</p>
+SmartFresh AI is a full-stack operations intelligence system that:
 
-<ul>
-<li>Real-time production and sales monitoring</li>
-<li>Inventory management and expiry risk control</li>
-<li>Waste, defect, and quality performance analysis</li>
-<li>Supplier performance and feedback sentiment insights</li>
-<li>Delivery tracking and delay risk detection</li>
-<li>End-to-end batch traceability and risk scoring</li>
-<li>ERP-style production planning, packaging logic, and resource optimization</li>
-<li>Shift scheduling and machine allocation optimization</li>
-<li>AI-powered Copilot for operational questions and insights</li>
-<li>Autonomous AI Agent for risk detection, decision support, and action recommendations</li>
-</ul>
-</div>
-""", unsafe_allow_html=True)
+- Monitors production, inventory, and logistics
+- Detects operational risks in real time
+- Explains revenue changes and business impact
+- Predicts future performance risks
+- Converts insights into trackable actions
+
+👉 This transforms dashboards into **decision systems**
+""")
 
 # -----------------------------
-# FOOTER FINAL SAFE VERSION
+# FOOTER (CLEAN + SAFE)
 # -----------------------------
 st.markdown("---")
 
-footer_title_col1, footer_title_col2, footer_title_col3 = st.columns([1, 3, 1])
+st.markdown("### 🥬 SmartFresh AI • Abdoulie J Bah")
+st.caption("AI Engineer • Data Scientist • BI Developer")
 
-with footer_title_col2:
-    st.markdown(
-        "<h4 style='text-align:center; color:#14532d;'>🥬 SmartFresh AI • Abdoulie J Bah</h4>",
-        unsafe_allow_html=True
-    )
-    st.markdown(
-        "<p style='text-align:center; color:#64748b;'>AI Engineer • Data Scientist • Business Intelligence Developer</p>",
-        unsafe_allow_html=True
-    )
+c1, c2, c3 = st.columns([1, 2, 1])
 
-footer_left, footer_center, footer_right = st.columns([1, 2, 1])
-
-with footer_center:
+with c2:
     b1, b2, b3 = st.columns(3)
 
     with b1:
-        st.link_button(
-            "LinkedIn",
-            "https://www.linkedin.com/in/abdoulie-j-bah-b71263244"
-        )
+        st.link_button("LinkedIn", "https://www.linkedin.com/in/abdoulie-j-bah-b71263244")
 
     with b2:
-        st.link_button(
-            "GitHub",
-            "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard/tree/main"
-        )
+        st.link_button("GitHub", "https://github.com/AbdoulieJBah/Smartfresh-Insalata-Dashboard")
 
     with b3:
-        st.link_button(
-            "Contact",
-            "mailto:21722285bah@gmail.com"
-        )
+        st.link_button("Contact", "mailto:21722285bah@gmail.com")
