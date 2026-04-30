@@ -6,6 +6,7 @@ from data_utils import load_data
 from ai_utils import generate_ai_response
 from database import save_agent_action
 from database import save_alert, save_agent_log
+from database import load_alerts
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
 
@@ -523,3 +524,16 @@ if len(alerts_df) > 0:
 else:
     if not revenue_alert and not future_revenue_risk:
         st.success("✅ No agent actions required.")
+
+if st.button("🔄 Refresh Alerts Feed"):
+    st.rerun()
+
+st.markdown("---")
+st.subheader("📡 Live Alerts Feed (From Database)")
+
+saved_alerts = load_alerts()
+
+if saved_alerts.empty:
+    st.info("No alerts stored yet.")
+else:
+    st.dataframe(saved_alerts.head(20), use_container_width=True)
