@@ -525,15 +525,21 @@ else:
     if not revenue_alert and not future_revenue_risk:
         st.success("✅ No agent actions required.")
 
+# -----------------------------
+# LIVE ALERTS FEED
+# -----------------------------
+st.markdown("---")
+st.subheader("📡 Live Alerts Feed")
+
 if st.button("🔄 Refresh Alerts Feed"):
     st.rerun()
-
-st.markdown("---")
-st.subheader("📡 Live Alerts Feed (From Database)")
 
 saved_alerts = load_alerts()
 
 if saved_alerts.empty:
-    st.info("No alerts stored yet.")
+    st.info("No alerts stored yet. Run the AI Production Agent to generate alerts.")
 else:
-    st.dataframe(saved_alerts.head(20), use_container_width=True)
+    st.dataframe(
+        saved_alerts.head(20),
+        use_container_width=True
+    )
