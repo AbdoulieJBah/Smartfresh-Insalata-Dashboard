@@ -13,6 +13,25 @@ def init_db():
     conn = get_connection()
     cursor = conn.cursor()
 
+    # -----------------------------
+    # ALERTS TABLE
+    # -----------------------------
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS alerts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        timestamp TEXT,
+        risk_type TEXT,
+        batch_id TEXT,
+        severity TEXT,
+        issue TEXT,
+        recommended_action TEXT,
+        status TEXT
+    )
+    """)
+
+    # -----------------------------
+    # AGENT ACTIONS TABLE
+    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS agent_actions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -29,6 +48,9 @@ def init_db():
     )
     """)
 
+    # -----------------------------
+    # AGENT LOGS TABLE
+    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS agent_logs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -42,6 +64,62 @@ def init_db():
     conn.close()
 
 
+# -----------------------------
+# ALERT FUNCTIONS
+# -----------------------------
+def save_alert(alert, status="Open"):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO alerts (
+        timestamp,
+        risk_type,
+        batch_id,
+        severity,
+        issue,
+        recommended_action,
+        status
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (
+        datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        alert.get("risk_type", ""),
+        alert.get("batch_id", ""),
+        alert.get("severity", ""),
+        alert.get("issue", ""),
+        alert.get("recommended_action", ""),
+        status
+    ))
+
+    conn.commit()
+    conn.close()
+
+
+def load_alerts():
+    conn = get_connection()
+    df = pd.read_sql_query("SELECT * FROM alerts ORDER BY timestamp DESC", conn)
+    conn.close()
+    return df
+
+
+def update_alert_status(alert_id, new_status):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE alerts
+    SET status = ?
+    WHERE id = ?
+    """, (new_status, alert_id))
+
+    conn.commit()
+    conn.close()
+
+
+# -----------------------------
+# AGENT ACTION FUNCTIONS
+# -----------------------------
 def save_agent_action(alert, assigned_team="Operations Team", status="Open"):
     conn = get_connection()
     cursor = conn.cursor()
@@ -98,6 +176,9 @@ def update_action_status(action_id, new_status):
     conn.close()
 
 
+# -----------------------------
+# AGENT LOG FUNCTIONS
+# -----------------------------
 def save_agent_log(log_type, message):
     conn = get_connection()
     cursor = conn.cursor()
