@@ -1,15 +1,18 @@
 import streamlit as st
 import plotly.express as px
+import pandas as pd
 from data_utils import load_data, calculate_kpis
 
 st.set_page_config(page_title="Business Intelligence", layout="wide")
 
-st.title("📊 Business Intelligence — Strategic, Quality & Supplier Insights")
+st.title("📊 Business Intelligence — Strategic, Quality & Revenue Insights")
 
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
 kpis = calculate_kpis(df)
+
+date_col = "date" if "date" in df.columns else "order_date"
 
 # -----------------------------
 # SENTIMENT FUNCTIONS
@@ -45,7 +48,11 @@ def sentiment_score(sentiment):
     return 0
 
 
-df["sentiment"] = df["feedback_text"].apply(analyze_sentiment)
+if "feedback_text" in df.columns:
+    df["sentiment"] = df["feedback_text"].apply(analyze_sentiment)
+else:
+    df["sentiment"] = "Neutral"
+
 df["sentiment_score"] = df["sentiment"].apply(sentiment_score)
 
 # -----------------------------
@@ -57,7 +64,6 @@ total_suppliers = df["supplier"].nunique()
 avg_rating = df["rating"].mean() if "rating" in df.columns else 0
 
 positive_count = (df["sentiment"] == "Positive").sum()
-neutral_count = (df["sentiment"] == "Neutral").sum()
 negative_count = (df["sentiment"] == "Negative").sum()
 
 st.subheader("📌 Strategic KPIs")
@@ -73,6 +79,97 @@ c5.metric("Total Defects", f"{kpis['total_defects']:,}")
 c6.metric("Defect Rate", f"{kpis['defect_rate']:.2f}%")
 c7.metric("Waste Rate", f"{kpis['waste_rate']:.2f}%")
 c8.metric("Negative Feedback", negative_count)
+
+st.markdown("---")
+
+# -----------------------------
+# REVENUE DROP INTELLIGENCE
+# -----------------------------
+st.subheader("📉 Revenue Drop Intelligence")
+
+if date_col in df.columns and "revenue" in df.columns:
+    rev_df = df.copy()
+    rev_df[date_col] = pd.to_datetime(rev_df[date_col], errors="coerce")
+    rev_df = rev_df.dropna(subset=[date_col])
+
+    daily_revenue = (
+        rev_df.groupby(date_col)
+        .agg(
+            revenue=("revenue", "sum"),
+            orders=("batch_id", "count"),
+            quantity_sold=("quantity_sold", "sum"),
+            waste=("waste_quantity", "sum"),
+            defects=("defect_count", "sum"),
+            delayed_deliveries=("delivery_status", lambda x: (x.astype(str).str.lower() == "delayed").sum())
+        )
+        .reset_index()
+        .sort_values(date_col)
+    )
+
+    if len(daily_revenue) >= 2:
+        latest = daily_revenue.iloc[-1]
+        previous = daily_revenue.iloc[-2]
+
+        previous_revenue = previous["revenue"]
+        latest_revenue = latest["revenue"]
+
+        revenue_change = latest_revenue - previous_revenue
+        revenue_change_pct = (revenue_change / previous_revenue) * 100 if previous_revenue else 0
+
+        r1, r2, r3, r4 = st.columns(4)
+        r1.metric("Previous Revenue", f"€{previous_revenue:,.2f}")
+        r2.metric("Latest Revenue", f"€{latest_revenue:,.2f}")
+        r3.metric("Revenue Change", f"€{revenue_change:,.2f}", f"{revenue_change_pct:.2f}%")
+        r4.metric("Latest Orders", int(latest["orders"]))
+
+        if revenue_change < 0:
+            st.warning(f"⚠️ Revenue decreased by {abs(revenue_change_pct):.2f}% compared with the previous period.")
+
+            possible_causes = []
+
+            if latest["orders"] < previous["orders"]:
+                possible_causes.append("Lower order volume")
+
+            if latest["quantity_sold"] < previous["quantity_sold"]:
+                possible_causes.append("Lower quantity sold")
+
+            if latest["waste"] > previous["waste"]:
+                possible_causes.append("Higher waste level")
+
+            if latest["defects"] > previous["defects"]:
+                possible_causes.append("Higher defect count")
+
+            if latest["delayed_deliveries"] > previous["delayed_deliveries"]:
+                possible_causes.append("More delayed deliveries")
+
+            if possible_causes:
+                st.markdown("**Likely reasons for revenue decline:**")
+                for cause in possible_causes:
+                    st.write(f"- ⚠️ {cause}")
+            else:
+                st.info("Revenue dropped, but no obvious operational cause was detected from the available metrics.")
+
+            st.markdown("**Recommended BI actions:**")
+            st.write("- Review client revenue contribution for the latest period")
+            st.write("- Check which products had the largest revenue decrease")
+            st.write("- Investigate supplier quality, waste, defects, and delayed deliveries")
+            st.write("- Review production schedule and machine allocation for the affected period")
+        else:
+            st.success(f"✅ Revenue increased by {revenue_change_pct:.2f}% compared with the previous period.")
+
+        fig_revenue_drop = px.line(
+            daily_revenue,
+            x=date_col,
+            y="revenue",
+            title="Daily Revenue Trend",
+            markers=True
+        )
+        st.plotly_chart(fig_revenue_drop, use_container_width=True)
+
+    else:
+        st.info("Not enough date periods available to compare revenue changes.")
+else:
+    st.warning("Revenue Drop Intelligence requires date/order_date and revenue columns.")
 
 st.markdown("---")
 
@@ -218,7 +315,7 @@ sentiment_counts.columns = ["Sentiment", "Count"]
 
 s1, s2, s3 = st.columns(3)
 s1.metric("Positive Feedback", positive_count)
-s2.metric("Neutral Feedback", neutral_count)
+s2.metric("Neutral Feedback", (df["sentiment"] == "Neutral").sum())
 s3.metric("Negative Feedback", negative_count)
 
 fig_sentiment = px.pie(
@@ -226,13 +323,7 @@ fig_sentiment = px.pie(
     names="Sentiment",
     values="Count",
     title="Feedback Sentiment Distribution",
-    hole=0.4,
-    color="Sentiment",
-    color_discrete_map={
-        "Positive": "green",
-        "Neutral": "orange",
-        "Negative": "red"
-    }
+    hole=0.4
 )
 st.plotly_chart(fig_sentiment, use_container_width=True)
 
@@ -251,6 +342,7 @@ negative_df = df[df["sentiment"] == "Negative"]
 if len(negative_df) > 0:
     available_cols = [
         "date",
+        "order_date",
         "supplier",
         "product_name",
         "feedback_text",
@@ -269,15 +361,15 @@ else:
 st.markdown("---")
 
 # -----------------------------
-# TRENDS
+# BUSINESS & QUALITY TRENDS
 # -----------------------------
 st.subheader("📈 Business & Quality Trends Over Time")
 
-date_col = "date" if "date" in df.columns else "order_date"
-
 if date_col in df.columns:
+    trend_df = df.copy()
+    trend_df[date_col] = pd.to_datetime(trend_df[date_col], errors="coerce")
     trend_df = (
-        df.groupby(date_col)
+        trend_df.groupby(date_col)
         .agg(
             revenue=("revenue", "sum"),
             waste=("waste_quantity", "sum"),
