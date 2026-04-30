@@ -1,0 +1,1501 @@
+date,batch_id,client,product_name,supplier,quantity_produced,quantity_sold,stock_remaining,waste_quantity,defect_count,temperature,delivery_status,delivery_delay_days,revenue,feedback_text,rating
+2026-04-13,B0,Conad,Mixed Salad,Farm A,120,182,82,27,10,4.755493351795203,Delivered,2,1633.78,late delivery,5
+2026-01-02,B1,Coop,Mixed Salad,Farm A,260,393,21,48,24,3.7473748411882513,Delivered,2,1499.6,late delivery,4
+2026-03-01,B2,Conad,Mixed Salad,Farm C,343,399,2,41,18,6.081845231526678,Delivered,2,859.45,late delivery,4
+2026-03-30,B3,Coop,Spinach,Farm A,445,132,1,24,27,4.640914962437607,Delivered,0,1938.14,fresh product,3
+2026-03-19,B4,Coop,Mixed Salad,Farm B,489,133,3,33,17,6.650796940166687,Delayed,1,632.74,late delivery,4
+2026-01-14,B5,Lidl,Rucola,Farm B,395,292,79,49,17,5.238152794334479,Delayed,1,1509.09,good quality,4
+2026-03-01,B6,Fruva,Rucola,Farm C,400,144,88,11,8,6.633468615779945,Delayed,2,1176.85,poor packaging,3
+2026-03-22,B7,Conad,Rucola,Farm C,360,310,40,32,6,7.100231466738796,Delayed,1,1480.42,good quality,5
+2026-04-09,B8,Conad,Lettuce,Farm A,326,180,46,18,2,6.564710291701385,Delayed,2,1264.34,poor packaging,3
+2026-01-09,B9,Coop,Spinach,Farm A,278,142,95,43,16,3.88613588645796,Delayed,1,1479.19,good quality,5
+2026-01-15,B10,Lidl,Rucola,Farm C,286,322,85,32,1,5.7461242888027595,Delayed,0,1559.99,good quality,4
+2026-01-28,B11,Lidl,Spinach,Farm B,430,207,91,29,6,7.440970649274524,Delivered,0,593.19,poor packaging,1
+2026-04-26,B12,Conad,Lettuce,Farm B,236,397,36,37,18,3.616474002791129,Delayed,2,834.62,poor packaging,1
+2026-02-21,B13,Fruva,Spinach,Farm B,394,192,55,21,26,5.657386003879381,Delayed,1,854.53,poor packaging,5
+2026-04-06,B14,Conad,Spinach,Farm B,152,251,89,36,5,3.4523316290690023,Delayed,2,1834.88,poor packaging,3
+2026-01-17,B15,Eurospin,Mixed Salad,Farm B,297,319,15,37,8,3.924680389830415,Delayed,0,1510.79,poor packaging,4
+2026-02-28,B16,Coop,Lettuce,Farm C,246,227,95,11,19,7.6431395869376235,Delayed,2,596.43,late delivery,1
+2026-01-11,B17,Fruva,Spinach,Farm C,397,178,6,20,25,7.893010059976613,Delayed,0,813.92,late delivery,1
+2026-02-17,B18,Eurospin,Rucola,Farm C,108,312,98,23,15,7.079966853429836,Delayed,1,1937.75,fresh product,1
+2026-01-24,B19,Fruva,Mixed Salad,Farm B,203,419,98,29,2,7.841983020531904,Delayed,1,1731.67,late delivery,2
+2026-02-23,B20,Eurospin,Rucola,Farm A,167,368,13,25,15,6.478948430708145,Delayed,2,1007.16,poor packaging,1
+2026-02-02,B21,Conad,Lettuce,Farm B,474,101,29,42,5,4.358586348000562,Delayed,2,1176.57,poor packaging,2
+2026-01-21,B22,Lidl,Lettuce,Farm A,416,383,18,8,2,6.611324085837854,Delayed,0,1104.75,fresh product,4
+2026-01-30,B23,Eurospin,Spinach,Farm C,479,312,36,28,28,4.569104889903886,Delivered,2,1917.07,poor packaging,4
+2026-04-07,B24,Eurospin,Rucola,Farm C,260,335,66,22,24,4.368148800856833,Delayed,1,335.62,poor packaging,2
+2026-02-01,B25,Coop,Lettuce,Farm C,485,352,32,13,10,6.253465981460712,Delivered,0,1408.06,late delivery,2
+2026-04-09,B26,Eurospin,Mixed Salad,Farm B,490,392,35,49,19,5.899783584666591,Delayed,1,661.17,fresh product,4
+2026-04-25,B27,Lidl,Spinach,Farm B,387,294,62,26,18,4.793588108794761,Delivered,1,808.39,good quality,2
+2026-02-27,B28,Lidl,Spinach,Farm B,370,133,59,41,0,6.967214022725532,Delayed,0,254.9,poor packaging,4
+2026-01-06,B29,Lidl,Spinach,Farm C,454,390,39,20,12,7.817221202684954,Delayed,1,293.03,poor packaging,1
+2026-04-30,B30,Lidl,Spinach,Farm C,445,308,89,27,8,6.130999404592198,Delivered,1,687.5,late delivery,1
+2026-04-21,B31,Fruva,Mixed Salad,Farm A,472,351,60,43,4,5.670324477406114,Delivered,2,650.44,fresh product,2
+2026-01-16,B32,Fruva,Rucola,Farm B,319,148,46,34,13,7.877063171729051,Delivered,1,485.56,late delivery,5
+2026-02-08,B33,Eurospin,Lettuce,Farm B,109,325,68,40,1,3.5653617400502835,Delayed,1,823.35,poor packaging,2
+2026-04-06,B34,Eurospin,Rucola,Farm C,357,239,90,24,23,6.063010054297891,Delivered,0,1741.68,good quality,5
+2026-02-20,B35,Lidl,Lettuce,Farm A,267,409,42,48,28,2.4161678052509927,Delivered,1,1677.15,late delivery,5
+2026-04-25,B36,Fruva,Spinach,Farm A,189,194,6,8,25,6.180422992184904,Delivered,2,1312.86,good quality,4
+2026-03-30,B37,Fruva,Mixed Salad,Farm B,456,271,98,39,15,2.7661383765347933,Delivered,2,1646.27,fresh product,5
+2026-01-12,B38,Eurospin,Lettuce,Farm A,454,440,29,21,16,5.031514234687143,Delayed,0,972.19,late delivery,5
+2026-02-28,B39,Lidl,Mixed Salad,Farm A,332,155,8,11,27,7.700371802304829,Delayed,2,379.97,late delivery,5
+2026-03-10,B40,Fruva,Mixed Salad,Farm C,152,230,15,43,12,7.5855746341237555,Delayed,2,727.78,late delivery,2
+2026-01-05,B41,Eurospin,Lettuce,Farm C,245,318,75,13,9,7.021783245424243,Delivered,0,1526.66,late delivery,5
+2026-02-09,B42,Coop,Lettuce,Farm B,293,84,28,41,5,7.919837471007053,Delayed,0,330.97,good quality,4
+2026-01-17,B43,Fruva,Rucola,Farm B,351,354,60,48,21,6.2305061857799595,Delayed,1,1905.05,poor packaging,3
+2026-02-14,B44,Lidl,Spinach,Farm B,247,396,38,5,2,5.500212590582958,Delayed,0,220.44,poor packaging,4
+2026-04-23,B45,Fruva,Spinach,Farm A,233,137,43,49,12,2.2589594717034567,Delivered,1,349.2,good quality,3
+2026-04-11,B46,Conad,Mixed Salad,Farm A,146,312,48,18,14,4.727246388606639,Delivered,1,655.38,late delivery,3
+2026-01-16,B47,Conad,Mixed Salad,Farm B,323,351,71,42,11,2.6405363956153063,Delivered,1,1526.78,fresh product,4
+2026-03-31,B48,Lidl,Spinach,Farm A,140,307,63,31,21,2.193895706657903,Delivered,0,898.88,good quality,4
+2026-03-18,B49,Eurospin,Rucola,Farm B,134,332,5,22,18,6.35431705033016,Delivered,0,1002.76,late delivery,2
+2026-02-25,B50,Conad,Rucola,Farm A,218,368,64,22,14,2.902501346621169,Delivered,1,1777.99,poor packaging,1
+2026-03-27,B51,Fruva,Rucola,Farm A,197,184,98,5,20,2.3382529799055627,Delayed,0,1692.5,good quality,5
+2026-04-12,B52,Eurospin,Rucola,Farm A,301,162,16,25,13,3.2302719710391496,Delivered,2,1843.7,good quality,5
+2026-01-04,B53,Fruva,Mixed Salad,Farm B,447,174,71,43,25,4.988991119875358,Delayed,1,611.56,poor packaging,3
+2026-02-19,B54,Lidl,Rucola,Farm B,321,330,56,21,15,4.880275802110851,Delivered,2,1733.93,good quality,5
+2026-01-14,B55,Conad,Lettuce,Farm B,291,331,97,42,17,5.539506121127799,Delayed,2,1467.34,poor packaging,3
+2026-03-04,B56,Fruva,Spinach,Farm A,434,109,50,21,4,6.778830654043263,Delayed,0,1507.51,late delivery,1
+2026-03-25,B57,Coop,Spinach,Farm A,304,205,42,15,18,5.22358050028442,Delivered,2,1026.44,fresh product,3
+2026-04-28,B58,Lidl,Mixed Salad,Farm A,294,431,66,31,28,7.838662095620625,Delivered,1,1455.8,poor packaging,3
+2026-01-21,B59,Lidl,Spinach,Farm A,121,405,0,9,8,4.135948905631917,Delayed,1,504.08,good quality,2
+2026-02-14,B60,Coop,Rucola,Farm C,220,293,55,34,10,7.525234403190879,Delivered,0,778.85,late delivery,4
+2026-01-01,B61,Conad,Rucola,Farm C,402,206,55,26,13,5.709528629181776,Delivered,1,352.13,fresh product,2
+2026-04-19,B62,Conad,Mixed Salad,Farm C,106,82,22,47,14,2.1828329164015647,Delayed,1,312.21,late delivery,3
+2026-04-25,B63,Fruva,Lettuce,Farm A,127,281,38,21,6,2.535225972272337,Delayed,0,636.45,good quality,5
+2026-03-25,B64,Coop,Lettuce,Farm A,208,225,99,26,1,5.3464535957026245,Delayed,0,1053.15,fresh product,3
+2026-02-11,B65,Lidl,Spinach,Farm B,414,444,69,41,24,3.423360750415967,Delayed,0,710.8,late delivery,4
+2026-04-04,B66,Fruva,Lettuce,Farm C,342,110,39,41,3,7.983533208610366,Delayed,1,535.82,fresh product,4
+2026-03-16,B67,Fruva,Spinach,Farm B,161,273,78,15,7,4.859716904758471,Delivered,0,1230.54,late delivery,2
+2026-04-28,B68,Lidl,Rucola,Farm A,239,126,0,30,13,3.7317833194415346,Delivered,1,1479.71,poor packaging,4
+2026-03-18,B69,Fruva,Spinach,Farm B,109,340,22,14,11,3.210382773981415,Delayed,1,811.06,fresh product,1
+2026-03-04,B70,Fruva,Rucola,Farm C,498,117,34,34,16,7.104364760098728,Delayed,1,1426.7,late delivery,5
+2026-04-30,B71,Coop,Mixed Salad,Farm C,134,80,39,26,27,7.050972660549633,Delayed,2,1983.67,good quality,5
+2026-01-14,B72,Conad,Rucola,Farm A,104,418,77,30,29,4.152982904741015,Delivered,1,1639.17,good quality,2
+2026-02-09,B73,Conad,Rucola,Farm B,452,102,62,19,0,3.393276170880904,Delivered,2,1013.51,poor packaging,2
+2026-03-19,B74,Conad,Lettuce,Farm C,297,213,66,11,18,4.009433687942517,Delayed,2,223.94,poor packaging,5
+2026-02-02,B75,Conad,Mixed Salad,Farm A,137,176,26,37,29,3.22726755901678,Delayed,1,1160.23,good quality,3
+2026-03-15,B76,Eurospin,Lettuce,Farm C,327,444,87,19,28,5.23916382267702,Delivered,2,571.02,fresh product,4
+2026-02-14,B77,Conad,Lettuce,Farm B,398,362,68,24,10,7.754448767384167,Delayed,1,1496.07,late delivery,2
+2026-02-15,B78,Coop,Rucola,Farm B,309,190,59,47,11,2.6132759853511978,Delayed,0,1306.91,fresh product,5
+2026-03-13,B79,Fruva,Mixed Salad,Farm C,477,130,28,18,7,7.042637791882537,Delivered,2,1372.46,good quality,5
+2026-01-21,B80,Lidl,Spinach,Farm C,412,80,62,44,14,4.394016223220781,Delivered,0,497.94,good quality,2
+2026-02-21,B81,Coop,Rucola,Farm C,162,323,24,30,10,7.537761390790909,Delivered,1,1618.02,poor packaging,2
+2026-04-01,B82,Conad,Lettuce,Farm C,278,261,23,29,6,2.9930799045678427,Delivered,0,1013.99,good quality,5
+2026-03-04,B83,Coop,Mixed Salad,Farm B,148,416,83,45,16,5.343832213340288,Delayed,2,699.66,good quality,1
+2026-03-12,B84,Eurospin,Spinach,Farm C,478,290,61,36,29,3.1441263239819994,Delivered,0,1271.69,late delivery,3
+2026-01-18,B85,Conad,Lettuce,Farm B,293,192,93,42,18,2.931441475584275,Delivered,0,729.28,poor packaging,3
+2026-02-01,B86,Conad,Spinach,Farm B,479,166,54,32,17,7.201962560069141,Delayed,0,690.14,good quality,3
+2026-03-29,B87,Eurospin,Mixed Salad,Farm B,348,318,66,37,27,3.429096686280359,Delayed,2,553.0,fresh product,3
+2026-01-16,B88,Eurospin,Spinach,Farm A,497,302,54,22,6,5.799444649465763,Delivered,2,914.93,good quality,3
+2026-04-22,B89,Lidl,Rucola,Farm B,101,382,68,24,10,3.5565406005877547,Delayed,2,526.58,poor packaging,4
+2026-01-20,B90,Fruva,Spinach,Farm A,454,421,23,21,9,5.394659719799363,Delivered,1,1323.47,poor packaging,1
+2026-04-24,B91,Fruva,Mixed Salad,Farm B,336,360,72,26,10,4.530223607319691,Delayed,1,240.44,good quality,5
+2026-04-08,B92,Conad,Spinach,Farm B,227,420,41,40,8,3.644331324123236,Delivered,0,690.15,good quality,2
+2026-03-17,B93,Coop,Spinach,Farm A,126,392,30,10,26,5.58447861302185,Delayed,0,400.09,good quality,5
+2026-03-12,B94,Fruva,Spinach,Farm A,289,201,45,6,27,7.751763063879324,Delivered,2,1231.93,good quality,4
+2026-04-25,B95,Eurospin,Lettuce,Farm C,263,192,58,43,7,5.398427841781383,Delayed,2,641.63,poor packaging,5
+2026-02-25,B96,Lidl,Lettuce,Farm C,326,323,80,49,10,4.005463344901765,Delayed,1,586.89,good quality,1
+2026-03-14,B97,Fruva,Rucola,Farm A,203,121,24,43,2,6.914613906045198,Delivered,2,832.77,late delivery,2
+2026-01-12,B98,Lidl,Lettuce,Farm C,404,96,73,16,29,7.749024758023582,Delivered,2,849.75,good quality,1
+2026-03-28,B99,Fruva,Spinach,Farm A,367,222,58,30,8,7.66435603811968,Delivered,1,1503.39,fresh product,1
+2026-01-23,B100,Coop,Lettuce,Farm B,434,196,6,13,18,7.546377172259183,Delayed,2,1200.45,poor packaging,5
+2026-03-23,B101,Lidl,Lettuce,Farm C,202,352,13,35,23,3.3800530237262185,Delayed,0,1541.12,late delivery,3
+2026-02-06,B102,Coop,Lettuce,Farm C,463,118,14,8,28,5.969931050483249,Delivered,1,1154.48,good quality,5
+2026-02-11,B103,Coop,Lettuce,Farm C,269,113,29,17,12,4.303783339518354,Delayed,2,1778.0,poor packaging,4
+2026-01-29,B104,Eurospin,Spinach,Farm A,335,264,15,48,14,4.389724303853813,Delayed,0,1580.94,poor packaging,4
+2026-01-05,B105,Fruva,Lettuce,Farm A,241,237,67,22,29,5.5346512068253695,Delayed,0,1518.09,good quality,1
+2026-01-15,B106,Lidl,Mixed Salad,Farm C,392,140,42,10,6,7.274709845372988,Delayed,2,891.79,late delivery,5
+2026-04-08,B107,Lidl,Mixed Salad,Farm C,171,227,92,49,13,3.3840188703065524,Delayed,0,500.66,late delivery,1
+2026-04-23,B108,Eurospin,Rucola,Farm B,146,294,48,13,2,5.583644434582046,Delivered,0,1923.09,poor packaging,2
+2026-02-04,B109,Fruva,Mixed Salad,Farm C,259,306,12,29,8,7.369528647367039,Delivered,1,1564.83,poor packaging,1
+2026-02-25,B110,Lidl,Rucola,Farm A,294,305,75,46,8,3.974308192219226,Delivered,0,678.08,poor packaging,3
+2026-04-08,B111,Conad,Rucola,Farm B,136,395,47,17,27,2.456785156941801,Delivered,1,935.22,fresh product,5
+2026-04-06,B112,Conad,Spinach,Farm C,155,119,97,44,26,7.186957281844091,Delivered,1,1128.94,fresh product,3
+2026-03-21,B113,Fruva,Lettuce,Farm C,403,248,12,47,12,6.184828770015702,Delayed,2,1385.21,poor packaging,4
+2026-01-07,B114,Eurospin,Spinach,Farm A,130,102,41,14,10,3.371750969149541,Delivered,2,1786.95,late delivery,4
+2026-01-02,B115,Eurospin,Mixed Salad,Farm C,323,92,45,31,16,5.359065873852977,Delayed,2,1697.84,late delivery,4
+2026-03-05,B116,Conad,Mixed Salad,Farm B,173,312,95,38,27,5.795731358803689,Delayed,0,1171.97,good quality,4
+2026-01-20,B117,Coop,Mixed Salad,Farm C,291,96,11,26,16,5.49302276105764,Delivered,1,1438.19,late delivery,3
+2026-03-23,B118,Eurospin,Mixed Salad,Farm C,326,86,28,15,0,3.9416613148972477,Delivered,2,1768.77,poor packaging,2
+2026-03-28,B119,Coop,Rucola,Farm A,198,118,14,33,28,3.790246585939956,Delayed,1,1002.62,poor packaging,4
+2026-01-22,B120,Conad,Rucola,Farm B,335,171,92,25,14,4.518363901556734,Delivered,1,436.4,poor packaging,1
+2026-03-10,B121,Fruva,Spinach,Farm B,114,241,60,39,16,5.91000095225531,Delayed,1,1971.16,poor packaging,4
+2026-03-21,B122,Lidl,Spinach,Farm A,244,172,52,12,14,4.7221618076316965,Delayed,2,1177.82,poor packaging,5
+2026-03-05,B123,Lidl,Spinach,Farm C,145,94,24,34,13,5.589963590734562,Delayed,0,729.5,late delivery,1
+2026-03-01,B124,Eurospin,Rucola,Farm B,443,151,10,17,16,2.069723239448604,Delayed,1,315.58,fresh product,2
+2026-04-20,B125,Conad,Rucola,Farm A,388,181,40,12,10,4.883041683546974,Delayed,0,1954.46,good quality,4
+2026-02-15,B126,Lidl,Mixed Salad,Farm A,301,321,96,6,0,2.527198994869,Delivered,1,456.49,good quality,5
+2026-04-26,B127,Coop,Spinach,Farm C,189,253,14,38,9,3.0048954935544185,Delivered,2,844.04,good quality,3
+2026-01-06,B128,Fruva,Lettuce,Farm C,140,449,75,12,7,6.284521592794567,Delayed,1,1270.6,poor packaging,3
+2026-01-07,B129,Lidl,Spinach,Farm B,121,82,40,46,13,2.4897798921835372,Delayed,2,1389.48,fresh product,5
+2026-01-25,B130,Coop,Lettuce,Farm C,337,435,44,12,28,6.738191042854875,Delivered,2,1769.21,fresh product,2
+2026-03-11,B131,Eurospin,Mixed Salad,Farm A,158,210,27,14,18,6.0813694545877475,Delivered,1,1494.56,poor packaging,1
+2026-01-07,B132,Eurospin,Lettuce,Farm B,123,372,3,32,11,6.606343328400682,Delayed,1,1032.72,good quality,3
+2026-04-06,B133,Coop,Rucola,Farm B,327,145,78,38,3,4.5303255612407325,Delayed,2,1258.51,poor packaging,2
+2026-04-28,B134,Conad,Rucola,Farm B,139,100,14,37,2,6.656001242212577,Delayed,1,846.47,poor packaging,2
+2026-02-13,B135,Coop,Lettuce,Farm A,424,120,61,18,23,5.476489396061004,Delayed,1,871.13,poor packaging,1
+2026-03-30,B136,Coop,Lettuce,Farm A,360,243,44,27,14,3.4080442295693065,Delayed,2,1944.94,late delivery,2
+2026-04-03,B137,Fruva,Rucola,Farm A,375,343,42,16,0,3.5151666924525156,Delayed,0,806.61,poor packaging,5
+2026-02-16,B138,Eurospin,Rucola,Farm A,219,123,55,32,14,7.209627683079551,Delayed,2,1394.85,good quality,4
+2026-04-24,B139,Fruva,Lettuce,Farm A,119,361,28,5,22,3.3482070618360797,Delivered,0,1976.05,poor packaging,5
+2026-02-02,B140,Lidl,Spinach,Farm A,341,295,42,38,24,5.834719626893002,Delivered,2,1113.02,poor packaging,3
+2026-02-19,B141,Lidl,Lettuce,Farm B,400,387,79,46,27,6.040594599949504,Delayed,0,816.78,good quality,5
+2026-04-06,B142,Coop,Rucola,Farm C,218,297,42,14,29,4.983048584050564,Delivered,1,622.21,fresh product,1
+2026-03-17,B143,Fruva,Spinach,Farm A,100,226,30,20,13,4.363186433924951,Delivered,0,282.52,late delivery,4
+2026-03-07,B144,Fruva,Rucola,Farm A,188,255,12,13,20,5.402097565920007,Delivered,2,1998.94,fresh product,2
+2026-04-12,B145,Conad,Spinach,Farm B,181,358,82,49,10,4.254033511290359,Delayed,1,788.66,poor packaging,1
+2026-03-26,B146,Lidl,Spinach,Farm C,242,395,92,29,0,3.4252647852459646,Delivered,2,784.25,fresh product,2
+2026-01-11,B147,Coop,Spinach,Farm B,364,82,84,30,7,5.114490710817308,Delayed,0,1286.21,good quality,2
+2026-01-25,B148,Coop,Mixed Salad,Farm A,399,307,14,47,15,5.29648543058272,Delayed,1,884.35,fresh product,3
+2026-02-12,B149,Conad,Lettuce,Farm C,216,203,14,29,3,7.56220726877784,Delivered,0,232.82,good quality,3
+2026-02-03,B150,Lidl,Mixed Salad,Farm A,151,106,28,32,2,5.485592319576787,Delayed,1,499.4,late delivery,2
+2026-02-18,B151,Coop,Rucola,Farm B,362,430,73,43,12,3.107510777222198,Delivered,0,1958.11,late delivery,5
+2026-02-11,B152,Lidl,Mixed Salad,Farm B,362,389,0,48,23,5.158995164922686,Delivered,2,1851.95,good quality,5
+2026-03-27,B153,Coop,Rucola,Farm C,109,200,41,12,23,4.120528275816309,Delayed,2,1268.37,good quality,4
+2026-02-19,B154,Lidl,Mixed Salad,Farm C,301,424,17,23,3,2.898223807741746,Delivered,1,1517.52,good quality,1
+2026-04-09,B155,Fruva,Lettuce,Farm A,249,372,14,39,27,3.2371169871105585,Delivered,1,1764.67,good quality,5
+2026-02-26,B156,Coop,Mixed Salad,Farm C,362,164,17,7,9,4.569197689553689,Delivered,0,1094.18,good quality,3
+2026-04-13,B157,Conad,Mixed Salad,Farm B,201,121,31,43,12,2.4765162139339196,Delayed,0,813.96,good quality,4
+2026-01-03,B158,Fruva,Lettuce,Farm B,295,348,48,6,27,6.802139046934169,Delivered,0,922.14,fresh product,2
+2026-03-08,B159,Eurospin,Spinach,Farm C,441,405,1,27,11,5.971035139096272,Delivered,2,1159.32,late delivery,4
+2026-01-08,B160,Coop,Mixed Salad,Farm A,432,366,46,20,9,2.5800586978803177,Delivered,2,1244.86,fresh product,4
+2026-01-17,B161,Lidl,Lettuce,Farm B,336,358,91,44,21,7.954901012950251,Delayed,0,741.54,good quality,5
+2026-03-25,B162,Coop,Mixed Salad,Farm C,387,240,15,16,5,2.9558241237138816,Delivered,1,1322.45,fresh product,1
+2026-01-23,B163,Coop,Rucola,Farm A,357,328,72,5,10,6.951716649397381,Delayed,2,673.6,late delivery,4
+2026-03-23,B164,Conad,Spinach,Farm C,242,421,59,41,19,3.251063086144015,Delivered,0,1128.22,late delivery,2
+2026-02-14,B165,Coop,Spinach,Farm B,233,146,79,11,19,6.912410024445621,Delivered,0,885.12,poor packaging,2
+2026-04-01,B166,Coop,Spinach,Farm B,355,345,24,6,24,4.876126640827111,Delivered,2,1450.91,late delivery,1
+2026-04-20,B167,Eurospin,Mixed Salad,Farm C,489,104,12,38,7,4.869404138288433,Delayed,0,1816.87,poor packaging,4
+2026-02-14,B168,Lidl,Rucola,Farm C,433,99,17,33,27,7.1086918253075915,Delayed,0,1189.15,poor packaging,2
+2026-03-01,B169,Conad,Rucola,Farm C,365,424,1,15,17,2.3466833659782,Delayed,2,856.64,good quality,3
+2026-01-09,B170,Fruva,Mixed Salad,Farm B,470,342,79,20,27,5.708310045723116,Delayed,2,456.05,fresh product,1
+2026-04-11,B171,Lidl,Rucola,Farm B,330,257,62,41,19,4.428790574511199,Delayed,0,1307.39,poor packaging,3
+2026-04-02,B172,Eurospin,Rucola,Farm B,232,262,1,31,20,2.11515366093834,Delivered,0,1066.94,late delivery,2
+2026-04-30,B173,Fruva,Rucola,Farm A,341,292,52,22,4,7.757459865926201,Delayed,0,1163.56,poor packaging,1
+2026-03-01,B174,Eurospin,Mixed Salad,Farm C,216,361,67,38,19,3.460867810429203,Delayed,2,1362.96,good quality,5
+2026-02-21,B175,Coop,Rucola,Farm B,496,192,63,21,23,3.8924413744880764,Delivered,1,1747.22,fresh product,5
+2026-04-07,B176,Coop,Mixed Salad,Farm A,383,282,33,12,26,4.700746594518558,Delivered,2,1713.57,good quality,4
+2026-03-28,B177,Conad,Rucola,Farm A,186,180,7,17,7,2.5087520962748195,Delivered,0,1133.13,good quality,3
+2026-01-24,B178,Fruva,Rucola,Farm A,331,393,30,40,10,7.824499746024021,Delivered,2,389.66,poor packaging,4
+2026-02-20,B179,Eurospin,Rucola,Farm B,451,87,63,14,5,2.495705980755612,Delayed,0,513.4,poor packaging,1
+2026-03-14,B180,Coop,Lettuce,Farm A,391,403,77,45,8,7.758959108455574,Delivered,1,887.49,poor packaging,2
+2026-01-10,B181,Lidl,Lettuce,Farm B,473,348,52,36,15,6.870618728540825,Delayed,1,1637.69,poor packaging,2
+2026-01-15,B182,Coop,Lettuce,Farm A,252,394,77,29,17,7.658455026468245,Delayed,0,399.45,fresh product,3
+2026-02-15,B183,Eurospin,Lettuce,Farm B,131,301,38,16,8,5.2640994750965096,Delivered,0,222.89,late delivery,5
+2026-01-08,B184,Lidl,Mixed Salad,Farm C,355,165,21,47,24,7.624328398982714,Delivered,0,1546.75,late delivery,2
+2026-01-29,B185,Lidl,Lettuce,Farm B,194,167,43,17,21,5.253423232951089,Delivered,0,1433.54,fresh product,3
+2026-03-04,B186,Eurospin,Spinach,Farm C,207,446,24,41,14,2.9650890437464774,Delayed,0,390.68,fresh product,5
+2026-01-03,B187,Conad,Mixed Salad,Farm B,453,89,20,43,26,3.128148407692497,Delivered,0,1985.26,good quality,4
+2026-02-05,B188,Coop,Spinach,Farm B,111,288,77,18,24,7.748440880716281,Delivered,2,209.41,fresh product,3
+2026-04-05,B189,Conad,Rucola,Farm B,231,190,3,24,9,7.317174682790447,Delivered,1,750.09,good quality,5
+2026-02-23,B190,Eurospin,Spinach,Farm B,359,267,56,49,19,4.413962748119336,Delivered,0,1452.11,late delivery,3
+2026-03-29,B191,Coop,Lettuce,Farm B,123,241,29,22,18,3.618924320769286,Delayed,2,387.45,good quality,3
+2026-01-22,B192,Lidl,Spinach,Farm B,216,435,63,23,15,4.24077557686504,Delayed,2,1451.75,good quality,1
+2026-01-18,B193,Fruva,Lettuce,Farm C,402,392,44,37,16,5.8253195868213785,Delayed,2,868.56,poor packaging,4
+2026-03-16,B194,Coop,Mixed Salad,Farm A,160,217,49,7,12,6.201511756667126,Delayed,1,1072.38,late delivery,5
+2026-03-11,B195,Eurospin,Lettuce,Farm A,134,381,25,9,28,4.7703968816742925,Delayed,0,1132.54,good quality,2
+2026-03-05,B196,Coop,Mixed Salad,Farm B,330,374,34,5,23,6.377049371914381,Delayed,0,1069.34,late delivery,4
+2026-04-18,B197,Lidl,Mixed Salad,Farm A,135,292,29,28,11,2.2675694502377692,Delayed,2,443.64,poor packaging,4
+2026-01-14,B198,Coop,Rucola,Farm A,169,123,72,49,3,2.201681601099696,Delayed,1,649.18,late delivery,3
+2026-02-26,B199,Coop,Rucola,Farm C,106,149,14,22,23,5.289923502358546,Delayed,2,822.66,fresh product,5
+2026-02-11,B200,Fruva,Rucola,Farm B,120,161,68,7,22,3.1885857965584408,Delayed,0,1690.16,poor packaging,3
+2026-03-30,B201,Lidl,Rucola,Farm A,260,257,67,46,24,7.103696347046827,Delivered,0,1904.66,good quality,5
+2026-03-02,B202,Coop,Lettuce,Farm A,185,256,16,38,5,3.3568823095396443,Delayed,0,1748.25,late delivery,5
+2026-01-05,B203,Fruva,Spinach,Farm B,197,223,50,43,21,3.7435253588381308,Delivered,1,1902.26,fresh product,3
+2026-01-10,B204,Conad,Lettuce,Farm A,131,356,19,30,3,6.54050903413181,Delayed,2,1960.51,fresh product,5
+2026-03-20,B205,Lidl,Spinach,Farm C,480,247,57,32,25,5.347884432695839,Delayed,0,1248.27,fresh product,3
+2026-03-13,B206,Coop,Mixed Salad,Farm C,361,246,51,27,24,4.3842883429118995,Delivered,2,708.38,good quality,3
+2026-01-11,B207,Coop,Mixed Salad,Farm A,263,164,71,13,14,3.1750448755215133,Delayed,1,566.78,late delivery,4
+2026-03-25,B208,Coop,Lettuce,Farm C,464,338,26,47,7,5.042306623192646,Delayed,0,1204.08,poor packaging,5
+2026-02-01,B209,Conad,Rucola,Farm B,465,325,18,36,8,6.821621212649211,Delayed,2,1377.73,fresh product,1
+2026-03-04,B210,Eurospin,Rucola,Farm B,368,241,3,32,5,7.878694747127131,Delivered,2,1073.65,fresh product,3
+2026-03-10,B211,Fruva,Mixed Salad,Farm A,253,212,98,32,28,3.778938687699892,Delayed,1,1207.56,late delivery,3
+2026-03-01,B212,Conad,Spinach,Farm C,463,443,72,25,23,4.965274683501799,Delivered,1,765.83,late delivery,5
+2026-01-28,B213,Fruva,Rucola,Farm C,279,113,40,22,25,5.682664512894194,Delivered,1,1686.76,good quality,5
+2026-04-18,B214,Conad,Lettuce,Farm A,311,351,33,6,2,6.117963180116584,Delayed,2,1048.32,poor packaging,1
+2026-01-20,B215,Conad,Mixed Salad,Farm B,402,373,14,25,2,6.578931747553336,Delivered,1,608.92,fresh product,4
+2026-03-17,B216,Fruva,Lettuce,Farm A,306,289,96,10,26,2.0011303973394914,Delivered,2,433.28,late delivery,4
+2026-04-27,B217,Conad,Lettuce,Farm B,433,163,24,44,23,2.163050096545065,Delayed,2,1183.97,late delivery,1
+2026-03-24,B218,Conad,Spinach,Farm C,300,363,83,49,6,5.7280669835211775,Delivered,2,1951.0,fresh product,1
+2026-01-19,B219,Eurospin,Rucola,Farm A,385,344,63,37,23,3.702970682141122,Delayed,2,1770.96,good quality,3
+2026-04-15,B220,Fruva,Mixed Salad,Farm C,167,343,1,45,28,5.559329420644306,Delivered,2,739.85,poor packaging,5
+2026-03-03,B221,Lidl,Lettuce,Farm C,163,129,84,25,4,3.5138434990364393,Delivered,2,1630.24,fresh product,1
+2026-04-27,B222,Eurospin,Rucola,Farm C,315,144,7,49,22,4.582564461925941,Delayed,1,368.94,fresh product,1
+2026-01-19,B223,Eurospin,Spinach,Farm A,406,117,19,33,18,3.4246008102488377,Delivered,1,1806.54,fresh product,5
+2026-03-08,B224,Coop,Mixed Salad,Farm B,446,440,0,12,22,4.441831457805583,Delayed,0,1374.0,late delivery,1
+2026-03-02,B225,Coop,Lettuce,Farm C,479,441,64,33,12,4.892246348672495,Delayed,1,1050.49,poor packaging,5
+2026-03-25,B226,Eurospin,Rucola,Farm B,148,381,61,12,10,7.063547675670344,Delivered,1,572.59,poor packaging,5
+2026-04-27,B227,Coop,Lettuce,Farm B,481,312,8,28,4,3.7073738105773852,Delivered,0,1229.69,poor packaging,3
+2026-02-08,B228,Eurospin,Mixed Salad,Farm C,246,412,45,49,0,4.339234117649265,Delivered,0,1234.6,good quality,5
+2026-01-12,B229,Fruva,Rucola,Farm B,202,329,68,12,24,5.818408221100443,Delivered,1,1414.29,good quality,1
+2026-02-16,B230,Coop,Spinach,Farm B,260,206,35,22,4,2.726150002911158,Delayed,0,1768.88,good quality,4
+2026-04-25,B231,Coop,Lettuce,Farm A,204,281,65,15,12,2.0607871041664603,Delayed,2,838.59,late delivery,1
+2026-02-08,B232,Lidl,Spinach,Farm C,216,81,92,42,2,5.203804835286583,Delayed,1,1772.66,good quality,1
+2026-01-12,B233,Fruva,Lettuce,Farm A,456,292,61,35,24,6.3750409252966875,Delivered,1,731.07,fresh product,5
+2026-02-23,B234,Lidl,Lettuce,Farm A,474,152,52,42,25,5.541713257718959,Delayed,1,1733.31,fresh product,3
+2026-03-08,B235,Fruva,Lettuce,Farm C,459,154,47,36,25,4.2203140080455315,Delayed,0,1743.61,fresh product,2
+2026-02-25,B236,Lidl,Rucola,Farm A,292,126,19,23,28,5.103436290285991,Delayed,2,498.13,poor packaging,3
+2026-01-11,B237,Eurospin,Mixed Salad,Farm B,275,195,55,16,5,4.724009727176689,Delayed,0,760.19,good quality,2
+2026-03-10,B238,Conad,Lettuce,Farm C,144,339,25,31,13,2.1857347455160614,Delayed,2,611.28,late delivery,3
+2026-02-19,B239,Eurospin,Lettuce,Farm A,129,201,36,46,27,3.883800304264117,Delivered,1,763.77,fresh product,2
+2026-03-14,B240,Eurospin,Lettuce,Farm C,225,188,95,26,3,7.880653954482602,Delivered,0,1971.22,good quality,2
+2026-04-19,B241,Conad,Lettuce,Farm C,486,121,97,36,12,3.1677430202292314,Delivered,0,1571.42,late delivery,4
+2026-01-21,B242,Lidl,Lettuce,Farm A,191,359,98,17,14,6.900541580717169,Delayed,2,1939.55,good quality,1
+2026-04-09,B243,Fruva,Mixed Salad,Farm B,374,244,84,12,27,7.1153466914093215,Delivered,1,1784.57,poor packaging,3
+2026-04-27,B244,Eurospin,Lettuce,Farm B,248,325,10,43,27,2.3464463112150424,Delayed,0,1278.42,late delivery,2
+2026-01-12,B245,Conad,Lettuce,Farm B,403,187,51,36,5,5.5323891327879196,Delayed,1,1945.29,poor packaging,1
+2026-03-03,B246,Conad,Lettuce,Farm A,341,258,52,18,26,4.445505251442902,Delivered,2,1571.24,poor packaging,4
+2026-01-07,B247,Fruva,Mixed Salad,Farm A,436,416,96,36,7,2.3747455617144286,Delayed,2,1920.88,poor packaging,5
+2026-01-13,B248,Eurospin,Lettuce,Farm C,307,193,95,26,28,2.18329674256028,Delivered,1,1948.76,late delivery,2
+2026-03-05,B249,Lidl,Spinach,Farm A,251,114,55,34,24,6.760364085832086,Delivered,2,738.91,late delivery,2
+2026-04-23,B250,Conad,Rucola,Farm A,136,80,14,41,12,6.520567533541815,Delivered,0,361.66,poor packaging,1
+2026-02-05,B251,Fruva,Spinach,Farm B,483,339,29,35,5,3.8368240452775595,Delayed,2,1460.06,late delivery,4
+2026-03-18,B252,Coop,Rucola,Farm A,182,202,15,6,7,2.677589856116068,Delayed,1,1334.09,fresh product,4
+2026-03-07,B253,Eurospin,Mixed Salad,Farm C,389,374,66,12,22,7.575368321791124,Delayed,2,331.22,poor packaging,5
+2026-04-13,B254,Fruva,Rucola,Farm A,257,348,20,23,20,4.496728568426554,Delivered,1,1057.59,poor packaging,1
+2026-02-24,B255,Coop,Spinach,Farm B,151,227,31,18,17,6.283715795039539,Delayed,0,1105.55,fresh product,4
+2026-03-18,B256,Coop,Mixed Salad,Farm C,389,417,97,15,8,6.4918714047572,Delivered,0,1295.16,poor packaging,1
+2026-04-03,B257,Fruva,Lettuce,Farm B,363,404,43,33,27,2.6113543283960814,Delivered,2,284.33,poor packaging,1
+2026-01-27,B258,Lidl,Mixed Salad,Farm B,498,386,12,23,16,4.263881968437942,Delayed,2,1759.79,good quality,1
+2026-02-27,B259,Eurospin,Rucola,Farm C,316,199,54,14,14,3.001718532483192,Delivered,2,276.13,good quality,5
+2026-02-02,B260,Conad,Rucola,Farm C,380,173,72,25,19,6.690943180069613,Delayed,0,701.19,late delivery,1
+2026-04-11,B261,Lidl,Mixed Salad,Farm A,454,382,17,18,2,4.21887953592306,Delayed,2,1097.43,good quality,5
+2026-03-23,B262,Lidl,Lettuce,Farm B,115,216,72,42,10,6.382978165752741,Delayed,0,1193.72,fresh product,5
+2026-03-28,B263,Coop,Rucola,Farm C,391,353,2,32,5,5.868995624133882,Delivered,1,1293.95,late delivery,1
+2026-04-10,B264,Conad,Lettuce,Farm A,412,128,53,14,20,3.605556060367829,Delivered,1,353.61,late delivery,5
+2026-02-06,B265,Coop,Spinach,Farm A,455,217,34,29,2,4.425738483529215,Delivered,1,1839.92,fresh product,5
+2026-02-12,B266,Coop,Mixed Salad,Farm B,329,400,83,32,15,6.63752889125669,Delayed,1,1779.76,fresh product,3
+2026-04-28,B267,Conad,Lettuce,Farm B,332,241,36,10,6,2.1053141801997732,Delivered,0,230.51,good quality,2
+2026-01-07,B268,Lidl,Mixed Salad,Farm C,472,214,99,13,10,6.978578721725869,Delivered,0,826.57,fresh product,5
+2026-03-27,B269,Conad,Rucola,Farm A,256,177,97,32,12,6.484666439580164,Delivered,1,474.19,fresh product,2
+2026-04-14,B270,Eurospin,Mixed Salad,Farm B,430,222,31,32,21,4.194084489568228,Delivered,1,1896.9,fresh product,2
+2026-02-26,B271,Coop,Lettuce,Farm A,438,346,76,12,7,7.438525783486621,Delivered,2,1320.34,poor packaging,1
+2026-02-18,B272,Lidl,Rucola,Farm C,258,253,25,9,19,5.785530741374981,Delivered,1,1905.31,good quality,2
+2026-02-07,B273,Eurospin,Spinach,Farm A,145,373,61,26,29,4.757989222415968,Delayed,1,1153.39,good quality,3
+2026-04-04,B274,Lidl,Rucola,Farm C,207,240,80,15,12,5.163395964523476,Delivered,1,1755.13,good quality,4
+2026-04-09,B275,Conad,Spinach,Farm B,431,218,88,22,18,3.056572827983568,Delayed,1,1096.82,late delivery,2
+2026-01-06,B276,Conad,Rucola,Farm C,224,433,16,47,10,5.128757832328832,Delayed,1,542.19,poor packaging,5
+2026-04-16,B277,Lidl,Lettuce,Farm B,420,118,80,24,23,6.581474413199436,Delivered,1,1058.42,fresh product,1
+2026-02-06,B278,Eurospin,Mixed Salad,Farm B,354,250,84,28,9,3.930019937957292,Delayed,2,216.27,fresh product,3
+2026-01-22,B279,Fruva,Rucola,Farm C,463,220,44,14,3,3.733309633454994,Delayed,2,971.66,poor packaging,2
+2026-04-25,B280,Fruva,Rucola,Farm C,340,402,83,24,20,2.195707690049399,Delivered,0,1090.42,poor packaging,3
+2026-03-31,B281,Coop,Rucola,Farm A,280,170,81,8,0,3.4423934773610414,Delayed,1,842.82,good quality,4
+2026-04-26,B282,Conad,Lettuce,Farm A,204,272,16,26,1,6.07729956280345,Delivered,0,249.53,fresh product,5
+2026-01-11,B283,Eurospin,Lettuce,Farm B,470,188,59,11,14,7.422545430650853,Delayed,0,1213.98,good quality,4
+2026-01-23,B284,Coop,Mixed Salad,Farm A,320,120,18,43,13,3.242454855265131,Delivered,2,1057.4,fresh product,2
+2026-01-15,B285,Fruva,Lettuce,Farm C,379,362,39,40,1,6.643437330623991,Delayed,1,1783.09,fresh product,3
+2026-02-03,B286,Eurospin,Mixed Salad,Farm C,464,148,94,45,24,5.54258653893616,Delayed,1,1776.59,late delivery,5
+2026-02-26,B287,Eurospin,Rucola,Farm C,483,258,85,8,27,3.8605072300565304,Delivered,2,1951.54,fresh product,1
+2026-03-10,B288,Coop,Spinach,Farm B,289,436,24,31,18,3.089683806539616,Delayed,2,1566.32,poor packaging,4
+2026-02-08,B289,Eurospin,Spinach,Farm A,340,351,58,35,9,6.2559249708356575,Delivered,1,596.88,poor packaging,1
+2026-03-22,B290,Coop,Spinach,Farm A,372,403,47,29,26,6.554031695131586,Delayed,0,1914.0,good quality,1
+2026-02-20,B291,Fruva,Lettuce,Farm B,203,350,95,43,26,6.821108650609606,Delivered,2,864.71,late delivery,5
+2026-02-26,B292,Conad,Rucola,Farm A,172,220,69,10,19,7.871152810334843,Delivered,0,693.33,poor packaging,1
+2026-03-17,B293,Eurospin,Lettuce,Farm A,436,350,99,36,3,4.3061302311448095,Delivered,2,985.53,fresh product,3
+2026-04-14,B294,Fruva,Spinach,Farm B,288,326,3,28,26,5.006527281573183,Delayed,0,1635.59,good quality,1
+2026-02-09,B295,Fruva,Rucola,Farm C,435,92,63,39,18,4.3793220919397795,Delivered,2,293.0,late delivery,1
+2026-01-20,B296,Lidl,Lettuce,Farm B,475,101,56,41,7,3.5028073927549936,Delayed,2,1418.87,poor packaging,2
+2026-01-16,B297,Conad,Spinach,Farm A,212,91,52,15,4,4.11775102071414,Delivered,1,1967.43,good quality,5
+2026-02-26,B298,Eurospin,Spinach,Farm C,132,397,49,45,18,6.065245673021204,Delivered,1,1780.37,late delivery,4
+2026-02-02,B299,Conad,Mixed Salad,Farm B,347,108,23,22,9,7.488386689739022,Delayed,1,1355.12,late delivery,5
+2026-03-15,B300,Coop,Rucola,Farm B,268,161,89,24,8,3.226643443697281,Delivered,2,366.0,poor packaging,3
+2026-01-10,B301,Conad,Mixed Salad,Farm B,223,359,73,42,21,2.863651481433385,Delivered,2,1130.22,poor packaging,5
+2026-04-21,B302,Conad,Rucola,Farm B,247,187,18,24,2,5.891028920712129,Delayed,0,1912.56,late delivery,3
+2026-01-06,B303,Coop,Rucola,Farm A,451,127,69,45,26,3.6265775225843946,Delayed,1,651.61,good quality,4
+2026-03-06,B304,Fruva,Spinach,Farm A,178,394,21,25,26,6.633806090992057,Delayed,1,410.72,late delivery,1
+2026-04-19,B305,Fruva,Rucola,Farm C,404,216,35,23,0,3.3229021608398246,Delivered,0,934.67,late delivery,2
+2026-02-01,B306,Fruva,Spinach,Farm B,382,133,49,39,19,6.490306098057388,Delivered,0,1410.43,fresh product,4
+2026-04-03,B307,Conad,Spinach,Farm C,347,427,16,47,24,6.024053152293954,Delayed,0,1122.91,fresh product,1
+2026-04-27,B308,Lidl,Lettuce,Farm C,324,445,68,47,15,7.4670097110804745,Delivered,0,1779.45,late delivery,3
+2026-03-03,B309,Conad,Mixed Salad,Farm B,193,383,9,22,5,4.299705437853208,Delayed,2,1292.12,poor packaging,5
+2026-04-30,B310,Coop,Spinach,Farm A,475,170,7,46,16,7.524599650780144,Delayed,2,560.51,good quality,1
+2026-03-01,B311,Eurospin,Rucola,Farm B,155,266,84,6,28,7.242337521093351,Delivered,1,863.21,late delivery,4
+2026-04-24,B312,Eurospin,Lettuce,Farm B,453,142,21,15,25,2.1314799726500535,Delayed,1,1368.78,fresh product,5
+2026-04-17,B313,Lidl,Mixed Salad,Farm C,228,390,2,18,5,5.931042287146028,Delivered,1,1083.97,late delivery,5
+2026-04-22,B314,Fruva,Spinach,Farm A,341,188,46,24,18,2.662591180466616,Delivered,0,1129.56,fresh product,4
+2026-03-01,B315,Coop,Lettuce,Farm A,376,140,62,28,24,6.9687009740380566,Delayed,2,997.95,fresh product,5
+2026-02-05,B316,Fruva,Spinach,Farm B,394,415,96,25,28,4.356384459628497,Delivered,0,1337.99,poor packaging,1
+2026-04-28,B317,Fruva,Mixed Salad,Farm C,412,293,72,33,14,6.041872504849446,Delivered,1,1630.07,fresh product,5
+2026-01-17,B318,Eurospin,Spinach,Farm A,233,187,17,34,21,5.248217660943612,Delayed,0,1533.13,late delivery,3
+2026-02-01,B319,Coop,Spinach,Farm C,214,241,72,46,27,3.8660149683960814,Delivered,2,1803.54,poor packaging,3
+2026-04-28,B320,Lidl,Mixed Salad,Farm C,236,254,32,37,18,6.073870958228252,Delayed,2,595.2,late delivery,1
+2026-01-29,B321,Conad,Rucola,Farm B,484,172,47,17,15,5.6338273359404685,Delayed,0,1100.2,good quality,2
+2026-01-17,B322,Eurospin,Spinach,Farm A,106,393,48,43,20,6.6589358159061085,Delayed,0,571.25,poor packaging,1
+2026-01-03,B323,Eurospin,Lettuce,Farm B,479,223,24,32,8,5.2139395960854715,Delivered,0,1209.22,good quality,1
+2026-04-25,B324,Fruva,Lettuce,Farm B,438,226,65,45,12,4.906066557749051,Delivered,0,429.3,late delivery,1
+2026-04-14,B325,Coop,Mixed Salad,Farm B,105,283,56,44,3,7.087567302580091,Delayed,0,227.91,good quality,5
+2026-03-23,B326,Eurospin,Spinach,Farm C,119,300,92,7,18,2.4200210727983946,Delayed,2,875.84,poor packaging,4
+2026-03-01,B327,Coop,Lettuce,Farm C,195,426,29,47,1,5.970105730399139,Delivered,0,1500.93,fresh product,4
+2026-04-08,B328,Fruva,Mixed Salad,Farm A,349,393,44,43,25,6.551011285498344,Delivered,0,1591.06,poor packaging,4
+2026-01-29,B329,Lidl,Rucola,Farm C,319,294,94,7,20,5.924796422167242,Delayed,1,895.92,good quality,5
+2026-03-27,B330,Lidl,Spinach,Farm A,368,346,53,20,7,5.531029610953933,Delivered,0,1564.88,poor packaging,2
+2026-04-04,B331,Coop,Mixed Salad,Farm C,306,415,80,30,1,2.801903488463108,Delivered,1,1763.55,poor packaging,2
+2026-03-03,B332,Fruva,Lettuce,Farm C,265,301,60,5,29,3.6170711737536356,Delayed,0,1633.23,late delivery,5
+2026-01-27,B333,Coop,Lettuce,Farm A,306,358,69,28,19,6.641975389373995,Delayed,0,1271.55,fresh product,1
+2026-02-06,B334,Eurospin,Rucola,Farm C,178,84,59,10,24,7.387515121745995,Delivered,2,667.24,good quality,5
+2026-04-12,B335,Conad,Rucola,Farm B,480,335,37,31,19,7.41856236725923,Delivered,2,369.79,poor packaging,5
+2026-03-15,B336,Conad,Lettuce,Farm C,242,332,12,39,19,7.350265191216476,Delivered,2,147.21,late delivery,3
+2026-01-30,B337,Eurospin,Lettuce,Farm B,265,193,48,36,3,2.2336281001259937,Delivered,2,763.0,late delivery,3
+2026-01-03,B338,Eurospin,Rucola,Farm B,438,104,67,33,18,4.6537628327068115,Delayed,0,1324.31,poor packaging,1
+2026-01-20,B339,Conad,Spinach,Farm B,282,107,68,9,18,4.6583561739825265,Delayed,1,1225.07,good quality,2
+2026-03-25,B340,Conad,Mixed Salad,Farm C,288,234,54,22,23,7.6501519199481836,Delivered,0,1891.88,poor packaging,1
+2026-02-28,B341,Fruva,Spinach,Farm B,438,400,63,11,3,4.4829647919247755,Delayed,1,1454.84,late delivery,2
+2026-02-16,B342,Coop,Mixed Salad,Farm B,211,138,42,19,11,4.7292346568172094,Delayed,1,1015.24,late delivery,3
+2026-01-28,B343,Eurospin,Rucola,Farm B,392,309,65,40,21,5.499144825662586,Delayed,2,1079.29,late delivery,4
+2026-01-08,B344,Coop,Spinach,Farm A,227,419,54,20,13,5.954272460793394,Delivered,0,319.75,poor packaging,3
+2026-02-22,B345,Fruva,Lettuce,Farm C,311,372,80,35,22,5.713949388191529,Delivered,2,1640.13,good quality,4
+2026-04-13,B346,Lidl,Rucola,Farm A,163,377,93,33,18,5.311262818527114,Delayed,1,983.71,poor packaging,4
+2026-02-27,B347,Lidl,Spinach,Farm B,315,131,14,41,19,7.83846078747379,Delayed,0,612.86,fresh product,4
+2026-02-25,B348,Conad,Spinach,Farm A,449,135,59,14,6,4.193574206023801,Delayed,0,480.03,good quality,4
+2026-04-11,B349,Lidl,Lettuce,Farm B,265,423,86,26,1,6.975885404754557,Delivered,1,506.21,fresh product,5
+2026-03-05,B350,Conad,Mixed Salad,Farm B,442,224,64,35,9,6.934287267112126,Delayed,0,1245.26,fresh product,2
+2026-01-09,B351,Fruva,Mixed Salad,Farm B,470,185,14,19,22,7.040648470635199,Delivered,0,543.31,fresh product,4
+2026-03-31,B352,Coop,Rucola,Farm A,431,117,82,11,24,7.158768048869874,Delayed,2,551.3,poor packaging,4
+2026-02-28,B353,Eurospin,Rucola,Farm A,328,156,59,30,13,5.8684714914609115,Delayed,2,1572.4,fresh product,1
+2026-03-18,B354,Lidl,Rucola,Farm B,230,316,97,20,21,5.623105895241667,Delayed,2,973.7,fresh product,1
+2026-01-06,B355,Conad,Spinach,Farm C,355,266,75,35,28,6.775558322861015,Delayed,0,874.19,poor packaging,1
+2026-01-31,B356,Coop,Mixed Salad,Farm C,482,92,44,46,17,2.3210867774782598,Delayed,0,592.77,good quality,4
+2026-04-07,B357,Eurospin,Rucola,Farm B,427,298,22,12,7,7.547134812391399,Delivered,2,1197.81,good quality,5
+2026-04-23,B358,Eurospin,Mixed Salad,Farm C,101,325,81,21,29,7.9973462195026315,Delayed,1,1590.53,good quality,2
+2026-01-13,B359,Eurospin,Mixed Salad,Farm C,436,195,14,13,19,5.059124057302746,Delivered,0,1413.92,poor packaging,4
+2026-01-30,B360,Lidl,Rucola,Farm B,466,80,43,39,10,4.694232607580755,Delivered,2,1192.09,fresh product,1
+2026-04-19,B361,Fruva,Mixed Salad,Farm C,289,347,64,47,7,3.199047627691637,Delivered,2,400.87,poor packaging,3
+2026-04-05,B362,Coop,Rucola,Farm A,440,135,5,26,17,3.908297435305512,Delivered,2,1590.99,late delivery,1
+2026-02-18,B363,Conad,Mixed Salad,Farm A,248,194,65,44,18,5.822568204946656,Delivered,0,621.97,late delivery,3
+2026-02-25,B364,Coop,Spinach,Farm C,392,323,67,26,25,7.4775860286481395,Delayed,1,771.59,good quality,4
+2026-02-27,B365,Fruva,Mixed Salad,Farm C,287,162,57,39,13,2.4736364176793333,Delivered,0,1488.89,late delivery,2
+2026-02-17,B366,Lidl,Mixed Salad,Farm B,487,216,15,16,23,4.04855161762579,Delivered,0,1702.23,poor packaging,2
+2026-03-08,B367,Coop,Rucola,Farm B,459,89,82,7,23,6.904447083836656,Delayed,2,643.99,fresh product,1
+2026-01-15,B368,Fruva,Rucola,Farm B,274,241,86,35,17,7.373377088791033,Delivered,2,1032.3,fresh product,1
+2026-04-28,B369,Conad,Spinach,Farm A,439,195,85,25,29,4.914904573475789,Delayed,1,543.1,good quality,2
+2026-04-20,B370,Fruva,Rucola,Farm A,477,149,46,27,3,5.488502633492123,Delivered,2,1272.95,late delivery,3
+2026-02-09,B371,Fruva,Mixed Salad,Farm A,299,282,60,9,25,5.461144286796202,Delivered,0,919.13,fresh product,3
+2026-04-19,B372,Eurospin,Rucola,Farm C,339,81,64,44,27,5.701664164307012,Delivered,2,1253.14,late delivery,5
+2026-03-13,B373,Eurospin,Rucola,Farm B,319,173,72,43,25,4.587403218749348,Delivered,1,733.44,poor packaging,4
+2026-03-30,B374,Eurospin,Lettuce,Farm A,420,328,62,46,21,7.386461399058351,Delivered,0,1445.62,late delivery,3
+2026-04-19,B375,Fruva,Rucola,Farm B,189,220,16,42,16,4.150007940030043,Delivered,1,1629.07,poor packaging,5
+2026-01-15,B376,Conad,Rucola,Farm A,344,242,59,10,4,7.60249653800882,Delivered,2,1682.52,good quality,2
+2026-01-26,B377,Coop,Mixed Salad,Farm B,297,138,63,22,3,5.3731328663871505,Delayed,1,1886.8,good quality,4
+2026-04-29,B378,Conad,Lettuce,Farm C,436,179,34,36,25,7.001864062851034,Delayed,0,1122.14,good quality,1
+2026-03-12,B379,Fruva,Lettuce,Farm A,413,207,13,41,15,3.301737475183277,Delayed,2,659.61,fresh product,4
+2026-01-16,B380,Eurospin,Spinach,Farm A,293,366,2,12,23,7.812047633446143,Delivered,0,275.45,poor packaging,5
+2026-03-07,B381,Lidl,Lettuce,Farm C,224,392,79,39,29,6.514387293822727,Delayed,1,1795.13,good quality,5
+2026-04-03,B382,Coop,Lettuce,Farm B,272,230,68,34,5,7.65904893776771,Delivered,1,916.81,fresh product,4
+2026-04-03,B383,Coop,Spinach,Farm C,477,175,72,41,9,5.438253203714094,Delayed,2,1847.11,poor packaging,3
+2026-04-16,B384,Fruva,Mixed Salad,Farm C,436,376,82,9,21,6.92256092155412,Delivered,1,211.48,good quality,4
+2026-01-22,B385,Conad,Rucola,Farm C,102,395,75,27,13,6.128273342444773,Delivered,2,1609.94,good quality,1
+2026-01-23,B386,Eurospin,Lettuce,Farm A,146,335,86,34,24,2.9613536058590375,Delivered,2,318.25,good quality,2
+2026-03-19,B387,Coop,Spinach,Farm C,226,104,77,39,19,4.01373963786747,Delayed,2,1052.53,poor packaging,3
+2026-03-26,B388,Eurospin,Lettuce,Farm C,308,143,1,16,24,4.517764296840862,Delayed,2,1702.9,poor packaging,1
+2026-04-25,B389,Eurospin,Lettuce,Farm B,243,341,56,48,10,3.8385969362202292,Delayed,1,907.21,fresh product,4
+2026-03-18,B390,Coop,Spinach,Farm C,382,158,71,11,14,5.079098502540672,Delivered,0,853.43,late delivery,3
+2026-01-17,B391,Fruva,Mixed Salad,Farm A,107,404,89,20,3,4.700351836557352,Delivered,2,599.21,fresh product,5
+2026-01-30,B392,Coop,Lettuce,Farm A,279,203,36,33,2,4.906347113605095,Delivered,1,703.54,fresh product,3
+2026-03-18,B393,Eurospin,Lettuce,Farm C,384,227,24,10,3,4.446294623991351,Delayed,1,860.71,good quality,4
+2026-01-30,B394,Coop,Rucola,Farm C,417,300,99,26,19,7.374139665599699,Delayed,0,905.44,poor packaging,3
+2026-01-19,B395,Lidl,Lettuce,Farm C,247,88,31,8,17,4.381952973244845,Delayed,2,1366.59,late delivery,3
+2026-02-06,B396,Lidl,Rucola,Farm B,176,377,8,46,6,2.7036808868026703,Delayed,1,347.64,poor packaging,3
+2026-02-26,B397,Conad,Lettuce,Farm A,387,401,58,14,1,5.71263246224603,Delayed,0,1112.75,fresh product,5
+2026-01-31,B398,Fruva,Lettuce,Farm C,440,83,70,30,14,6.910282548677211,Delivered,0,1440.36,good quality,3
+2026-04-02,B399,Lidl,Rucola,Farm B,298,185,23,8,11,2.3660428580323694,Delivered,1,551.02,poor packaging,3
+2026-04-19,B400,Conad,Spinach,Farm C,468,261,65,20,1,5.452155038774592,Delayed,1,443.14,fresh product,1
+2026-04-06,B401,Lidl,Spinach,Farm A,432,440,41,41,21,2.7858424579650443,Delayed,0,607.29,fresh product,2
+2026-04-17,B402,Coop,Mixed Salad,Farm B,188,401,11,44,8,4.7920216036369165,Delivered,1,404.19,fresh product,1
+2026-04-08,B403,Lidl,Spinach,Farm A,223,243,23,31,1,5.982946849116351,Delayed,1,1715.63,good quality,4
+2026-04-11,B404,Eurospin,Lettuce,Farm A,493,189,77,41,17,2.764914080841477,Delayed,1,1238.39,fresh product,4
+2026-02-14,B405,Eurospin,Mixed Salad,Farm A,195,243,19,22,5,3.7749445849792163,Delayed,0,728.04,poor packaging,3
+2026-03-10,B406,Conad,Spinach,Farm C,305,277,11,20,16,5.990335934039787,Delayed,0,1391.3,poor packaging,4
+2026-01-17,B407,Lidl,Spinach,Farm A,208,362,86,44,26,3.79269722632551,Delivered,0,1696.73,good quality,3
+2026-01-17,B408,Eurospin,Lettuce,Farm C,232,280,28,10,24,4.3042558303466025,Delayed,0,1197.84,good quality,4
+2026-04-01,B409,Fruva,Mixed Salad,Farm C,195,154,38,28,10,5.191230599030099,Delayed,2,632.54,fresh product,3
+2026-03-06,B410,Eurospin,Lettuce,Farm A,436,273,28,24,5,5.553808226372574,Delayed,2,776.05,good quality,3
+2026-03-01,B411,Conad,Mixed Salad,Farm A,375,152,38,8,18,4.999753951788731,Delayed,2,430.99,good quality,3
+2026-01-13,B412,Fruva,Spinach,Farm C,464,421,42,23,7,2.7532987393908623,Delayed,1,1412.66,fresh product,3
+2026-01-26,B413,Eurospin,Mixed Salad,Farm A,119,290,38,16,14,5.266069325805926,Delayed,2,736.54,late delivery,2
+2026-01-27,B414,Coop,Lettuce,Farm C,489,309,41,32,0,7.862190059271056,Delayed,2,1878.58,fresh product,3
+2026-04-13,B415,Fruva,Mixed Salad,Farm B,457,445,11,47,18,7.468035140471784,Delayed,0,1039.13,fresh product,1
+2026-01-13,B416,Fruva,Mixed Salad,Farm B,359,154,95,11,13,3.843433771086323,Delayed,1,1579.75,good quality,5
+2026-01-23,B417,Conad,Lettuce,Farm A,125,133,28,23,0,5.035589925917351,Delayed,2,772.37,late delivery,4
+2026-01-17,B418,Lidl,Rucola,Farm A,178,189,88,42,9,5.683876737640363,Delivered,1,391.41,fresh product,2
+2026-02-07,B419,Fruva,Spinach,Farm C,377,416,81,45,9,4.864497136882122,Delivered,0,1019.69,late delivery,3
+2026-02-21,B420,Lidl,Rucola,Farm B,103,211,42,30,3,5.314196826903406,Delayed,1,735.25,good quality,5
+2026-02-04,B421,Conad,Mixed Salad,Farm B,343,202,42,31,13,2.890162023737101,Delayed,0,409.66,fresh product,3
+2026-02-16,B422,Lidl,Rucola,Farm A,138,383,45,30,15,5.519743509701976,Delayed,1,1765.89,late delivery,3
+2026-03-07,B423,Lidl,Spinach,Farm B,280,334,70,5,25,7.926497234595131,Delayed,0,1334.17,late delivery,4
+2026-03-13,B424,Conad,Rucola,Farm B,194,333,29,46,0,2.8948449556384244,Delayed,1,1643.03,late delivery,3
+2026-02-08,B425,Eurospin,Mixed Salad,Farm C,128,240,61,19,1,5.863739476685681,Delivered,1,1968.54,late delivery,3
+2026-01-07,B426,Lidl,Spinach,Farm A,285,443,58,35,25,4.6469033133837945,Delivered,1,1824.33,fresh product,1
+2026-04-08,B427,Coop,Mixed Salad,Farm C,233,104,56,25,22,3.4843984823500747,Delivered,1,1639.61,poor packaging,4
+2026-04-06,B428,Fruva,Rucola,Farm B,249,294,68,46,20,5.140408225532049,Delayed,2,596.88,poor packaging,2
+2026-01-15,B429,Conad,Lettuce,Farm C,438,345,91,33,14,5.588054703972498,Delayed,2,1325.59,late delivery,5
+2026-04-03,B430,Coop,Mixed Salad,Farm C,487,258,84,7,12,5.319743837738001,Delayed,0,1069.93,poor packaging,1
+2026-03-01,B431,Eurospin,Rucola,Farm C,114,406,97,45,21,5.247620665650069,Delivered,0,664.59,late delivery,3
+2026-03-21,B432,Fruva,Rucola,Farm B,111,424,80,30,13,5.111370131994404,Delivered,0,1715.9,poor packaging,3
+2026-01-06,B433,Conad,Rucola,Farm B,289,220,42,18,27,2.460548371332428,Delayed,2,1431.77,good quality,4
+2026-02-20,B434,Fruva,Mixed Salad,Farm A,167,381,97,7,25,5.596158350252994,Delayed,2,796.06,late delivery,5
+2026-01-13,B435,Lidl,Spinach,Farm B,466,417,65,14,22,2.674186891693914,Delivered,2,505.11,fresh product,5
+2026-04-24,B436,Conad,Lettuce,Farm C,408,105,13,49,11,4.939222860306467,Delivered,2,1329.94,poor packaging,3
+2026-03-23,B437,Lidl,Mixed Salad,Farm C,388,107,51,41,25,7.340828320681484,Delivered,2,1658.84,fresh product,5
+2026-03-28,B438,Lidl,Mixed Salad,Farm C,272,125,71,48,22,7.695638637473701,Delivered,1,1223.39,fresh product,5
+2026-01-25,B439,Conad,Mixed Salad,Farm C,462,431,29,17,10,4.099126305085127,Delivered,0,936.35,good quality,1
+2026-04-13,B440,Eurospin,Mixed Salad,Farm B,187,382,39,46,6,6.681275891213801,Delayed,2,1196.25,late delivery,3
+2026-01-09,B441,Fruva,Lettuce,Farm A,189,375,44,17,16,2.7990927540051405,Delivered,1,1540.53,good quality,4
+2026-01-17,B442,Coop,Rucola,Farm B,396,213,74,42,5,2.143677591622901,Delayed,1,1449.23,fresh product,3
+2026-04-29,B443,Fruva,Mixed Salad,Farm C,245,320,87,49,2,7.379447950814061,Delayed,0,1232.93,good quality,1
+2026-04-17,B444,Coop,Rucola,Farm C,310,104,15,13,0,3.964525752400688,Delivered,1,1258.57,fresh product,4
+2026-04-14,B445,Coop,Rucola,Farm A,144,213,20,10,8,2.4894495536681953,Delivered,2,644.34,late delivery,2
+2026-01-30,B446,Coop,Mixed Salad,Farm A,428,94,3,44,8,3.852813652097692,Delayed,0,1486.82,fresh product,3
+2026-02-21,B447,Eurospin,Mixed Salad,Farm C,245,190,1,33,12,2.1136724202461274,Delivered,1,1472.63,good quality,1
+2026-01-08,B448,Fruva,Spinach,Farm A,366,178,41,17,3,5.000349555146521,Delayed,0,1349.28,late delivery,4
+2026-04-30,B449,Coop,Spinach,Farm C,202,375,63,43,20,7.607263284293094,Delayed,1,272.52,poor packaging,5
+2026-04-29,B450,Coop,Mixed Salad,Farm C,308,209,24,17,25,5.450363440752888,Delayed,2,472.47,late delivery,3
+2026-02-27,B451,Conad,Spinach,Farm A,313,394,59,23,29,3.1917896831712147,Delayed,0,465.01,fresh product,1
+2026-04-18,B452,Fruva,Lettuce,Farm B,199,86,29,23,16,2.374587963666682,Delivered,1,1814.59,fresh product,3
+2026-03-13,B453,Lidl,Lettuce,Farm B,372,270,44,17,6,7.143385624218746,Delayed,0,348.33,late delivery,2
+2026-03-28,B454,Fruva,Lettuce,Farm A,273,231,74,30,18,3.8362829973726287,Delayed,2,1735.99,poor packaging,5
+2026-03-19,B455,Eurospin,Spinach,Farm C,321,394,71,24,15,3.8775172881729354,Delivered,2,701.22,good quality,5
+2026-01-01,B456,Lidl,Lettuce,Farm C,486,325,6,31,0,4.852854291396402,Delayed,2,1276.11,fresh product,1
+2026-03-16,B457,Fruva,Spinach,Farm C,264,266,80,39,15,6.972253902908038,Delayed,2,992.57,fresh product,3
+2026-04-26,B458,Eurospin,Rucola,Farm C,194,352,23,27,17,4.446668206436976,Delayed,1,1043.82,poor packaging,3
+2026-01-15,B459,Conad,Spinach,Farm C,460,433,87,44,28,2.8355244247082236,Delayed,0,1752.49,good quality,1
+2026-02-03,B460,Lidl,Spinach,Farm A,448,177,81,11,28,2.1996078270161505,Delayed,0,864.45,good quality,3
+2026-02-23,B461,Eurospin,Spinach,Farm A,155,173,92,24,20,4.464255472349997,Delayed,2,1053.21,good quality,2
+2026-04-23,B462,Coop,Lettuce,Farm B,231,164,38,38,29,5.576300694565702,Delivered,0,447.25,good quality,5
+2026-01-20,B463,Conad,Rucola,Farm A,300,276,41,6,8,5.322940643802354,Delayed,1,202.96,late delivery,2
+2026-02-24,B464,Conad,Spinach,Farm A,117,406,64,37,0,2.714844031976289,Delayed,0,1555.13,late delivery,3
+2026-02-12,B465,Fruva,Mixed Salad,Farm B,204,307,59,10,29,3.396370093493311,Delivered,1,1539.25,late delivery,1
+2026-01-13,B466,Eurospin,Rucola,Farm A,270,374,60,46,16,7.168674116127946,Delivered,1,346.1,poor packaging,2
+2026-04-08,B467,Conad,Lettuce,Farm B,205,342,39,10,21,6.695000866281761,Delayed,1,1029.32,good quality,4
+2026-04-24,B468,Eurospin,Spinach,Farm B,108,330,46,16,9,3.4085265303498278,Delivered,1,375.26,fresh product,4
+2026-03-29,B469,Fruva,Spinach,Farm A,468,103,46,11,18,4.568931038180719,Delivered,2,323.57,fresh product,3
+2026-03-03,B470,Conad,Mixed Salad,Farm B,141,177,64,35,29,2.3613616694017847,Delivered,1,878.36,good quality,1
+2026-03-20,B471,Conad,Mixed Salad,Farm C,156,370,0,25,28,2.7119636868472328,Delivered,2,1126.78,good quality,3
+2026-01-21,B472,Lidl,Lettuce,Farm A,153,247,25,20,27,6.616655476529341,Delayed,2,1747.36,good quality,1
+2026-02-28,B473,Lidl,Rucola,Farm C,207,414,33,49,3,6.527221495414763,Delayed,2,1798.74,fresh product,3
+2026-01-02,B474,Eurospin,Rucola,Farm A,239,405,21,36,8,5.873206138463134,Delayed,2,501.62,good quality,2
+2026-03-11,B475,Eurospin,Rucola,Farm C,122,414,43,31,25,6.408251421590154,Delayed,0,1627.63,poor packaging,3
+2026-02-26,B476,Coop,Lettuce,Farm B,196,415,86,42,22,4.866452758397216,Delivered,1,1470.72,poor packaging,3
+2026-03-28,B477,Fruva,Rucola,Farm A,250,150,2,36,17,7.544437933074098,Delivered,0,1339.87,good quality,4
+2026-04-06,B478,Coop,Lettuce,Farm B,325,237,99,25,29,3.4510291724921185,Delivered,1,1867.35,poor packaging,2
+2026-02-20,B479,Fruva,Mixed Salad,Farm C,161,234,27,21,13,4.827849647444727,Delayed,1,1357.03,poor packaging,4
+2026-04-24,B480,Fruva,Lettuce,Farm B,302,153,24,41,15,3.4448228964390397,Delayed,0,1790.63,good quality,1
+2026-01-17,B481,Fruva,Spinach,Farm A,417,216,67,21,16,2.970167319643921,Delayed,1,616.88,fresh product,2
+2026-03-16,B482,Coop,Lettuce,Farm A,251,153,16,22,9,2.997376172309952,Delivered,0,442.68,late delivery,1
+2026-03-14,B483,Eurospin,Lettuce,Farm B,475,126,8,17,14,4.995193681047991,Delayed,0,1802.43,poor packaging,3
+2026-03-31,B484,Fruva,Spinach,Farm B,273,171,48,22,20,3.142021850570285,Delivered,1,1854.57,poor packaging,1
+2026-04-18,B485,Fruva,Mixed Salad,Farm C,230,442,48,30,2,7.914609497514447,Delayed,0,1571.91,late delivery,4
+2026-01-16,B486,Fruva,Rucola,Farm A,365,197,79,20,25,5.500529114110611,Delivered,1,273.92,fresh product,4
+2026-03-21,B487,Conad,Spinach,Farm B,433,278,32,30,24,4.895607413969124,Delivered,2,1391.07,fresh product,4
+2026-01-26,B488,Lidl,Spinach,Farm A,239,297,43,37,12,5.709744792528728,Delayed,1,1922.84,fresh product,2
+2026-01-21,B489,Lidl,Mixed Salad,Farm B,333,166,78,17,22,4.32617092903404,Delayed,1,570.76,fresh product,4
+2026-02-28,B490,Lidl,Mixed Salad,Farm B,199,157,15,23,1,7.6203473351209405,Delayed,1,1889.69,good quality,4
+2026-01-22,B491,Lidl,Lettuce,Farm B,321,130,70,36,15,5.503515735566812,Delayed,2,394.68,good quality,3
+2026-04-11,B492,Conad,Rucola,Farm C,242,271,2,9,22,6.734137067288805,Delivered,2,1598.24,poor packaging,5
+2026-03-11,B493,Eurospin,Mixed Salad,Farm A,476,346,37,12,9,6.0015646847520845,Delivered,2,581.14,late delivery,2
+2026-01-12,B494,Coop,Rucola,Farm B,221,224,66,35,18,4.893644000489261,Delivered,1,547.17,good quality,2
+2026-04-16,B495,Fruva,Mixed Salad,Farm B,296,98,1,16,16,6.326794144140942,Delayed,0,1481.2,poor packaging,3
+2026-03-04,B496,Lidl,Rucola,Farm B,107,329,10,40,9,6.878885931007909,Delayed,0,244.58,late delivery,4
+2026-01-14,B497,Coop,Rucola,Farm B,248,315,49,34,6,7.360428374527922,Delivered,2,1740.8,good quality,1
+2026-01-26,B498,Eurospin,Mixed Salad,Farm B,143,409,61,10,16,5.741115171044926,Delayed,2,1526.84,late delivery,5
+2026-04-30,B499,Fruva,Spinach,Farm C,388,97,55,32,24,4.740906827336811,Delayed,1,523.28,poor packaging,2
+2026-04-20,B500,Coop,Mixed Salad,Farm B,381,104,74,27,1,4.413842248294232,Delayed,1,1690.36,poor packaging,5
+2026-01-31,B501,Fruva,Rucola,Farm B,117,254,32,41,1,5.700276245880656,Delivered,1,281.27,good quality,2
+2026-04-20,B502,Eurospin,Spinach,Farm A,493,422,51,15,1,7.820446740000241,Delayed,0,830.36,poor packaging,5
+2026-02-09,B503,Coop,Lettuce,Farm B,328,429,18,27,26,3.6915101335835097,Delivered,1,1130.98,good quality,1
+2026-01-08,B504,Eurospin,Spinach,Farm B,281,92,82,33,2,7.112290494828158,Delivered,1,509.44,late delivery,4
+2026-01-02,B505,Lidl,Spinach,Farm A,357,206,6,30,25,5.453991517984518,Delayed,2,228.85,fresh product,4
+2026-03-14,B506,Eurospin,Rucola,Farm A,429,387,76,45,20,3.8972907353799804,Delivered,1,931.55,fresh product,4
+2026-02-01,B507,Lidl,Rucola,Farm B,164,90,25,41,22,3.9570215247695213,Delayed,0,736.41,good quality,1
+2026-04-01,B508,Eurospin,Lettuce,Farm C,243,268,67,44,15,6.851423204884342,Delayed,0,1725.08,fresh product,4
+2026-03-31,B509,Fruva,Mixed Salad,Farm A,111,404,53,32,23,2.7244798153800804,Delayed,1,1669.98,late delivery,5
+2026-04-13,B510,Coop,Spinach,Farm C,141,403,52,37,6,6.204850508010442,Delayed,0,1894.4,fresh product,3
+2026-03-15,B511,Eurospin,Rucola,Farm C,281,386,9,16,21,7.897681277328205,Delayed,0,180.89,poor packaging,4
+2026-04-08,B512,Conad,Rucola,Farm A,408,225,42,39,29,3.3126302504652783,Delivered,1,1643.31,good quality,4
+2026-04-03,B513,Eurospin,Spinach,Farm C,127,249,79,16,19,3.7995763848383977,Delayed,0,1294.78,poor packaging,2
+2026-01-17,B514,Conad,Mixed Salad,Farm C,273,249,38,30,16,4.033668652090692,Delivered,1,919.97,fresh product,1
+2026-02-28,B515,Coop,Rucola,Farm C,481,318,30,44,15,4.524419375411701,Delayed,2,939.32,fresh product,1
+2026-03-31,B516,Eurospin,Lettuce,Farm C,294,293,85,16,22,2.182495284847808,Delayed,2,1247.73,fresh product,2
+2026-03-28,B517,Lidl,Lettuce,Farm C,255,95,36,25,14,5.016501149657674,Delivered,0,485.21,poor packaging,5
+2026-01-18,B518,Lidl,Mixed Salad,Farm C,464,379,6,48,20,3.9963768590622744,Delayed,1,516.21,good quality,2
+2026-04-06,B519,Eurospin,Lettuce,Farm A,477,89,90,25,7,2.7478845739568802,Delivered,2,1073.41,late delivery,5
+2026-01-30,B520,Fruva,Rucola,Farm A,157,264,61,35,19,5.635380891076898,Delayed,2,270.85,poor packaging,3
+2026-04-10,B521,Eurospin,Spinach,Farm A,320,122,48,40,25,3.505240830296663,Delivered,1,1211.48,good quality,1
+2026-03-12,B522,Eurospin,Mixed Salad,Farm C,179,391,86,24,5,3.6721658955711547,Delayed,0,804.47,fresh product,5
+2026-01-18,B523,Fruva,Rucola,Farm C,483,432,64,49,2,6.923550735944889,Delivered,0,783.79,fresh product,3
+2026-01-25,B524,Eurospin,Lettuce,Farm A,453,263,54,27,5,4.00926974082191,Delivered,0,991.21,poor packaging,1
+2026-03-22,B525,Conad,Lettuce,Farm C,217,270,41,46,26,5.225240861842078,Delivered,2,1325.39,poor packaging,2
+2026-03-04,B526,Conad,Rucola,Farm A,472,325,70,21,6,4.433871556683425,Delivered,1,1439.01,good quality,5
+2026-01-30,B527,Eurospin,Rucola,Farm C,251,93,68,22,9,7.941711023509647,Delayed,1,1097.0,good quality,3
+2026-04-09,B528,Fruva,Lettuce,Farm A,370,267,34,26,26,4.052416607945332,Delayed,0,224.59,good quality,1
+2026-04-19,B529,Conad,Lettuce,Farm B,202,421,17,36,26,6.241737910960536,Delivered,2,1108.11,good quality,5
+2026-03-23,B530,Coop,Lettuce,Farm B,137,280,71,39,17,3.485789858428632,Delayed,1,1762.36,fresh product,4
+2026-03-05,B531,Lidl,Spinach,Farm C,305,229,30,27,15,6.418839047714437,Delayed,2,998.19,fresh product,1
+2026-01-01,B532,Lidl,Spinach,Farm A,207,257,41,42,27,7.84942563686141,Delayed,1,1545.14,late delivery,4
+2026-01-17,B533,Fruva,Lettuce,Farm C,351,198,33,10,17,5.576855897299382,Delayed,2,634.88,late delivery,2
+2026-02-13,B534,Coop,Rucola,Farm B,102,293,85,14,18,2.43599352548694,Delayed,0,1436.94,fresh product,1
+2026-01-07,B535,Coop,Mixed Salad,Farm B,330,167,16,10,18,4.466866018879922,Delayed,0,657.17,poor packaging,5
+2026-03-24,B536,Lidl,Mixed Salad,Farm C,358,403,39,39,23,5.035554800878363,Delayed,0,450.78,fresh product,5
+2026-01-27,B537,Lidl,Mixed Salad,Farm A,454,416,1,17,19,3.355037793340352,Delayed,2,1360.07,poor packaging,2
+2026-01-22,B538,Conad,Lettuce,Farm B,495,295,68,24,6,7.9242108338732,Delivered,0,747.37,good quality,5
+2026-01-12,B539,Coop,Rucola,Farm A,139,415,44,39,2,3.5642526447971132,Delayed,2,1156.66,late delivery,5
+2026-02-25,B540,Lidl,Spinach,Farm C,299,110,74,49,6,3.778669326464919,Delayed,0,1184.39,poor packaging,4
+2026-02-26,B541,Fruva,Mixed Salad,Farm C,138,224,44,15,5,6.2457235144432115,Delivered,1,294.9,late delivery,2
+2026-03-27,B542,Lidl,Rucola,Farm A,171,244,48,37,21,6.840641417892604,Delivered,2,1331.13,late delivery,5
+2026-02-06,B543,Coop,Lettuce,Farm B,222,255,43,22,22,2.980126698458939,Delayed,1,983.03,poor packaging,2
+2026-01-28,B544,Eurospin,Rucola,Farm C,424,171,52,43,12,6.453792540403666,Delivered,2,1143.55,late delivery,2
+2026-04-19,B545,Coop,Lettuce,Farm A,286,117,68,27,27,5.662256358690152,Delivered,1,288.76,fresh product,3
+2026-01-09,B546,Eurospin,Spinach,Farm C,138,339,2,33,19,5.925322772174078,Delayed,1,1878.23,poor packaging,3
+2026-04-07,B547,Coop,Lettuce,Farm C,210,417,64,39,2,5.9011229986739195,Delivered,0,1705.48,good quality,3
+2026-04-12,B548,Conad,Spinach,Farm B,225,148,8,6,1,4.814149638307301,Delivered,2,1259.06,late delivery,2
+2026-03-17,B549,Eurospin,Rucola,Farm C,425,256,2,14,4,4.131703845421535,Delivered,0,641.43,good quality,2
+2026-04-12,B550,Coop,Mixed Salad,Farm A,353,350,15,5,15,5.586094013140754,Delayed,2,752.48,poor packaging,5
+2026-04-30,B551,Conad,Rucola,Farm B,254,245,89,42,13,7.625968763699552,Delayed,0,1969.52,good quality,5
+2026-03-13,B552,Eurospin,Mixed Salad,Farm B,401,110,92,13,14,6.102729205339248,Delayed,0,1840.02,late delivery,4
+2026-03-25,B553,Eurospin,Spinach,Farm C,331,172,79,42,27,2.656945835326773,Delivered,1,541.0,good quality,1
+2026-03-14,B554,Conad,Mixed Salad,Farm A,189,108,50,47,27,5.484535994333955,Delivered,0,711.31,good quality,2
+2026-01-07,B555,Fruva,Lettuce,Farm B,401,401,24,13,20,5.718487126949396,Delivered,1,1440.95,late delivery,4
+2026-01-25,B556,Conad,Spinach,Farm A,413,405,52,6,25,6.21966336639471,Delivered,1,390.17,fresh product,5
+2026-01-20,B557,Lidl,Rucola,Farm A,308,330,0,49,29,3.259508274488309,Delivered,1,1731.53,poor packaging,3
+2026-03-29,B558,Lidl,Rucola,Farm B,432,103,73,39,23,5.003717194003586,Delayed,2,623.69,good quality,3
+2026-02-23,B559,Fruva,Spinach,Farm C,292,414,89,8,10,7.568085420376286,Delivered,1,1811.14,poor packaging,2
+2026-04-08,B560,Coop,Spinach,Farm C,414,118,2,16,6,7.272479142061579,Delivered,0,730.67,fresh product,2
+2026-04-15,B561,Lidl,Mixed Salad,Farm B,216,243,31,32,12,3.8095212192413093,Delayed,2,1304.63,fresh product,4
+2026-02-24,B562,Coop,Lettuce,Farm A,424,207,50,26,23,5.860573697103985,Delayed,0,388.39,good quality,4
+2026-02-05,B563,Lidl,Rucola,Farm B,268,101,65,25,3,6.096026914776556,Delivered,2,356.21,poor packaging,5
+2026-02-23,B564,Fruva,Mixed Salad,Farm C,342,152,94,18,16,2.9816972248296576,Delayed,1,509.96,late delivery,3
+2026-04-07,B565,Coop,Lettuce,Farm C,101,322,40,23,26,7.461176744868179,Delayed,0,1974.08,poor packaging,4
+2026-04-09,B566,Coop,Spinach,Farm B,270,416,68,49,9,6.424588648562732,Delivered,1,1232.18,good quality,1
+2026-01-29,B567,Fruva,Lettuce,Farm B,219,249,28,19,28,3.797337917689384,Delayed,0,1339.72,good quality,4
+2026-04-13,B568,Conad,Lettuce,Farm B,161,441,63,42,12,5.477580364476044,Delayed,2,623.06,fresh product,2
+2026-04-22,B569,Eurospin,Mixed Salad,Farm C,452,171,51,41,7,5.01725312039351,Delayed,0,1998.83,late delivery,5
+2026-01-31,B570,Coop,Mixed Salad,Farm A,225,146,29,16,28,6.89573473649124,Delivered,0,819.75,late delivery,1
+2026-01-26,B571,Conad,Spinach,Farm A,278,220,43,39,22,2.3260885900919424,Delayed,0,918.98,late delivery,1
+2026-02-13,B572,Lidl,Lettuce,Farm B,451,412,68,46,11,5.666849139267477,Delayed,2,416.68,poor packaging,1
+2026-02-03,B573,Conad,Rucola,Farm C,125,392,23,10,10,4.341773283276623,Delivered,1,1347.14,fresh product,1
+2026-04-10,B574,Coop,Spinach,Farm B,184,179,51,48,21,3.662866111240159,Delayed,1,1287.75,poor packaging,5
+2026-01-30,B575,Fruva,Lettuce,Farm A,214,355,24,23,4,4.060266737447435,Delayed,2,1110.88,poor packaging,3
+2026-02-09,B576,Conad,Spinach,Farm C,483,249,28,43,27,6.308408967205165,Delivered,0,1337.82,poor packaging,1
+2026-04-21,B577,Coop,Mixed Salad,Farm A,205,299,68,30,4,3.549802574765553,Delivered,0,1968.06,poor packaging,1
+2026-04-17,B578,Eurospin,Spinach,Farm B,243,284,38,37,25,4.649023539687049,Delivered,1,1462.06,late delivery,1
+2026-01-06,B579,Coop,Mixed Salad,Farm B,171,409,16,33,25,7.489052899109928,Delayed,1,1641.47,late delivery,2
+2026-02-08,B580,Conad,Lettuce,Farm C,203,168,12,25,8,3.089788531272931,Delivered,2,1882.81,good quality,4
+2026-01-02,B581,Coop,Lettuce,Farm B,133,370,2,46,23,7.130992069828837,Delivered,0,1735.63,poor packaging,3
+2026-03-23,B582,Lidl,Mixed Salad,Farm A,422,218,93,8,4,7.8370649519601345,Delayed,2,1938.51,good quality,2
+2026-01-12,B583,Coop,Rucola,Farm A,307,103,98,26,3,7.975961894604198,Delayed,1,341.53,good quality,3
+2026-04-22,B584,Lidl,Lettuce,Farm B,398,287,73,36,18,4.031041276552838,Delivered,1,706.31,late delivery,3
+2026-04-14,B585,Conad,Spinach,Farm B,355,360,47,5,20,5.73528194277369,Delayed,1,463.89,good quality,5
+2026-03-06,B586,Coop,Lettuce,Farm B,143,435,27,49,16,7.446567461901072,Delayed,1,920.64,fresh product,3
+2026-03-17,B587,Coop,Mixed Salad,Farm B,313,294,29,9,8,7.645257604968253,Delivered,2,1165.27,poor packaging,1
+2026-03-07,B588,Fruva,Lettuce,Farm B,273,244,91,35,10,2.8583717163404145,Delayed,0,1167.65,poor packaging,3
+2026-01-02,B589,Eurospin,Spinach,Farm A,279,420,92,24,28,2.4332791120111277,Delayed,0,1398.7,late delivery,1
+2026-02-01,B590,Fruva,Rucola,Farm C,324,80,50,9,12,3.278211919059585,Delayed,0,578.35,good quality,3
+2026-02-04,B591,Eurospin,Spinach,Farm B,458,284,56,7,27,7.873684135127971,Delivered,0,1133.06,fresh product,1
+2026-03-13,B592,Lidl,Mixed Salad,Farm B,471,411,76,49,9,7.136921731967962,Delayed,1,1137.59,fresh product,4
+2026-01-09,B593,Coop,Rucola,Farm C,114,371,62,9,21,3.920340361311746,Delayed,1,383.41,good quality,2
+2026-01-07,B594,Eurospin,Mixed Salad,Farm C,115,306,89,22,28,6.553208806507698,Delayed,2,952.19,good quality,1
+2026-01-25,B595,Fruva,Lettuce,Farm A,285,172,19,34,18,6.781169421657147,Delayed,0,545.01,late delivery,1
+2026-04-13,B596,Fruva,Rucola,Farm A,116,98,90,10,2,5.627444661549453,Delayed,0,1197.54,fresh product,2
+2026-03-15,B597,Conad,Lettuce,Farm B,352,301,79,11,15,7.263858417158214,Delayed,1,1114.19,fresh product,3
+2026-04-23,B598,Conad,Mixed Salad,Farm A,387,376,5,28,26,6.557120892301665,Delayed,0,1410.25,fresh product,5
+2026-03-02,B599,Lidl,Spinach,Farm C,154,336,69,49,1,5.500557290864546,Delivered,1,627.61,good quality,2
+2026-02-23,B600,Coop,Lettuce,Farm C,384,185,95,21,13,4.958180750952813,Delayed,1,530.42,fresh product,5
+2026-03-04,B601,Fruva,Lettuce,Farm B,465,116,25,13,27,4.721436857691049,Delayed,1,1957.68,late delivery,3
+2026-01-30,B602,Conad,Lettuce,Farm C,366,366,48,43,3,6.365218563380856,Delivered,2,404.56,poor packaging,3
+2026-04-11,B603,Eurospin,Spinach,Farm C,463,209,83,19,19,4.462992282184276,Delayed,1,561.28,poor packaging,3
+2026-03-31,B604,Lidl,Mixed Salad,Farm B,222,215,28,15,4,6.539235003357444,Delayed,1,1159.12,late delivery,2
+2026-04-09,B605,Conad,Lettuce,Farm C,280,157,55,32,10,2.1948246301504897,Delivered,1,1988.44,poor packaging,3
+2026-02-17,B606,Lidl,Mixed Salad,Farm B,250,220,68,8,27,4.933705558630712,Delivered,0,1704.94,poor packaging,3
+2026-04-11,B607,Coop,Rucola,Farm C,340,416,42,35,1,7.313356661513788,Delayed,2,1369.18,fresh product,4
+2026-01-12,B608,Coop,Lettuce,Farm C,436,214,93,32,13,2.1318908888577375,Delivered,1,555.84,late delivery,3
+2026-03-29,B609,Coop,Mixed Salad,Farm A,475,359,33,44,14,2.0131048571434924,Delayed,1,444.13,fresh product,1
+2026-01-18,B610,Fruva,Lettuce,Farm C,261,313,34,33,9,3.5513435818414756,Delayed,1,1715.95,late delivery,4
+2026-01-24,B611,Eurospin,Rucola,Farm C,199,340,96,38,29,5.121167646343314,Delivered,2,1427.21,late delivery,1
+2026-02-06,B612,Lidl,Lettuce,Farm B,458,132,3,46,17,4.129587205808098,Delivered,2,1637.22,late delivery,4
+2026-03-10,B613,Coop,Spinach,Farm C,339,439,66,27,6,5.994984965911176,Delivered,1,1197.38,late delivery,2
+2026-01-19,B614,Conad,Spinach,Farm A,403,252,24,18,11,5.341032168141446,Delivered,2,1532.92,poor packaging,3
+2026-04-14,B615,Lidl,Lettuce,Farm C,354,363,84,18,0,7.296938976070962,Delivered,1,408.09,late delivery,3
+2026-04-11,B616,Conad,Mixed Salad,Farm B,303,389,5,47,26,3.8183945670506096,Delivered,2,1954.57,late delivery,2
+2026-03-14,B617,Eurospin,Rucola,Farm B,325,315,54,12,4,5.731620402540255,Delivered,2,1395.96,late delivery,4
+2026-04-14,B618,Conad,Rucola,Farm C,388,119,31,9,16,4.592697420811576,Delivered,1,1646.95,late delivery,1
+2026-04-30,B619,Coop,Lettuce,Farm C,409,163,24,7,27,6.032315243032171,Delayed,1,1540.27,late delivery,3
+2026-02-17,B620,Conad,Lettuce,Farm A,401,117,7,41,26,2.0810818538370954,Delayed,2,996.78,fresh product,1
+2026-02-02,B621,Lidl,Spinach,Farm A,108,368,59,33,12,5.463120057339854,Delivered,0,1143.66,late delivery,3
+2026-01-13,B622,Fruva,Lettuce,Farm B,491,89,72,45,2,6.0955956786878325,Delayed,0,1182.35,good quality,1
+2026-03-30,B623,Lidl,Lettuce,Farm A,317,285,55,44,0,3.1396084619661204,Delayed,0,1490.93,late delivery,4
+2026-04-30,B624,Lidl,Lettuce,Farm B,334,422,67,20,6,3.641998309528746,Delivered,0,389.4,late delivery,5
+2026-03-05,B625,Lidl,Lettuce,Farm C,154,310,61,30,7,7.730137517670011,Delayed,0,213.24,good quality,4
+2026-03-30,B626,Fruva,Spinach,Farm A,192,193,27,31,14,2.985622696735568,Delivered,0,1038.31,fresh product,2
+2026-01-12,B627,Conad,Rucola,Farm A,184,188,30,41,15,2.3221824715958412,Delayed,0,1307.81,good quality,4
+2026-02-12,B628,Conad,Lettuce,Farm C,426,146,61,49,6,3.6786015853222453,Delayed,1,250.11,late delivery,1
+2026-02-21,B629,Fruva,Spinach,Farm B,481,234,7,27,27,7.141700779216329,Delivered,2,1550.29,late delivery,5
+2026-04-24,B630,Fruva,Mixed Salad,Farm C,475,245,37,33,8,6.488634007324936,Delivered,2,1772.05,good quality,1
+2026-02-08,B631,Lidl,Mixed Salad,Farm A,202,303,5,48,10,2.8238202508496264,Delayed,1,964.63,fresh product,1
+2026-03-03,B632,Fruva,Mixed Salad,Farm B,445,323,85,35,10,3.5128637350336613,Delivered,0,1514.23,fresh product,3
+2026-01-20,B633,Fruva,Spinach,Farm C,320,125,21,12,26,5.940891386530694,Delayed,2,1194.87,good quality,2
+2026-02-03,B634,Fruva,Lettuce,Farm C,153,113,70,27,13,5.603639775123096,Delayed,0,1943.87,good quality,3
+2026-02-07,B635,Fruva,Mixed Salad,Farm B,372,394,9,39,19,6.213949876518241,Delivered,2,1433.36,poor packaging,3
+2026-02-18,B636,Coop,Lettuce,Farm B,425,269,46,38,3,5.102791352063829,Delayed,1,1579.43,fresh product,5
+2026-02-09,B637,Coop,Rucola,Farm C,419,162,46,10,15,4.947982591472785,Delayed,2,1266.49,poor packaging,1
+2026-04-23,B638,Coop,Lettuce,Farm B,410,208,48,40,20,2.7838062893441586,Delayed,2,1286.83,good quality,2
+2026-03-22,B639,Fruva,Lettuce,Farm B,379,90,72,16,2,6.84575521737785,Delayed,0,1933.32,good quality,3
+2026-04-16,B640,Fruva,Mixed Salad,Farm B,430,238,92,17,1,3.2565060249311255,Delivered,2,1861.7,late delivery,4
+2026-03-16,B641,Eurospin,Mixed Salad,Farm C,176,372,80,25,11,6.412781171586099,Delivered,1,734.34,fresh product,5
+2026-04-11,B642,Conad,Mixed Salad,Farm B,160,105,70,43,18,6.01589249818101,Delivered,2,1198.32,poor packaging,2
+2026-01-19,B643,Fruva,Rucola,Farm A,160,171,29,11,8,2.5166966630382426,Delivered,0,1322.14,poor packaging,2
+2026-01-10,B644,Fruva,Rucola,Farm A,456,419,64,7,17,2.1553764214969107,Delivered,2,995.72,good quality,5
+2026-02-05,B645,Eurospin,Rucola,Farm B,252,81,85,9,3,4.137163660768277,Delayed,0,1919.32,good quality,5
+2026-04-29,B646,Lidl,Rucola,Farm B,155,307,80,25,13,6.240821577263031,Delayed,0,956.45,fresh product,3
+2026-03-30,B647,Coop,Lettuce,Farm B,223,281,81,26,13,4.038155710877523,Delivered,0,1391.8,good quality,2
+2026-03-18,B648,Conad,Lettuce,Farm C,418,448,93,39,15,7.454375257380389,Delayed,0,1136.05,poor packaging,1
+2026-02-09,B649,Fruva,Lettuce,Farm C,284,200,97,14,9,2.774390748974378,Delayed,2,1160.26,poor packaging,3
+2026-02-27,B650,Eurospin,Spinach,Farm A,489,101,87,29,28,4.536215417163037,Delayed,2,1289.8,fresh product,5
+2026-03-11,B651,Coop,Rucola,Farm B,135,283,37,15,11,5.335224885193756,Delivered,2,1073.13,poor packaging,4
+2026-02-21,B652,Eurospin,Spinach,Farm A,413,263,23,13,22,3.5352352448732765,Delayed,1,1188.79,late delivery,3
+2026-02-12,B653,Conad,Mixed Salad,Farm C,302,350,91,14,5,6.114276612948085,Delayed,1,1090.27,poor packaging,2
+2026-03-23,B654,Coop,Mixed Salad,Farm B,142,233,70,42,29,2.8098709164298525,Delivered,0,777.12,late delivery,1
+2026-03-24,B655,Lidl,Rucola,Farm C,248,167,67,16,21,4.367306775688239,Delivered,1,824.09,late delivery,1
+2026-01-24,B656,Eurospin,Lettuce,Farm C,410,287,23,17,23,7.2468506197018545,Delayed,1,1653.86,late delivery,1
+2026-04-23,B657,Conad,Lettuce,Farm A,264,416,57,43,9,4.11025890775285,Delivered,2,1554.22,fresh product,2
+2026-02-28,B658,Lidl,Lettuce,Farm B,449,367,41,36,25,5.971161873290033,Delayed,0,1645.47,late delivery,2
+2026-01-02,B659,Lidl,Lettuce,Farm A,121,369,48,5,8,3.6029915755279394,Delivered,0,748.14,fresh product,1
+2026-04-15,B660,Coop,Mixed Salad,Farm B,398,246,72,10,18,6.23213822116471,Delivered,2,989.6,fresh product,5
+2026-01-16,B661,Eurospin,Lettuce,Farm C,264,204,80,30,21,4.024154470143678,Delivered,0,1590.08,good quality,2
+2026-01-30,B662,Lidl,Spinach,Farm C,301,211,36,8,12,7.6626447220688965,Delayed,0,1053.38,poor packaging,2
+2026-02-17,B663,Conad,Rucola,Farm C,224,400,41,25,8,2.4444494432626866,Delivered,2,507.95,good quality,5
+2026-04-15,B664,Fruva,Lettuce,Farm C,155,315,24,31,8,3.065347518279337,Delayed,2,405.53,good quality,4
+2026-02-18,B665,Lidl,Spinach,Farm A,386,248,61,33,25,7.850523018246088,Delayed,0,1276.74,poor packaging,2
+2026-02-05,B666,Lidl,Mixed Salad,Farm B,307,283,79,44,5,6.420767412261182,Delivered,2,403.11,late delivery,2
+2026-04-16,B667,Fruva,Lettuce,Farm A,164,350,3,24,9,6.670035374405352,Delayed,1,448.91,fresh product,1
+2026-04-08,B668,Coop,Spinach,Farm A,432,80,4,20,14,3.713477697431818,Delivered,2,938.53,fresh product,5
+2026-04-17,B669,Coop,Rucola,Farm B,238,363,41,36,2,5.212480013068807,Delayed,2,466.51,good quality,1
+2026-01-10,B670,Eurospin,Lettuce,Farm B,296,277,29,35,16,5.999154990712302,Delayed,0,1683.68,late delivery,5
+2026-01-01,B671,Coop,Rucola,Farm C,364,294,75,14,1,7.851467211703752,Delayed,1,624.02,late delivery,2
+2026-01-02,B672,Coop,Mixed Salad,Farm A,344,151,47,17,14,5.069153844856958,Delayed,1,307.87,late delivery,5
+2026-04-24,B673,Conad,Lettuce,Farm A,398,355,19,25,17,3.001701074206815,Delayed,1,902.52,late delivery,1
+2026-04-20,B674,Coop,Lettuce,Farm A,425,413,67,30,14,7.5889423215135565,Delivered,2,548.52,good quality,3
+2026-04-23,B675,Eurospin,Lettuce,Farm B,252,183,74,11,25,3.3569095988127104,Delivered,2,393.04,poor packaging,2
+2026-02-11,B676,Eurospin,Rucola,Farm B,293,223,72,32,12,5.018435601629655,Delivered,2,1158.25,good quality,2
+2026-03-13,B677,Coop,Spinach,Farm B,267,235,36,45,0,3.2353238645995965,Delivered,2,712.84,late delivery,2
+2026-02-16,B678,Lidl,Rucola,Farm A,262,410,40,7,28,7.580032266746436,Delivered,1,1877.12,late delivery,1
+2026-02-23,B679,Coop,Spinach,Farm B,380,332,18,12,27,5.773238866479831,Delivered,2,400.94,fresh product,1
+2026-04-10,B680,Conad,Rucola,Farm B,449,244,95,15,19,3.292155697127651,Delivered,1,1643.45,poor packaging,4
+2026-01-08,B681,Lidl,Mixed Salad,Farm B,146,173,43,31,20,7.1030699118624,Delayed,2,1410.19,good quality,5
+2026-03-14,B682,Fruva,Rucola,Farm B,201,185,76,43,27,2.9535486010650294,Delayed,2,888.03,good quality,5
+2026-03-18,B683,Eurospin,Spinach,Farm B,481,284,57,13,0,5.226101130530603,Delayed,2,539.75,fresh product,1
+2026-01-17,B684,Eurospin,Spinach,Farm C,402,191,15,6,16,4.842639755086537,Delayed,2,1788.02,good quality,4
+2026-03-25,B685,Conad,Rucola,Farm A,162,128,50,37,29,7.722221758950248,Delivered,1,847.68,poor packaging,4
+2026-01-23,B686,Fruva,Rucola,Farm B,298,350,45,42,13,4.480054759227153,Delayed,2,1716.6,good quality,1
+2026-02-21,B687,Fruva,Lettuce,Farm B,249,99,32,12,24,7.009740650312701,Delayed,0,1588.24,poor packaging,5
+2026-02-24,B688,Eurospin,Mixed Salad,Farm A,370,272,21,7,5,2.957796540640641,Delayed,1,272.51,poor packaging,1
+2026-03-23,B689,Fruva,Lettuce,Farm C,420,298,56,31,10,6.9874748305396555,Delivered,2,1840.84,good quality,5
+2026-01-15,B690,Eurospin,Lettuce,Farm B,119,210,72,45,6,5.639969178655207,Delivered,2,1160.4,poor packaging,5
+2026-01-16,B691,Lidl,Lettuce,Farm C,419,131,80,42,3,6.900760217446084,Delivered,2,634.43,good quality,5
+2026-02-09,B692,Conad,Mixed Salad,Farm B,295,231,35,45,9,3.556398432811123,Delayed,0,923.26,good quality,4
+2026-03-16,B693,Coop,Spinach,Farm A,162,419,24,16,20,4.368843697269536,Delayed,0,1193.51,late delivery,2
+2026-03-03,B694,Conad,Mixed Salad,Farm A,113,336,80,29,26,7.2695148063940795,Delivered,0,340.99,poor packaging,3
+2026-01-23,B695,Coop,Mixed Salad,Farm A,485,93,0,30,25,4.760703099219953,Delivered,1,691.03,poor packaging,4
+2026-03-21,B696,Conad,Mixed Salad,Farm B,485,362,73,39,22,4.190285400155609,Delayed,2,1601.33,fresh product,5
+2026-04-16,B697,Lidl,Mixed Salad,Farm C,323,304,89,21,6,4.013655465445408,Delayed,2,1650.09,good quality,4
+2026-03-07,B698,Eurospin,Mixed Salad,Farm C,286,293,14,14,8,7.9675651233316405,Delivered,0,1366.58,good quality,4
+2026-01-10,B699,Eurospin,Spinach,Farm C,393,310,69,44,11,3.208394616763324,Delayed,2,1266.47,late delivery,4
+2026-03-20,B700,Coop,Rucola,Farm B,109,332,38,32,29,3.2722690962978467,Delivered,1,224.41,poor packaging,5
+2026-02-21,B701,Lidl,Mixed Salad,Farm C,492,310,91,27,12,2.7348885011017834,Delayed,1,1617.82,fresh product,3
+2026-02-27,B702,Fruva,Mixed Salad,Farm B,156,141,81,11,17,4.765212411617912,Delayed,1,348.38,poor packaging,2
+2026-04-17,B703,Fruva,Lettuce,Farm C,492,348,57,7,2,2.795444464906894,Delayed,2,1760.34,fresh product,2
+2026-04-06,B704,Eurospin,Rucola,Farm A,387,162,96,32,20,7.341324023327336,Delayed,2,1323.13,late delivery,3
+2026-04-17,B705,Lidl,Rucola,Farm A,453,105,81,32,28,6.195877526931822,Delivered,2,773.21,good quality,3
+2026-03-11,B706,Coop,Mixed Salad,Farm A,112,378,75,23,20,6.49835448070126,Delivered,1,1561.22,good quality,4
+2026-04-20,B707,Lidl,Mixed Salad,Farm B,372,147,43,49,28,3.88883035352341,Delayed,1,1586.79,good quality,3
+2026-04-21,B708,Fruva,Rucola,Farm B,381,279,98,31,24,6.544550620239949,Delivered,0,516.41,fresh product,3
+2026-04-29,B709,Eurospin,Lettuce,Farm C,107,117,82,30,6,5.110397759798391,Delayed,0,673.47,good quality,3
+2026-01-30,B710,Conad,Lettuce,Farm B,330,102,47,49,7,7.125548369323637,Delivered,2,1083.25,poor packaging,5
+2026-02-26,B711,Conad,Lettuce,Farm A,178,189,12,15,27,3.8136602029786912,Delayed,0,382.09,good quality,2
+2026-01-04,B712,Coop,Lettuce,Farm A,448,182,9,13,26,4.031324164622308,Delayed,0,1225.06,poor packaging,2
+2026-03-30,B713,Lidl,Spinach,Farm C,264,301,90,43,14,2.9774159268643645,Delayed,0,981.29,good quality,1
+2026-04-17,B714,Conad,Spinach,Farm C,161,416,35,30,15,7.549861689410209,Delivered,2,677.51,poor packaging,1
+2026-04-28,B715,Eurospin,Lettuce,Farm C,469,207,46,9,25,7.783496072439131,Delayed,2,935.83,late delivery,2
+2026-04-24,B716,Eurospin,Mixed Salad,Farm A,356,144,32,42,24,2.3214593576444473,Delivered,0,1387.77,good quality,1
+2026-01-30,B717,Fruva,Lettuce,Farm A,367,148,87,10,24,2.3855163377276662,Delivered,1,1741.9,late delivery,3
+2026-02-18,B718,Conad,Rucola,Farm B,101,408,55,21,27,3.7575512204187373,Delivered,0,1375.74,good quality,4
+2026-03-01,B719,Conad,Lettuce,Farm A,149,257,36,46,14,6.6241518245614035,Delivered,2,1844.71,fresh product,5
+2026-03-05,B720,Coop,Rucola,Farm A,313,283,16,29,27,6.217198664300608,Delayed,2,270.73,poor packaging,2
+2026-03-02,B721,Conad,Mixed Salad,Farm B,131,239,98,25,9,6.701503368457303,Delayed,2,1528.67,fresh product,1
+2026-01-31,B722,Lidl,Mixed Salad,Farm B,409,198,16,49,10,3.6066458876247047,Delivered,1,456.78,late delivery,5
+2026-02-12,B723,Conad,Rucola,Farm B,212,114,3,20,15,7.909488596101427,Delivered,2,1599.2,late delivery,1
+2026-02-14,B724,Coop,Lettuce,Farm A,455,401,16,44,5,2.924885146018005,Delivered,0,1490.09,poor packaging,5
+2026-03-21,B725,Coop,Spinach,Farm C,225,249,76,21,6,2.981650525062273,Delayed,0,1821.63,poor packaging,1
+2026-03-24,B726,Coop,Rucola,Farm C,357,257,74,35,0,7.369215204233119,Delivered,0,975.77,late delivery,5
+2026-02-17,B727,Lidl,Rucola,Farm C,374,416,89,10,10,3.4994103298213393,Delayed,0,1658.47,poor packaging,4
+2026-01-23,B728,Eurospin,Lettuce,Farm C,263,338,57,28,22,2.4270814179085174,Delivered,1,1044.27,fresh product,5
+2026-03-17,B729,Conad,Rucola,Farm B,270,146,43,36,9,5.6975242434248745,Delivered,0,790.33,fresh product,2
+2026-01-28,B730,Conad,Rucola,Farm C,372,187,66,14,14,7.327237591107982,Delivered,1,948.39,good quality,3
+2026-03-05,B731,Conad,Mixed Salad,Farm A,230,146,36,23,28,2.0326622551501434,Delayed,0,548.21,good quality,2
+2026-03-31,B732,Coop,Lettuce,Farm A,275,420,22,8,20,7.001444657874421,Delivered,0,335.26,late delivery,1
+2026-04-09,B733,Conad,Rucola,Farm A,346,395,66,5,19,3.3512426012972094,Delivered,1,1418.56,good quality,1
+2026-02-26,B734,Lidl,Mixed Salad,Farm A,432,134,50,42,6,4.0048581343031735,Delivered,0,272.22,late delivery,1
+2026-04-22,B735,Eurospin,Mixed Salad,Farm B,173,120,94,17,2,2.570561886264377,Delayed,1,916.85,good quality,4
+2026-03-24,B736,Eurospin,Rucola,Farm B,347,148,66,11,23,7.152454379079846,Delivered,0,1093.38,poor packaging,4
+2026-01-18,B737,Eurospin,Lettuce,Farm A,212,204,71,19,19,5.038103319684874,Delivered,0,582.91,good quality,5
+2026-02-07,B738,Coop,Rucola,Farm C,153,240,32,12,19,3.346215054190916,Delivered,2,1202.27,fresh product,2
+2026-03-28,B739,Lidl,Spinach,Farm A,333,408,2,30,8,5.946732680217117,Delayed,1,1078.96,late delivery,5
+2026-01-03,B740,Coop,Mixed Salad,Farm A,240,278,20,23,24,3.3474942959234064,Delivered,0,1502.11,fresh product,5
+2026-02-08,B741,Coop,Rucola,Farm A,380,337,18,24,9,6.490438066430227,Delivered,1,552.34,good quality,4
+2026-03-30,B742,Lidl,Lettuce,Farm C,406,417,25,40,7,5.184171138581128,Delivered,0,654.65,good quality,1
+2026-01-27,B743,Coop,Mixed Salad,Farm B,454,116,95,11,0,3.756028674556545,Delivered,2,1114.22,fresh product,1
+2026-02-07,B744,Coop,Lettuce,Farm B,132,89,79,8,26,7.595216514813344,Delivered,2,1519.68,fresh product,1
+2026-04-22,B745,Fruva,Rucola,Farm A,382,352,43,49,7,3.332493129253939,Delivered,2,867.99,good quality,1
+2026-03-17,B746,Eurospin,Lettuce,Farm B,276,417,64,23,21,3.2564402836996016,Delivered,1,381.94,good quality,2
+2026-03-10,B747,Conad,Spinach,Farm B,472,174,32,22,28,6.021523856266155,Delayed,2,748.24,fresh product,1
+2026-01-07,B748,Eurospin,Lettuce,Farm A,259,117,21,20,19,5.831262364411481,Delayed,0,1284.52,good quality,3
+2026-03-30,B749,Eurospin,Mixed Salad,Farm A,358,306,32,26,17,4.237259055213067,Delivered,0,541.08,late delivery,2
+2026-01-29,B750,Lidl,Rucola,Farm A,155,305,45,7,4,6.004106978302376,Delivered,2,1551.2,late delivery,2
+2026-04-19,B751,Conad,Spinach,Farm B,432,351,40,38,22,3.5761598592800308,Delivered,1,431.74,fresh product,1
+2026-03-28,B752,Fruva,Rucola,Farm B,475,257,85,47,12,6.871454689759428,Delivered,0,415.8,fresh product,4
+2026-04-27,B753,Eurospin,Rucola,Farm C,353,86,86,28,4,3.7940760776560767,Delayed,0,1404.89,late delivery,1
+2026-01-19,B754,Coop,Spinach,Farm A,306,412,76,36,12,3.9335623629169083,Delayed,2,1357.04,late delivery,4
+2026-01-26,B755,Fruva,Rucola,Farm A,176,336,86,44,2,3.0346783338431544,Delayed,2,1881.69,poor packaging,3
+2026-04-03,B756,Coop,Lettuce,Farm C,415,375,64,33,9,6.430107662727169,Delivered,2,1098.64,poor packaging,4
+2026-02-12,B757,Fruva,Lettuce,Farm C,464,169,79,40,0,3.663550498095117,Delivered,0,1884.79,good quality,3
+2026-03-28,B758,Lidl,Lettuce,Farm C,274,133,3,34,18,2.0951212722414017,Delivered,0,839.52,good quality,4
+2026-02-15,B759,Eurospin,Lettuce,Farm C,169,297,65,49,28,7.913144799531308,Delayed,2,1005.09,good quality,5
+2026-03-07,B760,Conad,Rucola,Farm C,206,267,7,26,3,7.757565230166443,Delivered,1,451.5,late delivery,5
+2026-03-26,B761,Conad,Mixed Salad,Farm B,123,191,43,41,23,6.415721363091068,Delayed,2,1129.6,fresh product,2
+2026-02-10,B762,Lidl,Mixed Salad,Farm A,165,377,64,40,24,4.6746724853568224,Delayed,0,1000.56,poor packaging,4
+2026-02-07,B763,Eurospin,Spinach,Farm B,444,97,69,22,19,2.087204811595944,Delayed,0,644.97,poor packaging,3
+2026-03-01,B764,Fruva,Spinach,Farm B,154,348,46,27,29,4.819870607946767,Delayed,0,1760.04,good quality,5
+2026-02-04,B765,Conad,Rucola,Farm C,262,252,12,14,1,5.794833214468865,Delayed,0,246.34,fresh product,4
+2026-02-16,B766,Conad,Spinach,Farm B,496,332,20,5,26,5.293595146996026,Delayed,0,1900.55,fresh product,2
+2026-01-03,B767,Fruva,Lettuce,Farm B,412,443,86,37,15,6.803983649151867,Delivered,0,1881.11,late delivery,5
+2026-02-16,B768,Eurospin,Lettuce,Farm B,117,123,26,39,25,3.3385401106721346,Delivered,2,407.54,fresh product,2
+2026-04-07,B769,Eurospin,Lettuce,Farm B,452,314,62,36,17,4.286881292208413,Delivered,2,1027.1,late delivery,5
+2026-04-09,B770,Conad,Lettuce,Farm A,399,200,67,29,15,3.202814286598154,Delayed,2,1742.11,fresh product,5
+2026-03-04,B771,Conad,Rucola,Farm B,161,399,16,18,8,5.409914906467553,Delayed,0,1391.38,poor packaging,3
+2026-01-02,B772,Eurospin,Mixed Salad,Farm C,243,225,6,49,3,2.710173367107788,Delayed,0,1424.43,poor packaging,4
+2026-02-09,B773,Eurospin,Spinach,Farm B,467,262,76,44,8,7.291419708580757,Delivered,1,1122.14,poor packaging,2
+2026-02-25,B774,Lidl,Mixed Salad,Farm B,469,225,67,13,6,5.598226480448601,Delayed,2,1329.07,poor packaging,1
+2026-02-09,B775,Coop,Lettuce,Farm B,320,449,51,26,3,4.3317937423930335,Delayed,1,1805.73,late delivery,3
+2026-03-31,B776,Lidl,Lettuce,Farm C,304,286,17,41,15,5.427283457688786,Delivered,0,1189.32,poor packaging,3
+2026-04-26,B777,Conad,Mixed Salad,Farm C,480,437,8,16,14,4.492634097557965,Delivered,1,1474.01,good quality,3
+2026-03-24,B778,Eurospin,Lettuce,Farm A,342,428,87,20,24,6.86652347720155,Delayed,2,684.42,fresh product,3
+2026-02-25,B779,Conad,Lettuce,Farm A,234,80,48,36,8,6.083498557512604,Delivered,0,943.24,poor packaging,5
+2026-04-26,B780,Lidl,Lettuce,Farm B,474,130,80,40,2,7.120078985652343,Delivered,0,394.54,poor packaging,1
+2026-03-25,B781,Eurospin,Lettuce,Farm A,475,158,5,37,22,2.678815626044142,Delivered,0,1679.24,good quality,2
+2026-02-23,B782,Fruva,Rucola,Farm A,335,252,29,48,13,6.738570642407807,Delivered,0,1822.27,late delivery,4
+2026-01-19,B783,Conad,Spinach,Farm C,307,174,91,11,29,3.4643840658035074,Delayed,2,313.87,fresh product,5
+2026-01-24,B784,Lidl,Mixed Salad,Farm A,399,212,54,33,29,2.196799245661376,Delayed,2,432.16,late delivery,5
+2026-04-01,B785,Eurospin,Spinach,Farm C,350,201,42,11,28,4.11209949501127,Delivered,0,351.9,good quality,2
+2026-03-18,B786,Eurospin,Rucola,Farm C,190,87,31,24,9,3.938426410434507,Delivered,2,1033.57,good quality,5
+2026-04-05,B787,Eurospin,Mixed Salad,Farm C,101,257,40,6,1,5.7643793318950785,Delivered,2,1378.6,good quality,2
+2026-03-25,B788,Coop,Spinach,Farm C,320,352,25,27,23,2.3746851871850447,Delayed,0,1523.79,late delivery,3
+2026-01-02,B789,Lidl,Rucola,Farm A,327,242,71,6,5,5.706361544370766,Delayed,0,1710.93,late delivery,2
+2026-01-23,B790,Lidl,Spinach,Farm A,460,387,45,38,4,2.0640337270930047,Delivered,2,1715.26,late delivery,3
+2026-04-18,B791,Coop,Rucola,Farm A,120,161,87,42,9,5.200870855437756,Delivered,0,1355.98,good quality,2
+2026-04-24,B792,Conad,Mixed Salad,Farm A,161,308,46,35,2,4.829651424446554,Delayed,2,1798.15,late delivery,1
+2026-03-24,B793,Lidl,Lettuce,Farm A,191,80,50,10,7,3.4069040406990196,Delivered,1,516.21,fresh product,4
+2026-02-21,B794,Conad,Rucola,Farm A,204,145,58,11,16,6.921661158611927,Delayed,1,980.23,poor packaging,2
+2026-03-16,B795,Coop,Spinach,Farm A,418,166,40,26,25,5.657171058524382,Delivered,1,662.71,poor packaging,2
+2026-04-03,B796,Conad,Rucola,Farm A,213,371,72,20,3,5.964364358654909,Delivered,2,1912.6,poor packaging,2
+2026-03-21,B797,Eurospin,Mixed Salad,Farm B,320,341,25,15,23,7.431930970256539,Delayed,1,1791.64,good quality,4
+2026-03-04,B798,Conad,Spinach,Farm B,431,424,71,47,3,7.463858095007272,Delayed,2,1252.56,good quality,2
+2026-04-10,B799,Eurospin,Spinach,Farm B,115,121,80,26,3,3.6827793452279147,Delivered,0,1536.16,fresh product,3
+2026-01-16,B800,Coop,Lettuce,Farm A,184,218,38,45,3,3.6997791679862133,Delayed,1,1270.92,good quality,3
+2026-03-31,B801,Lidl,Lettuce,Farm B,492,283,1,42,4,4.851782442939534,Delayed,1,1710.0,good quality,3
+2026-03-09,B802,Eurospin,Spinach,Farm C,237,287,60,14,5,5.306848017168403,Delivered,1,1308.31,late delivery,3
+2026-02-25,B803,Fruva,Lettuce,Farm C,231,439,47,36,23,6.239298813696962,Delivered,1,1606.26,late delivery,4
+2026-03-11,B804,Conad,Rucola,Farm C,325,174,40,21,14,2.5475099547142888,Delayed,2,924.13,poor packaging,3
+2026-03-03,B805,Conad,Rucola,Farm B,381,439,18,10,0,3.416047581942272,Delivered,2,985.19,good quality,1
+2026-02-16,B806,Fruva,Lettuce,Farm C,192,391,11,37,23,3.4459775479755077,Delivered,0,212.22,late delivery,4
+2026-01-10,B807,Fruva,Spinach,Farm A,309,297,79,12,23,5.494405789207638,Delayed,2,235.51,fresh product,3
+2026-02-04,B808,Eurospin,Rucola,Farm B,328,425,80,5,24,3.8324809912565083,Delayed,2,1875.62,fresh product,5
+2026-01-29,B809,Fruva,Mixed Salad,Farm B,211,290,11,25,9,7.572376215664013,Delivered,1,1204.06,late delivery,5
+2026-02-04,B810,Coop,Lettuce,Farm A,333,138,78,26,26,5.150845110617778,Delivered,0,815.36,poor packaging,1
+2026-04-03,B811,Eurospin,Lettuce,Farm B,168,165,17,39,16,3.968418106913947,Delayed,1,399.86,good quality,5
+2026-01-03,B812,Eurospin,Lettuce,Farm C,390,259,86,32,27,6.296892673254168,Delayed,0,589.04,fresh product,2
+2026-02-17,B813,Fruva,Mixed Salad,Farm A,155,205,30,16,15,2.208439684668689,Delivered,2,653.27,late delivery,4
+2026-01-20,B814,Fruva,Lettuce,Farm B,221,413,74,11,28,5.533616135375287,Delivered,1,1064.23,poor packaging,1
+2026-01-09,B815,Coop,Rucola,Farm A,234,223,18,43,5,5.526772430398233,Delivered,0,1295.84,fresh product,5
+2026-02-11,B816,Eurospin,Spinach,Farm B,263,171,87,9,4,6.6279388593011,Delayed,1,334.12,poor packaging,5
+2026-02-09,B817,Coop,Rucola,Farm A,458,185,8,26,14,2.748184682741619,Delivered,1,1456.89,late delivery,3
+2026-01-19,B818,Conad,Lettuce,Farm C,269,161,25,17,25,5.630609733422904,Delayed,2,1564.94,poor packaging,1
+2026-04-01,B819,Conad,Mixed Salad,Farm C,481,359,71,13,13,6.270092356130516,Delivered,2,509.37,good quality,4
+2026-01-21,B820,Eurospin,Spinach,Farm A,464,249,49,8,7,3.0199388781058234,Delivered,1,1755.62,good quality,1
+2026-03-31,B821,Lidl,Rucola,Farm C,346,297,32,35,15,6.866975623274794,Delayed,2,1678.84,late delivery,4
+2026-02-22,B822,Conad,Mixed Salad,Farm A,173,335,80,16,5,4.0881617791323155,Delivered,0,1694.06,good quality,3
+2026-03-30,B823,Fruva,Mixed Salad,Farm B,312,427,37,45,27,7.177826163992865,Delivered,1,1999.47,poor packaging,1
+2026-04-03,B824,Fruva,Lettuce,Farm B,198,321,29,38,9,3.6640805703477755,Delayed,2,986.66,poor packaging,3
+2026-01-18,B825,Conad,Lettuce,Farm A,321,171,21,48,27,3.999450443304366,Delivered,2,783.16,late delivery,5
+2026-01-06,B826,Conad,Mixed Salad,Farm C,364,191,35,42,7,4.699476686513032,Delayed,2,1945.2,good quality,5
+2026-02-23,B827,Eurospin,Rucola,Farm B,113,310,28,10,6,4.543583210177998,Delayed,2,1876.76,fresh product,3
+2026-01-01,B828,Lidl,Lettuce,Farm C,314,298,59,30,19,7.326346387359925,Delayed,2,819.34,fresh product,1
+2026-01-03,B829,Lidl,Spinach,Farm B,210,202,57,40,7,2.7012725635456345,Delivered,0,880.89,fresh product,1
+2026-03-18,B830,Conad,Rucola,Farm A,131,107,77,49,2,4.0028894702554245,Delivered,2,390.84,fresh product,3
+2026-04-27,B831,Lidl,Rucola,Farm B,288,123,96,18,7,3.858369102365191,Delivered,1,295.48,poor packaging,1
+2026-04-25,B832,Fruva,Mixed Salad,Farm C,284,393,34,28,0,3.2226562051463823,Delivered,2,994.79,good quality,1
+2026-02-23,B833,Conad,Rucola,Farm B,408,310,26,20,18,2.0915890378761786,Delivered,1,1646.38,fresh product,4
+2026-01-20,B834,Conad,Rucola,Farm B,317,357,96,43,14,4.351647138730624,Delivered,0,507.98,fresh product,1
+2026-01-24,B835,Eurospin,Lettuce,Farm A,426,279,77,16,3,6.861819794739995,Delayed,0,1877.84,fresh product,5
+2026-04-03,B836,Fruva,Mixed Salad,Farm B,167,423,20,37,6,2.133634730403343,Delivered,2,1761.46,poor packaging,2
+2026-04-28,B837,Conad,Spinach,Farm A,372,139,21,28,28,7.53758046860364,Delivered,1,476.06,poor packaging,2
+2026-02-08,B838,Eurospin,Rucola,Farm A,437,178,19,19,4,2.9766566061522126,Delayed,1,774.77,poor packaging,5
+2026-02-06,B839,Coop,Spinach,Farm A,103,100,30,25,7,7.811831991801653,Delivered,0,967.53,poor packaging,1
+2026-02-12,B840,Fruva,Spinach,Farm C,191,396,13,8,20,4.824574354325618,Delayed,0,1617.23,fresh product,4
+2026-03-10,B841,Conad,Mixed Salad,Farm C,391,117,79,19,13,7.074251490300362,Delivered,2,429.64,good quality,5
+2026-04-17,B842,Eurospin,Lettuce,Farm B,397,94,62,8,26,3.5419504118656855,Delivered,0,1366.78,fresh product,1
+2026-02-22,B843,Lidl,Lettuce,Farm C,234,339,68,9,10,3.212498990047542,Delayed,0,1430.92,late delivery,4
+2026-01-02,B844,Coop,Rucola,Farm B,398,324,81,48,4,3.7637682584617895,Delayed,1,705.28,late delivery,3
+2026-01-03,B845,Fruva,Rucola,Farm C,410,369,68,19,14,3.8580917498777083,Delayed,2,1793.03,late delivery,4
+2026-03-29,B846,Conad,Rucola,Farm C,430,244,64,13,16,5.123123201849087,Delivered,2,1833.04,late delivery,5
+2026-01-31,B847,Coop,Mixed Salad,Farm A,419,184,55,14,19,4.217858705735129,Delivered,0,1555.06,good quality,1
+2026-01-02,B848,Lidl,Spinach,Farm C,128,350,45,5,27,3.079997699664121,Delivered,2,390.97,poor packaging,2
+2026-02-21,B849,Eurospin,Rucola,Farm B,330,354,21,33,0,5.255287173803876,Delivered,1,1701.4,poor packaging,3
+2026-03-08,B850,Conad,Lettuce,Farm C,210,169,23,17,4,5.279753875659477,Delivered,0,1904.67,good quality,2
+2026-04-30,B851,Fruva,Mixed Salad,Farm B,239,228,10,48,18,7.764368529369459,Delayed,1,992.22,late delivery,2
+2026-01-25,B852,Lidl,Lettuce,Farm B,243,345,65,39,18,4.472561657795235,Delivered,0,1008.04,fresh product,3
+2026-01-08,B853,Conad,Spinach,Farm A,370,166,22,22,13,2.3816539770590044,Delayed,1,1929.84,poor packaging,4
+2026-02-24,B854,Coop,Lettuce,Farm A,255,226,86,24,12,6.848942294145276,Delivered,2,585.52,good quality,2
+2026-01-28,B855,Eurospin,Lettuce,Farm B,452,379,41,44,0,3.5828364496781453,Delivered,1,949.87,late delivery,1
+2026-03-31,B856,Lidl,Mixed Salad,Farm C,447,312,9,26,5,3.4235261819428233,Delayed,0,1933.17,good quality,3
+2026-03-05,B857,Conad,Mixed Salad,Farm A,325,443,59,38,25,6.99758989035749,Delivered,1,1105.79,poor packaging,1
+2026-02-13,B858,Eurospin,Mixed Salad,Farm A,391,416,87,25,1,3.320397528708151,Delivered,1,1444.71,fresh product,4
+2026-01-12,B859,Fruva,Mixed Salad,Farm B,287,92,90,12,9,3.512419321101029,Delayed,0,1322.1,poor packaging,4
+2026-01-02,B860,Eurospin,Rucola,Farm C,390,102,45,19,1,6.404441186035268,Delayed,0,343.97,fresh product,4
+2026-03-08,B861,Fruva,Lettuce,Farm C,101,251,63,21,13,6.992568416498689,Delayed,1,1065.3,poor packaging,4
+2026-04-12,B862,Fruva,Spinach,Farm C,146,301,20,34,27,3.5192448898541446,Delayed,1,789.62,poor packaging,5
+2026-01-01,B863,Eurospin,Spinach,Farm A,146,292,94,43,26,5.337418364154637,Delayed,2,247.34,late delivery,5
+2026-01-16,B864,Fruva,Spinach,Farm B,461,301,51,30,20,5.953132425361053,Delivered,2,1952.65,fresh product,5
+2026-04-16,B865,Eurospin,Lettuce,Farm B,360,95,16,36,5,5.7653361432238786,Delayed,1,1518.03,fresh product,2
+2026-01-01,B866,Eurospin,Lettuce,Farm B,463,182,49,12,23,3.69199611610983,Delayed,0,484.1,good quality,2
+2026-03-21,B867,Conad,Spinach,Farm B,271,368,32,48,19,5.517094124530049,Delayed,2,565.53,fresh product,3
+2026-02-08,B868,Coop,Mixed Salad,Farm C,387,124,60,10,23,3.572677832100779,Delayed,2,350.97,fresh product,3
+2026-02-07,B869,Eurospin,Lettuce,Farm C,432,183,29,45,19,3.793686368478682,Delayed,1,1120.77,good quality,1
+2026-03-07,B870,Coop,Rucola,Farm C,269,353,31,25,9,7.520682879935773,Delayed,0,234.28,poor packaging,1
+2026-01-09,B871,Eurospin,Lettuce,Farm C,319,312,93,11,26,6.9026127980156895,Delayed,1,1856.49,late delivery,4
+2026-02-15,B872,Eurospin,Lettuce,Farm C,127,236,86,22,2,6.298126897244522,Delayed,2,1502.5,late delivery,5
+2026-04-13,B873,Conad,Lettuce,Farm C,338,313,46,35,12,6.9044747316146635,Delivered,1,1864.37,good quality,1
+2026-04-07,B874,Lidl,Spinach,Farm B,489,187,88,19,3,2.5979835324606553,Delayed,1,775.37,late delivery,3
+2026-04-05,B875,Lidl,Lettuce,Farm A,290,440,71,18,0,2.450561874831884,Delivered,0,1727.82,late delivery,5
+2026-01-04,B876,Conad,Mixed Salad,Farm C,177,109,28,12,11,5.322369388390167,Delayed,1,1559.79,late delivery,2
+2026-04-14,B877,Fruva,Rucola,Farm A,367,320,12,23,11,5.16242563108075,Delivered,2,1695.24,good quality,1
+2026-01-16,B878,Conad,Rucola,Farm B,186,221,5,29,22,4.141399323048529,Delivered,0,1104.09,fresh product,2
+2026-01-06,B879,Coop,Spinach,Farm A,107,183,96,38,11,4.774168683486435,Delayed,0,1401.68,poor packaging,5
+2026-02-24,B880,Eurospin,Lettuce,Farm A,127,163,96,20,29,6.9445669429062455,Delayed,1,587.22,poor packaging,5
+2026-03-09,B881,Eurospin,Mixed Salad,Farm B,442,331,14,35,26,4.703219234402456,Delayed,0,247.88,good quality,1
+2026-04-23,B882,Conad,Lettuce,Farm A,167,300,14,5,21,2.4778707742085953,Delayed,0,1265.45,good quality,4
+2026-04-10,B883,Eurospin,Lettuce,Farm A,462,280,88,20,9,5.320566204722408,Delayed,2,1361.72,late delivery,3
+2026-02-13,B884,Eurospin,Rucola,Farm C,484,258,63,8,22,5.74965365064437,Delivered,0,1438.82,good quality,5
+2026-01-17,B885,Lidl,Spinach,Farm A,178,140,78,38,5,4.043455624526712,Delivered,0,873.07,fresh product,1
+2026-02-28,B886,Fruva,Spinach,Farm B,244,136,82,37,0,3.5207427780380973,Delivered,1,413.04,poor packaging,1
+2026-04-04,B887,Coop,Lettuce,Farm C,150,166,67,24,18,5.105833614136607,Delivered,1,269.97,fresh product,5
+2026-03-12,B888,Coop,Spinach,Farm B,118,344,60,24,9,6.317350479592609,Delayed,1,826.82,good quality,5
+2026-01-12,B889,Eurospin,Spinach,Farm B,293,251,8,7,21,4.383365177397395,Delayed,1,581.09,late delivery,2
+2026-02-17,B890,Coop,Spinach,Farm B,267,198,14,21,20,7.1547821585074,Delayed,2,1184.83,late delivery,3
+2026-02-08,B891,Lidl,Mixed Salad,Farm C,425,273,12,48,14,4.187839946082698,Delivered,1,1899.61,good quality,3
+2026-01-29,B892,Conad,Mixed Salad,Farm C,389,347,22,19,0,3.227026032156775,Delivered,1,961.16,fresh product,5
+2026-04-24,B893,Coop,Rucola,Farm A,476,197,4,36,18,5.672951953659375,Delayed,1,1545.94,good quality,2
+2026-01-24,B894,Eurospin,Rucola,Farm A,350,229,67,38,23,5.1361626442672215,Delivered,2,1772.88,poor packaging,2
+2026-01-23,B895,Coop,Mixed Salad,Farm A,464,144,69,9,24,6.304421332431262,Delivered,1,443.75,good quality,4
+2026-04-13,B896,Fruva,Lettuce,Farm B,399,215,54,48,14,7.33478321422915,Delayed,1,630.03,good quality,5
+2026-02-01,B897,Eurospin,Lettuce,Farm B,467,425,54,24,16,3.4676976443135965,Delivered,2,907.31,late delivery,4
+2026-01-10,B898,Fruva,Lettuce,Farm B,282,321,47,33,26,5.704125505928403,Delayed,1,1597.89,late delivery,2
+2026-03-10,B899,Eurospin,Mixed Salad,Farm B,486,174,61,45,4,4.455179862713899,Delayed,2,256.45,good quality,2
+2026-04-18,B900,Lidl,Rucola,Farm A,430,204,41,9,24,5.956940348747506,Delivered,1,1341.79,good quality,2
+2026-03-19,B901,Fruva,Mixed Salad,Farm C,192,121,80,47,7,3.6257792472273174,Delivered,2,1109.15,late delivery,5
+2026-01-24,B902,Conad,Rucola,Farm A,119,82,36,30,14,6.7876591355197995,Delayed,0,257.39,fresh product,3
+2026-03-06,B903,Fruva,Spinach,Farm B,308,113,8,17,4,3.864980606164968,Delivered,0,544.69,fresh product,4
+2026-04-10,B904,Coop,Mixed Salad,Farm A,225,213,26,16,29,7.759500137852546,Delivered,1,1198.27,good quality,2
+2026-04-05,B905,Lidl,Spinach,Farm B,230,448,66,26,18,4.252264123395919,Delayed,0,1778.32,late delivery,1
+2026-02-02,B906,Conad,Lettuce,Farm C,211,103,34,23,5,7.079325934792417,Delivered,1,315.77,late delivery,3
+2026-03-09,B907,Lidl,Spinach,Farm C,246,347,10,10,11,3.5365305574305426,Delivered,1,1157.81,poor packaging,3
+2026-03-25,B908,Conad,Spinach,Farm C,233,355,10,36,27,2.758881540147857,Delayed,1,1870.28,good quality,3
+2026-02-16,B909,Eurospin,Spinach,Farm B,258,204,36,25,13,3.8459305241380193,Delayed,2,1467.08,poor packaging,4
+2026-01-29,B910,Conad,Spinach,Farm B,182,106,88,44,5,3.528819596190173,Delivered,2,1587.47,poor packaging,3
+2026-01-10,B911,Fruva,Mixed Salad,Farm C,110,255,4,9,25,3.735069523138659,Delayed,0,1339.91,poor packaging,5
+2026-02-25,B912,Lidl,Mixed Salad,Farm A,210,405,79,33,3,7.657476268350539,Delayed,1,805.1,good quality,2
+2026-04-15,B913,Lidl,Mixed Salad,Farm B,354,307,12,22,0,5.3904427488806315,Delivered,1,1518.14,good quality,5
+2026-03-11,B914,Lidl,Mixed Salad,Farm A,135,238,20,31,26,5.030994269136395,Delivered,1,1642.55,fresh product,2
+2026-03-07,B915,Fruva,Lettuce,Farm C,167,207,36,42,10,5.330034034006916,Delayed,0,1517.2,poor packaging,1
+2026-01-08,B916,Conad,Mixed Salad,Farm B,190,421,15,6,4,4.572350850508888,Delivered,1,1367.36,good quality,3
+2026-01-07,B917,Fruva,Lettuce,Farm C,384,207,56,41,4,6.332584677607285,Delayed,0,520.85,late delivery,2
+2026-03-11,B918,Lidl,Mixed Salad,Farm A,188,216,2,30,15,7.990527403542644,Delayed,0,1029.75,good quality,5
+2026-04-28,B919,Conad,Spinach,Farm C,154,336,89,32,20,6.728713639671314,Delayed,2,1741.31,fresh product,2
+2026-02-18,B920,Conad,Rucola,Farm B,440,231,23,23,17,5.187984756039055,Delayed,0,539.52,fresh product,2
+2026-04-06,B921,Coop,Lettuce,Farm A,303,87,78,30,11,6.171913697746307,Delayed,2,997.72,late delivery,5
+2026-04-10,B922,Conad,Lettuce,Farm A,266,400,70,30,6,7.259588713010112,Delayed,2,253.06,good quality,2
+2026-04-24,B923,Eurospin,Spinach,Farm A,450,166,56,31,23,4.268186373399171,Delivered,1,1188.46,poor packaging,1
+2026-01-04,B924,Conad,Spinach,Farm C,190,338,27,21,9,2.0755702290165603,Delayed,1,1079.0,good quality,5
+2026-04-10,B925,Lidl,Rucola,Farm B,119,448,48,46,6,4.806814472224035,Delivered,0,557.89,poor packaging,2
+2026-01-16,B926,Eurospin,Lettuce,Farm A,411,111,48,17,29,2.182035480909909,Delayed,2,454.79,good quality,4
+2026-04-22,B927,Coop,Rucola,Farm B,156,264,74,21,15,3.7780884612834846,Delivered,1,978.31,late delivery,2
+2026-03-04,B928,Lidl,Rucola,Farm C,143,184,31,30,17,3.939164391946017,Delayed,0,627.53,fresh product,3
+2026-04-30,B929,Lidl,Spinach,Farm A,130,100,90,21,0,4.05027127605013,Delayed,1,1746.98,good quality,4
+2026-03-06,B930,Coop,Mixed Salad,Farm A,108,109,44,8,4,5.073019735603323,Delivered,1,1003.88,good quality,1
+2026-04-29,B931,Conad,Mixed Salad,Farm A,307,342,50,5,8,4.241807912556346,Delayed,2,768.43,poor packaging,4
+2026-01-10,B932,Conad,Spinach,Farm C,466,317,70,20,20,4.1799468534140605,Delivered,2,214.01,good quality,5
+2026-01-06,B933,Eurospin,Rucola,Farm C,457,186,38,25,7,5.099985559063246,Delayed,1,1697.58,fresh product,4
+2026-03-22,B934,Coop,Rucola,Farm B,456,379,30,47,12,2.8515992645563912,Delayed,2,880.34,good quality,1
+2026-03-02,B935,Coop,Rucola,Farm B,215,348,43,43,26,3.7076615873610628,Delayed,0,540.23,fresh product,4
+2026-01-28,B936,Fruva,Rucola,Farm B,157,333,51,49,28,7.068255002455175,Delayed,0,510.3,poor packaging,3
+2026-03-14,B937,Fruva,Lettuce,Farm C,320,243,95,11,22,6.719261935460285,Delayed,1,1407.27,fresh product,5
+2026-03-28,B938,Coop,Spinach,Farm C,146,144,66,31,17,3.8598808186128197,Delayed,1,949.51,good quality,5
+2026-04-07,B939,Coop,Rucola,Farm B,440,393,78,24,7,5.493084416867839,Delayed,0,392.46,late delivery,3
+2026-04-18,B940,Coop,Spinach,Farm A,286,350,0,15,22,2.3690344187518315,Delivered,1,219.25,late delivery,2
+2026-01-18,B941,Coop,Lettuce,Farm B,161,164,79,10,2,2.8670913434417016,Delivered,0,483.87,late delivery,2
+2026-04-28,B942,Conad,Spinach,Farm B,139,188,73,6,7,3.347964200630429,Delayed,0,323.31,late delivery,5
+2026-03-28,B943,Coop,Rucola,Farm B,493,186,12,16,8,5.119988744221531,Delayed,0,875.9,late delivery,2
+2026-04-13,B944,Eurospin,Lettuce,Farm B,487,130,51,43,25,7.1551342323294165,Delivered,0,1376.66,fresh product,3
+2026-01-27,B945,Fruva,Rucola,Farm B,161,361,23,43,27,4.652936828676871,Delivered,2,1968.84,fresh product,1
+2026-01-13,B946,Conad,Lettuce,Farm B,275,416,67,49,7,2.9494444508915763,Delivered,1,896.72,poor packaging,2
+2026-03-16,B947,Coop,Lettuce,Farm A,358,284,41,23,7,2.1297619547707627,Delayed,0,1290.9,fresh product,2
+2026-03-07,B948,Coop,Rucola,Farm C,475,114,28,11,28,3.203698226747916,Delivered,0,437.89,fresh product,4
+2026-04-20,B949,Eurospin,Mixed Salad,Farm B,274,313,52,43,25,7.583975023802784,Delayed,0,1061.45,good quality,2
+2026-02-05,B950,Fruva,Mixed Salad,Farm B,305,123,90,37,27,4.356194680153648,Delivered,2,672.59,late delivery,5
+2026-03-24,B951,Coop,Spinach,Farm A,327,209,46,48,29,5.523074768814181,Delayed,1,898.31,poor packaging,5
+2026-03-22,B952,Lidl,Mixed Salad,Farm A,102,303,77,7,0,7.013424259787362,Delivered,2,334.39,late delivery,3
+2026-01-13,B953,Eurospin,Spinach,Farm C,278,119,67,40,18,5.191929909624691,Delayed,2,774.33,good quality,5
+2026-04-26,B954,Conad,Lettuce,Farm A,241,165,79,16,16,7.190375179906162,Delayed,0,1488.14,late delivery,2
+2026-03-27,B955,Coop,Rucola,Farm B,456,85,84,40,6,3.0182314349314696,Delivered,1,1747.4,good quality,5
+2026-03-15,B956,Eurospin,Mixed Salad,Farm B,296,331,87,44,24,5.4516775691285,Delayed,2,1039.75,poor packaging,4
+2026-03-05,B957,Conad,Spinach,Farm C,270,408,2,12,5,2.19786166209556,Delayed,2,1609.28,good quality,5
+2026-03-21,B958,Eurospin,Rucola,Farm C,431,244,3,6,2,6.677458693167617,Delivered,1,1386.88,fresh product,3
+2026-03-15,B959,Fruva,Mixed Salad,Farm A,348,280,58,13,11,5.942391095197673,Delivered,1,240.37,poor packaging,3
+2026-01-08,B960,Eurospin,Mixed Salad,Farm C,454,151,33,23,6,4.789098822224313,Delayed,1,1341.3,poor packaging,4
+2026-04-27,B961,Lidl,Rucola,Farm A,492,393,19,49,24,5.2541537029539285,Delayed,0,938.48,fresh product,5
+2026-01-27,B962,Fruva,Rucola,Farm A,236,419,44,36,1,2.2287094711309496,Delivered,1,259.49,fresh product,4
+2026-01-01,B963,Eurospin,Lettuce,Farm C,263,400,77,13,29,7.828905290253864,Delayed,1,1881.27,good quality,4
+2026-01-25,B964,Coop,Rucola,Farm B,142,136,35,18,17,3.5111201740742537,Delivered,1,1621.41,good quality,4
+2026-01-25,B965,Lidl,Spinach,Farm C,195,428,73,25,29,4.852497422624086,Delivered,2,1028.7,good quality,4
+2026-02-20,B966,Lidl,Rucola,Farm A,339,135,78,43,27,2.9754024119808715,Delayed,1,1056.27,good quality,4
+2026-04-20,B967,Fruva,Spinach,Farm C,178,265,45,46,20,6.08362322071492,Delayed,0,479.5,good quality,1
+2026-04-15,B968,Conad,Rucola,Farm B,319,150,72,26,25,2.3344131590084127,Delivered,1,861.78,poor packaging,5
+2026-01-14,B969,Eurospin,Lettuce,Farm B,456,341,89,43,8,5.86249119465754,Delivered,2,1069.96,good quality,5
+2026-02-09,B970,Coop,Spinach,Farm A,182,367,85,6,27,2.533577136530143,Delivered,1,1583.21,poor packaging,1
+2026-03-29,B971,Fruva,Mixed Salad,Farm B,201,206,85,9,15,2.329429345464646,Delayed,0,1198.65,late delivery,4
+2026-02-08,B972,Eurospin,Mixed Salad,Farm B,373,363,81,20,19,2.6014482216055486,Delayed,0,531.27,good quality,2
+2026-01-28,B973,Eurospin,Mixed Salad,Farm A,274,386,75,36,5,7.780905671937035,Delivered,1,1751.98,fresh product,4
+2026-04-06,B974,Fruva,Mixed Salad,Farm B,257,328,57,38,13,2.7351148552225633,Delivered,2,790.66,poor packaging,2
+2026-02-17,B975,Eurospin,Rucola,Farm A,352,265,90,39,15,4.670112102352132,Delivered,0,700.1,good quality,4
+2026-04-18,B976,Coop,Lettuce,Farm C,317,109,88,49,15,7.247031770228462,Delivered,1,1222.0,good quality,4
+2026-04-03,B977,Lidl,Rucola,Farm C,411,132,67,38,27,4.82170361757942,Delivered,2,343.53,late delivery,2
+2026-02-20,B978,Lidl,Spinach,Farm C,477,281,60,27,4,6.750297005505629,Delivered,0,896.83,late delivery,1
+2026-01-27,B979,Coop,Mixed Salad,Farm B,127,196,65,9,17,2.399767990462248,Delivered,2,1071.68,late delivery,1
+2026-02-06,B980,Coop,Lettuce,Farm B,344,366,86,23,3,5.4769650967415675,Delivered,1,1717.31,poor packaging,1
+2026-01-19,B981,Conad,Mixed Salad,Farm C,146,335,63,43,24,5.50061380826531,Delivered,1,1294.78,poor packaging,5
+2026-03-11,B982,Fruva,Spinach,Farm A,405,392,60,44,6,4.241844910800191,Delayed,1,424.31,good quality,3
+2026-03-24,B983,Fruva,Spinach,Farm A,182,123,67,15,21,6.374202456976964,Delayed,1,1758.26,poor packaging,2
+2026-01-11,B984,Eurospin,Rucola,Farm B,193,215,7,12,22,6.416492866022512,Delivered,0,1324.28,good quality,4
+2026-04-01,B985,Fruva,Rucola,Farm A,419,337,96,30,27,3.2486599785230448,Delivered,0,564.1,fresh product,5
+2026-01-08,B986,Fruva,Mixed Salad,Farm A,166,253,89,35,7,4.8157394656248975,Delayed,0,1134.61,poor packaging,4
+2026-02-20,B987,Eurospin,Mixed Salad,Farm C,232,390,19,28,3,4.8627786043741,Delivered,1,1973.37,fresh product,2
+2026-03-24,B988,Fruva,Spinach,Farm C,408,385,71,31,14,4.716608777068405,Delayed,1,770.09,fresh product,5
+2026-01-20,B989,Conad,Rucola,Farm A,477,389,5,18,3,7.897669529721327,Delivered,2,1106.44,fresh product,2
+2026-01-27,B990,Fruva,Spinach,Farm B,435,395,78,28,14,6.601573558094957,Delayed,1,1240.92,late delivery,1
+2026-01-18,B991,Fruva,Mixed Salad,Farm C,387,203,72,31,13,7.792653324432263,Delivered,1,313.57,poor packaging,1
+2026-04-23,B992,Fruva,Spinach,Farm C,197,407,12,27,24,3.2677102254196266,Delayed,1,634.17,poor packaging,4
+2026-01-23,B993,Conad,Spinach,Farm A,145,160,44,23,29,6.22654172886492,Delivered,0,1121.42,late delivery,2
+2026-02-08,B994,Conad,Mixed Salad,Farm A,126,81,96,20,6,5.8611449622451355,Delivered,2,1404.12,poor packaging,5
+2026-02-25,B995,Fruva,Mixed Salad,Farm C,309,263,40,40,8,2.2367117175361484,Delayed,0,1707.19,late delivery,4
+2026-02-15,B996,Coop,Rucola,Farm B,235,262,68,48,12,5.749534818730738,Delayed,1,1220.89,poor packaging,1
+2026-02-21,B997,Coop,Lettuce,Farm C,152,373,47,28,7,5.232635516690697,Delayed,1,904.48,fresh product,3
+2026-01-17,B998,Conad,Mixed Salad,Farm A,239,162,47,26,26,2.20190199281034,Delivered,2,436.02,good quality,2
+2026-03-05,B999,Fruva,Spinach,Farm C,297,173,78,19,17,6.137814451490726,Delivered,1,1772.61,fresh product,2
+2026-04-25,B1000,Coop,Mixed Salad,Farm A,234,311,38,8,2,7.094793487931064,Delayed,2,939.66,good quality,1
+2026-01-13,B1001,Fruva,Mixed Salad,Farm B,107,383,84,47,19,6.304606705269522,Delivered,2,1334.72,poor packaging,3
+2026-02-19,B1002,Conad,Mixed Salad,Farm C,461,191,68,45,7,6.73131105204954,Delivered,2,1138.28,fresh product,5
+2026-03-26,B1003,Fruva,Spinach,Farm C,171,342,65,34,12,7.858940204265495,Delivered,1,1109.41,good quality,5
+2026-03-25,B1004,Coop,Lettuce,Farm C,205,210,92,49,7,2.110738514258136,Delivered,1,1175.38,good quality,1
+2026-02-19,B1005,Lidl,Mixed Salad,Farm A,392,151,26,39,5,7.812148701278258,Delayed,2,548.73,good quality,2
+2026-04-30,B1006,Conad,Lettuce,Farm B,399,186,35,23,5,5.0595949724458915,Delivered,1,1696.55,good quality,3
+2026-01-13,B1007,Coop,Spinach,Farm A,379,324,43,46,1,7.61130686102525,Delayed,2,1710.29,fresh product,3
+2026-04-29,B1008,Lidl,Rucola,Farm C,115,124,64,15,5,2.530625524013015,Delayed,2,351.2,good quality,1
+2026-03-31,B1009,Lidl,Lettuce,Farm B,438,212,26,32,25,5.505609212387006,Delivered,1,758.26,good quality,1
+2026-04-28,B1010,Coop,Spinach,Farm C,282,416,25,24,24,2.6539999391778566,Delivered,0,974.76,late delivery,4
+2026-01-30,B1011,Conad,Lettuce,Farm B,366,412,11,6,20,7.869616915993928,Delayed,0,1402.0,fresh product,4
+2026-01-22,B1012,Conad,Mixed Salad,Farm C,385,329,65,18,8,7.448209258014329,Delayed,2,651.78,poor packaging,5
+2026-03-31,B1013,Coop,Rucola,Farm A,312,127,48,44,10,4.562639377022254,Delayed,0,951.3,poor packaging,1
+2026-01-23,B1014,Eurospin,Rucola,Farm B,177,415,48,42,25,7.8432666022618385,Delayed,1,960.97,good quality,1
+2026-03-20,B1015,Coop,Spinach,Farm B,240,365,1,23,14,2.8817624354228695,Delivered,1,833.94,late delivery,4
+2026-03-25,B1016,Coop,Spinach,Farm A,193,136,35,38,15,4.9285535615898555,Delayed,1,716.26,poor packaging,2
+2026-04-22,B1017,Lidl,Lettuce,Farm B,267,104,2,9,5,5.916558535856752,Delayed,1,1240.99,late delivery,4
+2026-01-07,B1018,Conad,Lettuce,Farm C,260,240,77,42,9,6.911255479433018,Delayed,1,1784.24,fresh product,4
+2026-01-21,B1019,Fruva,Spinach,Farm A,482,350,2,47,14,5.797996663081568,Delayed,0,857.05,fresh product,2
+2026-04-25,B1020,Fruva,Lettuce,Farm B,467,293,42,25,14,3.1649161797112946,Delayed,0,1598.35,good quality,5
+2026-03-01,B1021,Eurospin,Lettuce,Farm A,472,228,71,48,19,7.08500372225805,Delivered,0,1224.39,good quality,1
+2026-02-07,B1022,Conad,Lettuce,Farm A,430,430,81,27,27,5.54353794643151,Delayed,2,701.68,good quality,4
+2026-03-18,B1023,Lidl,Mixed Salad,Farm A,485,107,25,27,14,5.856511483757282,Delayed,2,439.02,poor packaging,3
+2026-04-10,B1024,Eurospin,Rucola,Farm B,137,300,58,47,6,2.62145939661809,Delivered,2,1542.33,good quality,1
+2026-03-19,B1025,Coop,Spinach,Farm B,475,105,42,40,6,6.936500088590739,Delayed,1,734.64,poor packaging,2
+2026-02-25,B1026,Conad,Lettuce,Farm C,219,104,85,22,11,7.714947802605947,Delivered,2,679.98,good quality,2
+2026-04-04,B1027,Eurospin,Spinach,Farm A,201,216,62,17,4,5.1515027889829295,Delivered,2,721.53,fresh product,3
+2026-02-24,B1028,Fruva,Mixed Salad,Farm C,118,369,77,23,29,6.283487504501806,Delivered,1,1895.86,good quality,4
+2026-01-19,B1029,Lidl,Rucola,Farm C,106,236,42,9,29,5.639155202303202,Delayed,1,1077.05,fresh product,2
+2026-03-17,B1030,Coop,Spinach,Farm B,150,448,83,20,4,6.2655778204873,Delivered,2,930.8,late delivery,2
+2026-02-14,B1031,Conad,Spinach,Farm A,423,322,53,45,22,2.3727546243205744,Delivered,0,1032.61,good quality,5
+2026-03-21,B1032,Fruva,Spinach,Farm A,162,152,78,43,0,4.964754446847624,Delayed,0,320.96,fresh product,4
+2026-02-14,B1033,Conad,Spinach,Farm C,184,399,29,22,2,5.495323022251965,Delayed,2,1470.69,good quality,5
+2026-02-07,B1034,Coop,Mixed Salad,Farm A,211,309,59,25,16,2.019045789107019,Delayed,0,1547.11,poor packaging,5
+2026-03-01,B1035,Conad,Mixed Salad,Farm A,300,393,2,25,22,4.967538668058882,Delivered,0,388.2,poor packaging,4
+2026-01-19,B1036,Conad,Lettuce,Farm C,455,106,45,38,0,3.858587499111122,Delayed,1,1236.29,fresh product,3
+2026-04-05,B1037,Eurospin,Rucola,Farm A,492,270,78,17,21,5.5417944305335975,Delayed,1,363.82,late delivery,3
+2026-02-07,B1038,Lidl,Rucola,Farm B,142,199,91,48,15,3.72279102312286,Delivered,0,545.59,fresh product,1
+2026-01-02,B1039,Eurospin,Rucola,Farm B,399,117,98,43,29,6.660609628100437,Delivered,0,1196.9,poor packaging,2
+2026-02-26,B1040,Eurospin,Lettuce,Farm B,319,365,99,6,25,4.843518565467152,Delivered,1,1092.0,late delivery,1
+2026-03-06,B1041,Coop,Lettuce,Farm A,450,413,53,18,15,5.9971577615985865,Delivered,2,1840.26,poor packaging,3
+2026-01-09,B1042,Conad,Mixed Salad,Farm A,315,107,35,22,24,4.985450864924813,Delayed,2,826.89,late delivery,4
+2026-01-15,B1043,Fruva,Mixed Salad,Farm B,313,143,11,22,23,5.330495608625906,Delayed,2,914.44,good quality,5
+2026-01-02,B1044,Lidl,Rucola,Farm A,281,234,30,45,3,3.5932651088194483,Delivered,1,855.25,good quality,1
+2026-03-13,B1045,Coop,Mixed Salad,Farm B,437,357,40,16,18,4.752841725614214,Delivered,0,661.33,poor packaging,2
+2026-02-08,B1046,Fruva,Lettuce,Farm A,210,259,59,19,9,3.6478891572109298,Delivered,1,1688.51,late delivery,2
+2026-01-10,B1047,Coop,Mixed Salad,Farm A,126,150,47,14,23,2.418542073872061,Delayed,2,1514.44,poor packaging,1
+2026-01-27,B1048,Fruva,Mixed Salad,Farm C,142,342,91,23,19,5.404915266701577,Delayed,2,1509.88,late delivery,1
+2026-04-15,B1049,Fruva,Rucola,Farm B,197,141,7,49,17,3.8513989855335016,Delayed,1,1917.82,fresh product,2
+2026-01-02,B1050,Eurospin,Rucola,Farm C,465,296,3,30,3,4.6584555976006925,Delivered,0,1919.18,poor packaging,5
+2026-01-19,B1051,Coop,Lettuce,Farm A,446,309,49,29,25,3.45546321738762,Delayed,1,1327.63,good quality,4
+2026-01-04,B1052,Coop,Spinach,Farm B,292,185,60,24,9,3.6070695233534833,Delayed,1,220.08,good quality,4
+2026-01-27,B1053,Fruva,Mixed Salad,Farm C,236,223,4,38,27,2.8718987380197563,Delayed,0,1020.32,good quality,3
+2026-01-13,B1054,Conad,Mixed Salad,Farm C,116,244,12,31,19,2.26686313281896,Delayed,0,1597.07,fresh product,3
+2026-03-11,B1055,Fruva,Rucola,Farm A,355,121,73,14,19,5.908016634801233,Delivered,0,1778.88,late delivery,2
+2026-02-22,B1056,Conad,Rucola,Farm A,372,439,84,45,7,6.438499684342913,Delivered,2,709.96,fresh product,1
+2026-03-06,B1057,Coop,Spinach,Farm C,323,328,4,41,11,7.332478428509852,Delayed,1,411.68,poor packaging,5
+2026-01-16,B1058,Lidl,Spinach,Farm B,194,143,28,7,8,6.2405916911697865,Delivered,1,495.47,late delivery,2
+2026-02-15,B1059,Conad,Rucola,Farm B,256,398,72,9,7,2.784189522489878,Delivered,1,618.08,good quality,2
+2026-03-03,B1060,Lidl,Spinach,Farm A,212,149,31,15,9,5.571201085432627,Delivered,1,654.38,poor packaging,4
+2026-04-25,B1061,Conad,Spinach,Farm A,494,360,34,39,21,3.527655975771835,Delivered,2,870.32,fresh product,3
+2026-04-05,B1062,Lidl,Spinach,Farm B,103,97,50,8,19,2.771463564781271,Delayed,1,1460.55,late delivery,1
+2026-03-09,B1063,Eurospin,Rucola,Farm B,216,354,13,25,14,4.18035487659276,Delivered,1,817.43,late delivery,1
+2026-04-21,B1064,Eurospin,Lettuce,Farm B,459,208,95,9,29,2.582988091795793,Delayed,2,1220.5,poor packaging,2
+2026-04-24,B1065,Coop,Rucola,Farm A,113,311,4,33,10,2.6278268415657537,Delayed,2,1888.09,poor packaging,2
+2026-02-25,B1066,Fruva,Mixed Salad,Farm A,301,289,17,49,13,7.076020540384381,Delayed,1,811.15,late delivery,1
+2026-01-07,B1067,Coop,Rucola,Farm A,486,162,43,39,5,7.771963459200936,Delivered,2,705.59,late delivery,5
+2026-04-09,B1068,Lidl,Mixed Salad,Farm C,271,130,18,8,0,6.915383461040614,Delayed,1,897.12,good quality,5
+2026-01-30,B1069,Conad,Spinach,Farm A,460,320,73,22,18,7.73498497809794,Delivered,2,1443.2,good quality,2
+2026-03-28,B1070,Lidl,Spinach,Farm A,396,187,86,44,20,7.052996180368298,Delivered,2,1625.9,poor packaging,5
+2026-01-14,B1071,Fruva,Lettuce,Farm B,214,315,81,14,6,2.4889398638556592,Delayed,1,1652.42,poor packaging,2
+2026-01-30,B1072,Lidl,Mixed Salad,Farm A,247,256,34,27,9,6.830067794490342,Delivered,2,1421.36,fresh product,5
+2026-03-25,B1073,Conad,Mixed Salad,Farm A,106,337,84,10,27,7.1498566430422885,Delayed,0,868.74,late delivery,5
+2026-04-20,B1074,Coop,Lettuce,Farm A,229,274,10,39,25,3.3351262650646785,Delivered,2,782.78,fresh product,4
+2026-04-06,B1075,Lidl,Rucola,Farm C,447,208,58,9,9,4.446441481578317,Delayed,1,602.14,late delivery,5
+2026-04-25,B1076,Coop,Lettuce,Farm C,161,367,57,42,22,6.330130347368982,Delayed,2,1539.51,good quality,3
+2026-03-24,B1077,Lidl,Mixed Salad,Farm B,349,387,35,32,13,5.416011210656563,Delayed,1,485.76,good quality,5
+2026-03-05,B1078,Coop,Spinach,Farm C,395,263,3,35,26,5.428183818014943,Delivered,0,740.41,late delivery,5
+2026-04-25,B1079,Fruva,Lettuce,Farm A,204,342,95,12,14,6.517657326101824,Delivered,2,1306.36,poor packaging,3
+2026-03-24,B1080,Fruva,Spinach,Farm C,226,270,30,15,14,2.843508987493382,Delivered,2,1851.53,late delivery,3
+2026-01-18,B1081,Lidl,Spinach,Farm A,441,257,78,43,9,7.163911324325701,Delayed,0,842.57,fresh product,2
+2026-01-13,B1082,Coop,Lettuce,Farm C,231,192,66,25,20,5.398799635877806,Delivered,2,1915.43,good quality,1
+2026-03-11,B1083,Lidl,Lettuce,Farm A,394,290,25,48,11,6.792630974687771,Delayed,1,1472.28,late delivery,4
+2026-03-25,B1084,Conad,Spinach,Farm C,288,199,33,43,8,3.867001788628615,Delivered,0,324.18,late delivery,1
+2026-01-18,B1085,Fruva,Rucola,Farm B,482,409,35,37,22,3.5153664276171526,Delayed,0,1549.0,poor packaging,1
+2026-04-02,B1086,Eurospin,Lettuce,Farm B,252,132,20,42,1,5.194086367727773,Delayed,0,1750.25,fresh product,4
+2026-03-24,B1087,Coop,Spinach,Farm C,389,418,8,11,29,3.301659352444015,Delivered,2,1934.39,good quality,1
+2026-04-19,B1088,Lidl,Rucola,Farm C,118,102,6,45,11,2.240078783210746,Delayed,2,1493.19,poor packaging,3
+2026-03-29,B1089,Eurospin,Spinach,Farm C,162,147,77,20,19,2.2762709602693914,Delivered,0,1460.34,poor packaging,3
+2026-03-20,B1090,Conad,Lettuce,Farm B,469,432,47,20,26,3.2569173363175983,Delayed,2,656.45,good quality,4
+2026-02-26,B1091,Lidl,Rucola,Farm A,475,435,20,16,18,5.877515105943143,Delivered,0,510.39,poor packaging,5
+2026-01-06,B1092,Lidl,Spinach,Farm B,489,144,85,38,23,6.454523071228389,Delayed,1,1358.4,late delivery,4
+2026-01-21,B1093,Coop,Mixed Salad,Farm B,186,329,69,27,27,3.2971314432228525,Delayed,1,757.87,good quality,1
+2026-02-03,B1094,Conad,Spinach,Farm C,490,184,20,20,19,6.437146605603347,Delivered,1,487.93,poor packaging,5
+2026-01-11,B1095,Coop,Rucola,Farm A,263,255,86,19,13,7.008790955479642,Delayed,1,1562.39,fresh product,1
+2026-03-26,B1096,Coop,Lettuce,Farm A,443,262,75,14,13,7.642408233573113,Delayed,0,316.82,poor packaging,3
+2026-04-28,B1097,Fruva,Lettuce,Farm B,345,425,7,28,7,3.4256852011678554,Delayed,1,692.66,late delivery,1
+2026-03-03,B1098,Lidl,Rucola,Farm A,297,126,99,15,4,4.9283609376179776,Delivered,1,476.22,fresh product,4
+2026-03-18,B1099,Fruva,Spinach,Farm B,168,110,69,31,23,3.369985019559863,Delivered,1,1172.55,good quality,4
+2026-01-20,B1100,Eurospin,Mixed Salad,Farm C,464,192,16,25,17,4.57651272111352,Delivered,2,269.18,good quality,5
+2026-02-19,B1101,Lidl,Mixed Salad,Farm C,353,252,71,23,5,3.6023656414361613,Delivered,1,383.48,poor packaging,1
+2026-03-06,B1102,Conad,Rucola,Farm C,406,318,94,15,21,4.774965644074629,Delivered,1,399.06,poor packaging,5
+2026-01-09,B1103,Conad,Mixed Salad,Farm C,304,332,37,47,20,4.106862143340872,Delayed,1,507.82,late delivery,1
+2026-03-16,B1104,Eurospin,Rucola,Farm C,426,237,20,5,24,4.261013366096994,Delivered,0,1044.51,late delivery,3
+2026-01-08,B1105,Lidl,Lettuce,Farm C,434,115,54,48,26,3.9431053193420196,Delivered,1,744.72,fresh product,5
+2026-01-16,B1106,Conad,Rucola,Farm A,474,370,78,32,2,6.593290124595894,Delayed,1,1214.09,late delivery,3
+2026-02-15,B1107,Eurospin,Mixed Salad,Farm B,157,417,49,19,19,6.242723683666286,Delayed,0,1938.42,good quality,2
+2026-04-14,B1108,Coop,Lettuce,Farm A,419,334,8,11,8,4.460982615383824,Delayed,1,603.09,fresh product,4
+2026-01-02,B1109,Conad,Mixed Salad,Farm B,247,168,48,12,27,6.250869518821011,Delivered,2,1504.17,fresh product,5
+2026-01-16,B1110,Conad,Mixed Salad,Farm A,245,114,51,19,20,5.839584124703149,Delayed,1,305.41,good quality,2
+2026-01-31,B1111,Eurospin,Rucola,Farm A,197,113,54,7,16,7.021545979455752,Delayed,1,617.42,poor packaging,1
+2026-04-22,B1112,Eurospin,Rucola,Farm A,255,257,89,12,1,3.0693985934695007,Delivered,2,1795.82,poor packaging,2
+2026-01-10,B1113,Lidl,Lettuce,Farm C,228,362,66,16,29,7.054868229209389,Delivered,1,505.8,good quality,1
+2026-02-11,B1114,Conad,Lettuce,Farm C,178,182,71,34,25,6.615120739975568,Delayed,2,207.87,poor packaging,3
+2026-03-20,B1115,Fruva,Spinach,Farm A,216,320,25,12,17,5.466578404986245,Delayed,1,1320.73,good quality,2
+2026-04-02,B1116,Fruva,Spinach,Farm B,262,364,11,22,11,4.300777007286155,Delivered,0,1851.54,late delivery,2
+2026-01-22,B1117,Eurospin,Rucola,Farm A,327,333,30,35,1,2.06578191878926,Delayed,1,1439.53,poor packaging,5
+2026-01-22,B1118,Coop,Lettuce,Farm C,247,188,39,43,23,4.547432611042142,Delivered,1,1341.43,poor packaging,4
+2026-01-15,B1119,Eurospin,Lettuce,Farm B,428,376,83,14,29,6.748930294068545,Delayed,1,1262.46,good quality,1
+2026-01-17,B1120,Conad,Lettuce,Farm A,462,434,11,25,2,6.224514011854013,Delayed,0,358.16,late delivery,3
+2026-02-21,B1121,Eurospin,Lettuce,Farm A,288,330,67,33,4,4.693878644383038,Delayed,0,1450.62,poor packaging,5
+2026-03-23,B1122,Fruva,Spinach,Farm C,418,116,63,31,21,5.270050494343643,Delayed,2,1933.32,poor packaging,1
+2026-03-03,B1123,Conad,Rucola,Farm C,188,327,66,19,28,6.958179109138787,Delayed,2,1197.55,poor packaging,1
+2026-04-11,B1124,Lidl,Mixed Salad,Farm B,325,156,94,37,19,5.340311754398992,Delayed,0,975.37,fresh product,1
+2026-01-28,B1125,Fruva,Rucola,Farm C,432,390,9,20,5,7.145526054574409,Delayed,2,1409.75,fresh product,5
+2026-02-10,B1126,Eurospin,Spinach,Farm A,170,235,12,21,14,4.506869497409001,Delivered,1,979.54,good quality,3
+2026-02-25,B1127,Conad,Spinach,Farm C,493,301,44,24,28,6.337490317537612,Delivered,2,497.96,good quality,2
+2026-01-21,B1128,Coop,Rucola,Farm B,480,386,32,22,13,4.751629278034051,Delivered,0,1616.52,good quality,3
+2026-04-26,B1129,Lidl,Lettuce,Farm B,313,111,57,37,25,4.0374388472490175,Delivered,2,1417.22,poor packaging,2
+2026-03-07,B1130,Conad,Rucola,Farm B,479,402,70,40,28,6.2559431166558035,Delivered,1,1738.68,fresh product,5
+2026-01-16,B1131,Coop,Spinach,Farm A,309,311,42,19,15,6.139814072850349,Delayed,1,589.22,fresh product,5
+2026-02-03,B1132,Conad,Spinach,Farm B,359,187,38,24,23,6.248884007591343,Delayed,0,830.19,fresh product,2
+2026-02-27,B1133,Fruva,Mixed Salad,Farm B,307,212,82,8,5,7.191144866638371,Delivered,2,1066.3,poor packaging,1
+2026-02-14,B1134,Fruva,Lettuce,Farm A,277,206,83,12,14,4.0131661480993905,Delivered,2,1034.9,good quality,2
+2026-04-05,B1135,Lidl,Lettuce,Farm A,141,338,0,48,22,2.6013695398573056,Delivered,1,977.64,late delivery,1
+2026-04-30,B1136,Lidl,Lettuce,Farm B,390,329,56,33,17,5.43129552959666,Delayed,1,859.39,poor packaging,4
+2026-02-27,B1137,Eurospin,Lettuce,Farm B,482,131,13,40,26,6.072279417292123,Delivered,0,651.32,good quality,1
+2026-03-10,B1138,Lidl,Lettuce,Farm B,397,320,29,19,5,5.937367942452839,Delayed,2,1771.03,fresh product,1
+2026-04-17,B1139,Conad,Rucola,Farm C,172,276,85,35,2,2.5264035635761934,Delivered,1,298.62,fresh product,2
+2026-04-11,B1140,Conad,Spinach,Farm C,419,197,29,36,22,5.310675702354173,Delivered,0,1638.14,fresh product,2
+2026-02-08,B1141,Coop,Lettuce,Farm B,387,432,35,32,15,5.50252513269842,Delayed,1,1231.39,fresh product,3
+2026-03-11,B1142,Eurospin,Rucola,Farm A,393,124,57,21,0,7.91708186965217,Delayed,2,775.37,poor packaging,2
+2026-04-21,B1143,Coop,Mixed Salad,Farm A,351,193,56,14,18,5.482508994680883,Delivered,1,889.16,good quality,4
+2026-04-27,B1144,Fruva,Spinach,Farm C,472,312,14,48,20,7.350829316510612,Delayed,0,1295.64,late delivery,5
+2026-01-26,B1145,Lidl,Mixed Salad,Farm A,406,210,13,17,8,6.488871614618847,Delivered,0,749.74,fresh product,2
+2026-04-08,B1146,Conad,Rucola,Farm C,453,119,88,6,1,3.420788207576713,Delivered,1,595.64,fresh product,5
+2026-04-03,B1147,Coop,Mixed Salad,Farm A,492,182,61,48,25,3.677566223139392,Delayed,0,1663.23,fresh product,2
+2026-01-20,B1148,Eurospin,Lettuce,Farm C,247,362,93,25,11,4.808674342729561,Delivered,1,670.03,late delivery,2
+2026-01-13,B1149,Coop,Mixed Salad,Farm C,196,177,33,40,2,2.704772436778304,Delayed,1,1909.09,fresh product,3
+2026-02-26,B1150,Fruva,Lettuce,Farm B,216,172,36,8,11,2.7264877894487762,Delivered,2,683.71,fresh product,2
+2026-02-21,B1151,Eurospin,Rucola,Farm C,386,185,0,10,10,6.26087022557902,Delayed,2,1224.98,good quality,5
+2026-03-26,B1152,Conad,Mixed Salad,Farm A,215,104,55,17,29,4.7519649262279255,Delayed,2,1827.5,good quality,1
+2026-02-07,B1153,Fruva,Mixed Salad,Farm A,120,165,14,43,15,7.32092400406113,Delivered,0,1972.89,fresh product,4
+2026-04-27,B1154,Fruva,Rucola,Farm B,409,206,46,10,1,5.055471503017251,Delivered,2,588.1,late delivery,3
+2026-04-19,B1155,Fruva,Mixed Salad,Farm C,244,353,26,19,27,2.1329572132671295,Delivered,2,1763.31,late delivery,2
+2026-02-17,B1156,Coop,Spinach,Farm A,471,255,25,26,11,3.3155942095554805,Delivered,0,232.88,good quality,4
+2026-04-02,B1157,Eurospin,Mixed Salad,Farm A,275,399,29,48,8,6.9092720082227785,Delivered,1,1481.95,poor packaging,3
+2026-03-08,B1158,Conad,Spinach,Farm B,480,275,16,21,27,4.181766492626942,Delivered,1,1009.26,fresh product,5
+2026-01-04,B1159,Eurospin,Lettuce,Farm C,384,149,22,43,13,3.1635669216840827,Delayed,2,1240.31,late delivery,5
+2026-02-09,B1160,Lidl,Mixed Salad,Farm A,211,387,37,31,3,7.457103898670316,Delivered,0,817.16,good quality,5
+2026-02-16,B1161,Coop,Spinach,Farm B,205,409,38,34,25,7.224357839913173,Delivered,0,811.49,late delivery,2
+2026-01-13,B1162,Coop,Mixed Salad,Farm A,201,414,78,44,18,7.4180065109089774,Delivered,1,510.78,late delivery,1
+2026-03-04,B1163,Eurospin,Spinach,Farm C,181,92,23,44,13,4.140777533929607,Delayed,1,1883.49,fresh product,1
+2026-03-02,B1164,Coop,Spinach,Farm A,260,111,55,28,26,2.487674629045326,Delivered,0,1690.28,late delivery,5
+2026-01-30,B1165,Conad,Rucola,Farm A,157,360,22,48,26,6.818744997074232,Delivered,0,1489.46,late delivery,1
+2026-02-21,B1166,Lidl,Mixed Salad,Farm A,234,125,8,27,0,3.4630345981756427,Delayed,0,1083.1,late delivery,2
+2026-02-03,B1167,Conad,Mixed Salad,Farm A,410,216,16,25,27,4.763163986818258,Delayed,2,1279.47,fresh product,2
+2026-03-16,B1168,Coop,Rucola,Farm A,224,251,38,23,18,7.973288451729515,Delayed,1,221.96,poor packaging,5
+2026-04-30,B1169,Lidl,Rucola,Farm A,174,308,47,22,11,2.6887758019889842,Delivered,2,219.85,fresh product,2
+2026-03-02,B1170,Eurospin,Rucola,Farm B,487,301,93,17,9,4.702645972555599,Delayed,2,1435.25,fresh product,2
+2026-02-04,B1171,Eurospin,Spinach,Farm C,467,404,99,30,9,6.2263164711042585,Delayed,1,1538.08,late delivery,4
+2026-02-01,B1172,Eurospin,Rucola,Farm B,151,182,39,17,13,5.294934144741435,Delivered,1,538.2,late delivery,5
+2026-02-12,B1173,Conad,Rucola,Farm B,102,147,4,14,19,6.229822002843235,Delivered,1,288.73,fresh product,3
+2026-03-10,B1174,Fruva,Mixed Salad,Farm C,291,292,87,48,11,2.600190026402922,Delivered,0,1724.88,late delivery,1
+2026-04-23,B1175,Fruva,Mixed Salad,Farm C,494,224,65,10,8,7.502130271283339,Delivered,0,1422.56,good quality,4
+2026-04-29,B1176,Lidl,Lettuce,Farm B,440,140,27,27,5,6.343536027158392,Delivered,2,206.74,fresh product,4
+2026-04-13,B1177,Eurospin,Lettuce,Farm B,112,197,6,44,5,7.242011933907988,Delivered,1,380.79,late delivery,1
+2026-01-28,B1178,Conad,Rucola,Farm A,498,425,66,44,24,2.7640926582553114,Delayed,1,1377.75,fresh product,5
+2026-04-05,B1179,Conad,Rucola,Farm B,161,286,25,22,15,3.264082383965377,Delivered,0,1962.65,fresh product,3
+2026-02-14,B1180,Coop,Mixed Salad,Farm C,472,428,74,10,2,6.006043706049721,Delayed,2,514.18,poor packaging,3
+2026-04-24,B1181,Fruva,Mixed Salad,Farm C,136,234,47,31,11,6.717693843741352,Delayed,2,1104.32,late delivery,2
+2026-02-01,B1182,Conad,Lettuce,Farm B,486,122,99,21,15,6.072690165421081,Delayed,0,843.89,poor packaging,2
+2026-03-08,B1183,Coop,Mixed Salad,Farm A,401,390,45,15,27,4.62246849654485,Delayed,2,1370.66,late delivery,2
+2026-03-27,B1184,Coop,Lettuce,Farm A,214,130,17,47,11,4.408382697876165,Delayed,1,1627.39,poor packaging,1
+2026-01-06,B1185,Conad,Lettuce,Farm C,364,306,22,16,19,3.1361373660839904,Delayed,0,1034.81,good quality,2
+2026-03-22,B1186,Coop,Mixed Salad,Farm B,191,240,20,14,20,5.295507628267366,Delivered,1,1326.06,late delivery,3
+2026-04-27,B1187,Conad,Spinach,Farm A,296,104,10,14,16,6.456385182579916,Delivered,0,784.42,late delivery,4
+2026-01-18,B1188,Coop,Lettuce,Farm C,391,141,0,25,9,3.1157206723461597,Delayed,1,1963.01,poor packaging,4
+2026-02-08,B1189,Fruva,Spinach,Farm A,429,199,71,31,9,6.733705379247401,Delivered,1,1472.77,poor packaging,5
+2026-03-03,B1190,Coop,Lettuce,Farm B,462,162,52,28,23,6.77384806931274,Delayed,0,477.68,late delivery,2
+2026-01-08,B1191,Conad,Lettuce,Farm B,255,380,64,38,2,2.605292168320758,Delayed,1,1781.75,fresh product,2
+2026-02-27,B1192,Fruva,Lettuce,Farm A,444,329,63,12,16,6.42033455900838,Delayed,0,515.31,fresh product,5
+2026-01-07,B1193,Conad,Mixed Salad,Farm A,383,286,65,11,14,4.350168653065037,Delayed,1,448.45,late delivery,2
+2026-02-02,B1194,Lidl,Spinach,Farm A,263,92,15,20,21,6.519280632433263,Delivered,1,1903.7,late delivery,2
+2026-02-07,B1195,Fruva,Spinach,Farm C,176,297,54,5,7,5.3218713079954085,Delivered,1,335.29,late delivery,3
+2026-02-22,B1196,Fruva,Lettuce,Farm C,228,108,86,37,22,5.061575877323895,Delivered,0,944.15,poor packaging,1
+2026-01-06,B1197,Fruva,Rucola,Farm B,427,244,30,41,12,6.077048136419332,Delayed,0,1894.27,good quality,5
+2026-01-05,B1198,Fruva,Lettuce,Farm C,236,142,95,35,6,5.054013101220429,Delivered,2,1572.84,poor packaging,1
+2026-01-10,B1199,Coop,Spinach,Farm C,100,117,61,19,24,4.800291934423413,Delivered,1,997.17,fresh product,3
+2026-01-17,B1200,Lidl,Rucola,Farm A,444,120,11,33,24,3.0548593004635416,Delivered,1,1073.89,good quality,5
+2026-01-11,B1201,Eurospin,Rucola,Farm B,391,153,6,40,15,7.133615762324169,Delivered,0,1943.5,fresh product,5
+2026-02-25,B1202,Fruva,Lettuce,Farm C,412,274,64,5,6,4.248505497056562,Delayed,0,259.71,fresh product,4
+2026-03-28,B1203,Fruva,Mixed Salad,Farm A,173,306,51,33,11,2.4110454040493146,Delayed,1,739.04,poor packaging,2
+2026-02-18,B1204,Coop,Spinach,Farm A,194,323,62,47,5,4.344502086254559,Delivered,2,414.65,fresh product,1
+2026-03-16,B1205,Conad,Spinach,Farm C,135,246,3,14,5,3.7546727659843753,Delayed,1,1330.66,poor packaging,1
+2026-04-17,B1206,Eurospin,Rucola,Farm B,166,297,14,21,26,5.595053811263467,Delivered,0,927.55,fresh product,3
+2026-02-17,B1207,Conad,Spinach,Farm C,453,163,63,45,3,6.016884478315588,Delayed,1,754.03,late delivery,5
+2026-01-16,B1208,Conad,Lettuce,Farm A,173,84,22,19,17,4.590217871938514,Delivered,0,587.98,late delivery,4
+2026-03-05,B1209,Coop,Spinach,Farm A,320,422,96,22,21,7.739383571367014,Delivered,2,1610.67,fresh product,1
+2026-03-04,B1210,Coop,Lettuce,Farm C,130,412,23,9,22,4.047212434352921,Delivered,2,935.87,poor packaging,2
+2026-04-30,B1211,Conad,Mixed Salad,Farm A,268,91,72,15,0,3.3549463265842028,Delivered,1,1370.55,late delivery,4
+2026-01-02,B1212,Coop,Rucola,Farm B,321,410,19,24,8,5.652132563175908,Delivered,1,1660.08,fresh product,1
+2026-04-15,B1213,Conad,Rucola,Farm A,480,420,67,20,24,6.505570361100333,Delayed,2,957.06,late delivery,1
+2026-01-21,B1214,Coop,Spinach,Farm A,479,341,65,28,23,3.233776853193688,Delivered,0,1821.56,fresh product,4
+2026-01-20,B1215,Fruva,Spinach,Farm C,404,153,75,45,6,4.291068793540495,Delayed,2,1427.37,fresh product,1
+2026-03-10,B1216,Coop,Mixed Salad,Farm A,308,114,64,40,14,2.430263125309596,Delivered,1,1163.95,good quality,3
+2026-04-17,B1217,Lidl,Mixed Salad,Farm C,303,115,62,16,17,3.0713171557094983,Delayed,2,416.72,late delivery,1
+2026-02-18,B1218,Eurospin,Rucola,Farm A,208,84,88,28,28,3.5905484115646997,Delayed,0,1442.97,late delivery,5
+2026-04-07,B1219,Conad,Mixed Salad,Farm C,213,100,19,14,24,3.5125919573737994,Delayed,2,1131.7,poor packaging,4
+2026-04-14,B1220,Eurospin,Spinach,Farm B,487,358,12,21,15,2.930958673630097,Delayed,0,1962.83,poor packaging,4
+2026-04-11,B1221,Coop,Mixed Salad,Farm B,135,414,37,26,11,6.901162883246135,Delayed,2,1450.94,fresh product,4
+2026-04-07,B1222,Coop,Spinach,Farm C,192,170,4,35,21,6.6887608749838305,Delivered,1,1043.44,late delivery,1
+2026-03-24,B1223,Lidl,Mixed Salad,Farm C,252,429,58,33,17,6.066562966176027,Delayed,0,788.08,good quality,3
+2026-01-15,B1224,Coop,Lettuce,Farm B,179,209,35,24,15,2.1520259176878014,Delayed,2,303.38,late delivery,3
+2026-01-26,B1225,Eurospin,Spinach,Farm C,411,291,61,38,1,2.8054305145624614,Delivered,1,607.29,good quality,4
+2026-01-25,B1226,Lidl,Lettuce,Farm C,303,191,68,6,21,7.622058197072862,Delayed,2,1175.77,poor packaging,5
+2026-02-07,B1227,Conad,Spinach,Farm C,257,328,52,43,10,4.595854883624215,Delivered,1,562.6,good quality,4
+2026-04-07,B1228,Conad,Lettuce,Farm A,199,251,30,34,20,5.696591372896128,Delivered,0,298.17,fresh product,5
+2026-02-10,B1229,Conad,Mixed Salad,Farm B,432,307,84,49,20,5.22247724478554,Delivered,2,799.53,fresh product,4
+2026-02-14,B1230,Eurospin,Spinach,Farm B,479,367,5,34,25,2.6053328126351536,Delivered,0,341.63,good quality,5
+2026-03-29,B1231,Lidl,Rucola,Farm A,214,268,83,19,25,5.186018778457775,Delivered,0,235.34,good quality,5
+2026-01-11,B1232,Conad,Spinach,Farm B,186,400,2,7,27,6.0011998167233545,Delayed,1,728.91,late delivery,5
+2026-04-23,B1233,Fruva,Lettuce,Farm A,107,151,18,36,28,4.0693350450391,Delivered,0,1246.71,poor packaging,3
+2026-01-26,B1234,Eurospin,Mixed Salad,Farm A,354,303,51,7,18,3.581437705511606,Delayed,1,381.94,fresh product,3
+2026-01-24,B1235,Eurospin,Mixed Salad,Farm C,269,238,62,30,17,2.4519285930044292,Delivered,2,1400.57,fresh product,4
+2026-02-02,B1236,Conad,Spinach,Farm B,108,386,16,21,0,7.614805856327726,Delayed,2,699.28,poor packaging,3
+2026-03-29,B1237,Fruva,Mixed Salad,Farm B,468,325,64,25,6,7.244520275164622,Delayed,1,380.89,late delivery,1
+2026-01-20,B1238,Lidl,Spinach,Farm B,172,229,0,9,8,2.4730941834237523,Delivered,1,1501.35,poor packaging,5
+2026-03-25,B1239,Lidl,Rucola,Farm B,322,360,92,28,6,6.288150403488542,Delivered,1,1168.26,late delivery,2
+2026-03-09,B1240,Eurospin,Spinach,Farm A,176,356,23,22,12,6.160370015590266,Delayed,1,1575.19,fresh product,4
+2026-02-26,B1241,Eurospin,Rucola,Farm C,245,242,11,29,12,5.031532341505462,Delivered,1,285.83,poor packaging,3
+2026-04-20,B1242,Eurospin,Mixed Salad,Farm C,249,268,42,33,9,4.903168101743722,Delivered,0,1776.86,late delivery,1
+2026-04-11,B1243,Coop,Mixed Salad,Farm C,297,327,71,25,20,3.474962795799298,Delivered,2,1753.95,fresh product,5
+2026-01-06,B1244,Lidl,Spinach,Farm C,121,234,14,48,18,3.3656634718506346,Delayed,1,1138.29,fresh product,1
+2026-01-09,B1245,Fruva,Lettuce,Farm B,400,291,71,32,18,6.397533557783415,Delayed,2,1499.88,late delivery,1
+2026-03-15,B1246,Conad,Spinach,Farm C,149,82,90,32,13,4.440344623844591,Delivered,1,394.54,poor packaging,2
+2026-03-20,B1247,Coop,Spinach,Farm A,350,130,28,48,14,2.50026537739177,Delayed,0,833.54,good quality,1
+2026-03-10,B1248,Fruva,Rucola,Farm C,486,196,66,30,17,3.327704395489745,Delayed,1,1826.74,fresh product,3
+2026-01-24,B1249,Coop,Rucola,Farm C,421,139,65,19,23,7.705233227752567,Delivered,2,788.96,poor packaging,5
+2026-02-02,B1250,Fruva,Spinach,Farm B,449,279,39,11,5,2.116610931093812,Delivered,2,535.81,good quality,1
+2026-02-21,B1251,Eurospin,Rucola,Farm A,407,221,28,12,1,3.952342541367437,Delivered,2,1643.5,good quality,5
+2026-03-10,B1252,Lidl,Mixed Salad,Farm C,111,131,0,11,16,2.9695250105484092,Delivered,2,1303.91,good quality,3
+2026-01-03,B1253,Conad,Rucola,Farm B,345,313,68,34,22,3.238033271492533,Delayed,1,521.36,late delivery,5
+2026-01-20,B1254,Eurospin,Rucola,Farm A,498,96,50,18,26,4.729439617294383,Delayed,1,200.21,late delivery,5
+2026-02-18,B1255,Eurospin,Lettuce,Farm A,473,208,12,47,26,6.0441570747567965,Delivered,1,492.43,good quality,1
+2026-04-14,B1256,Eurospin,Spinach,Farm B,314,330,87,33,5,2.652719653307365,Delivered,1,1052.02,good quality,5
+2026-04-24,B1257,Lidl,Rucola,Farm A,392,274,35,9,13,7.768587874300023,Delivered,1,381.05,poor packaging,2
+2026-04-28,B1258,Fruva,Spinach,Farm A,498,251,57,26,17,6.75902491996425,Delayed,2,1305.19,late delivery,4
+2026-04-19,B1259,Eurospin,Lettuce,Farm C,255,402,77,22,26,3.1540589388501283,Delayed,1,340.49,late delivery,1
+2026-01-15,B1260,Lidl,Lettuce,Farm C,147,151,0,11,20,4.870945159371311,Delayed,1,1805.36,good quality,3
+2026-04-21,B1261,Fruva,Lettuce,Farm C,162,437,14,11,10,2.703630617323464,Delivered,2,1406.73,late delivery,5
+2026-04-30,B1262,Coop,Lettuce,Farm C,139,423,7,25,28,3.072236725595653,Delivered,2,1950.64,poor packaging,3
+2026-04-20,B1263,Fruva,Rucola,Farm A,445,379,42,35,20,5.739545058038788,Delayed,0,311.23,poor packaging,2
+2026-04-24,B1264,Coop,Spinach,Farm A,127,280,1,21,25,3.6099564137860316,Delivered,2,732.97,late delivery,3
+2026-03-22,B1265,Coop,Spinach,Farm C,329,191,91,5,27,4.371353904334798,Delayed,1,1387.86,good quality,5
+2026-01-15,B1266,Coop,Mixed Salad,Farm A,399,374,4,29,23,6.744923940887463,Delayed,1,688.67,fresh product,1
+2026-04-22,B1267,Coop,Mixed Salad,Farm B,300,397,89,39,26,4.3253980297989925,Delivered,2,1941.76,late delivery,5
+2026-02-16,B1268,Eurospin,Spinach,Farm A,161,102,43,23,23,5.116716599105338,Delivered,0,1362.09,good quality,4
+2026-02-19,B1269,Lidl,Spinach,Farm C,488,299,56,16,24,6.090053890154441,Delayed,2,332.97,fresh product,1
+2026-02-20,B1270,Lidl,Rucola,Farm A,491,202,76,40,5,7.09653361672934,Delivered,0,1150.24,poor packaging,2
+2026-03-20,B1271,Coop,Lettuce,Farm B,460,414,52,44,15,6.943043091027163,Delayed,1,1366.31,late delivery,3
+2026-02-15,B1272,Fruva,Rucola,Farm A,121,299,84,49,5,2.9651209888957153,Delivered,0,1323.8,fresh product,3
+2026-04-23,B1273,Coop,Lettuce,Farm C,409,330,24,19,5,4.1332121913824516,Delayed,0,1510.14,good quality,4
+2026-04-18,B1274,Conad,Spinach,Farm B,113,178,32,5,1,2.931878120880238,Delayed,0,1601.16,late delivery,1
+2026-04-13,B1275,Conad,Mixed Salad,Farm B,475,329,61,26,15,6.917105628503519,Delivered,1,1308.63,fresh product,1
+2026-01-15,B1276,Conad,Mixed Salad,Farm B,368,315,20,45,24,6.581307404356312,Delivered,1,588.51,poor packaging,4
+2026-03-05,B1277,Coop,Spinach,Farm C,458,189,19,22,10,2.0210651054639035,Delayed,1,1214.51,fresh product,2
+2026-02-03,B1278,Coop,Rucola,Farm A,355,310,8,35,6,6.043666694438141,Delayed,0,402.6,fresh product,2
+2026-03-04,B1279,Conad,Mixed Salad,Farm A,419,109,7,44,4,7.4707516421996125,Delivered,2,1689.82,good quality,2
+2026-02-07,B1280,Eurospin,Spinach,Farm A,478,146,53,26,25,4.2271534168759635,Delayed,2,1966.39,fresh product,3
+2026-02-05,B1281,Coop,Lettuce,Farm A,391,231,89,25,17,6.63889160498894,Delayed,2,1239.34,poor packaging,4
+2026-01-08,B1282,Fruva,Mixed Salad,Farm A,340,423,57,40,28,5.752385779282476,Delayed,1,1413.99,late delivery,3
+2026-04-04,B1283,Lidl,Spinach,Farm C,445,427,14,18,15,6.94153894502378,Delayed,2,656.22,late delivery,5
+2026-02-23,B1284,Lidl,Spinach,Farm B,119,284,90,39,12,2.7681062518499937,Delayed,0,1273.6,good quality,5
+2026-03-08,B1285,Coop,Spinach,Farm B,306,128,31,46,0,4.323307142475229,Delivered,2,833.85,poor packaging,5
+2026-03-18,B1286,Eurospin,Spinach,Farm C,337,359,64,14,12,5.401395410190906,Delayed,1,180.4,fresh product,3
+2026-02-24,B1287,Coop,Lettuce,Farm B,434,408,46,21,29,2.134080730561144,Delayed,2,1378.7,late delivery,4
+2026-01-23,B1288,Coop,Mixed Salad,Farm B,261,209,68,35,0,7.970316514875484,Delayed,2,1725.96,good quality,3
+2026-04-17,B1289,Eurospin,Rucola,Farm B,298,447,26,19,19,6.3604433913759175,Delayed,1,319.68,good quality,1
+2026-03-29,B1290,Lidl,Mixed Salad,Farm A,116,302,37,14,21,2.3739063502951137,Delayed,1,673.07,fresh product,4
+2026-01-15,B1291,Conad,Spinach,Farm A,344,444,25,35,1,5.369795199706279,Delivered,1,452.48,late delivery,3
+2026-01-13,B1292,Fruva,Spinach,Farm A,409,212,34,23,22,3.7838035953538363,Delayed,1,897.2,late delivery,1
+2026-04-23,B1293,Eurospin,Rucola,Farm A,320,389,85,7,27,7.729447453610021,Delivered,1,1762.33,poor packaging,3
+2026-03-14,B1294,Lidl,Rucola,Farm B,164,360,15,19,1,2.9186150287927997,Delivered,0,857.68,good quality,5
+2026-04-23,B1295,Fruva,Lettuce,Farm B,458,354,51,34,10,2.8898104088464827,Delivered,1,379.19,poor packaging,1
+2026-01-09,B1296,Lidl,Spinach,Farm B,341,241,51,45,18,7.643872060163142,Delivered,0,541.57,fresh product,4
+2026-03-26,B1297,Coop,Spinach,Farm B,300,235,23,23,0,4.471180792318711,Delivered,1,1967.45,fresh product,2
+2026-01-23,B1298,Eurospin,Spinach,Farm B,129,88,90,46,1,7.594975247082438,Delivered,0,1730.07,good quality,4
+2026-02-19,B1299,Fruva,Rucola,Farm A,401,125,16,6,7,4.0350417200134645,Delivered,1,1521.47,good quality,1
+2026-04-28,B1300,Lidl,Mixed Salad,Farm C,451,314,81,42,21,3.5944782571199685,Delayed,2,1070.62,late delivery,2
+2026-02-25,B1301,Fruva,Mixed Salad,Farm B,406,279,97,8,5,7.752186448192391,Delivered,2,431.74,good quality,2
+2026-01-12,B1302,Lidl,Spinach,Farm A,402,167,62,30,2,3.902442616178349,Delayed,1,1975.57,fresh product,4
+2026-01-13,B1303,Conad,Rucola,Farm A,220,425,83,9,19,5.345109588003652,Delayed,0,1822.65,fresh product,3
+2026-03-06,B1304,Coop,Lettuce,Farm C,483,297,77,45,28,7.469477607513314,Delivered,2,621.93,fresh product,2
+2026-01-21,B1305,Fruva,Mixed Salad,Farm B,185,192,60,8,3,3.0631628749042283,Delivered,2,1226.19,late delivery,4
+2026-03-26,B1306,Eurospin,Mixed Salad,Farm A,103,144,61,30,23,4.6004770635507,Delivered,2,750.37,good quality,5
+2026-01-18,B1307,Fruva,Spinach,Farm A,188,297,57,40,9,2.303453396474062,Delivered,2,1219.5,good quality,3
+2026-02-19,B1308,Eurospin,Lettuce,Farm C,205,272,92,17,23,6.6826378394670645,Delivered,1,1698.07,late delivery,5
+2026-04-08,B1309,Fruva,Rucola,Farm B,459,274,12,23,1,3.1855075149699097,Delayed,1,1699.14,late delivery,2
+2026-03-18,B1310,Eurospin,Mixed Salad,Farm A,258,350,19,9,6,6.746179262070507,Delivered,1,1316.92,poor packaging,2
+2026-04-11,B1311,Coop,Spinach,Farm A,123,332,47,49,22,7.116379791671285,Delayed,1,930.94,poor packaging,1
+2026-01-18,B1312,Coop,Lettuce,Farm A,378,273,69,33,26,6.58433353911463,Delayed,1,1742.77,late delivery,2
+2026-03-15,B1313,Lidl,Rucola,Farm C,240,387,59,46,26,5.934346847554989,Delayed,1,683.52,poor packaging,1
+2026-01-12,B1314,Conad,Rucola,Farm B,149,311,38,45,9,4.464057489696202,Delivered,2,298.92,fresh product,4
+2026-02-05,B1315,Coop,Mixed Salad,Farm A,197,382,80,43,5,3.104780138487109,Delivered,0,1046.78,late delivery,4
+2026-03-10,B1316,Eurospin,Spinach,Farm A,357,328,68,30,8,6.528095125208847,Delivered,0,1459.58,fresh product,5
+2026-03-07,B1317,Conad,Lettuce,Farm B,472,345,12,48,1,3.2298796592260732,Delayed,0,698.2,late delivery,1
+2026-03-20,B1318,Eurospin,Rucola,Farm B,209,432,44,31,7,6.671274928536134,Delayed,1,506.66,good quality,5
+2026-02-04,B1319,Eurospin,Lettuce,Farm A,297,111,7,43,20,6.906939949522737,Delivered,1,1513.12,late delivery,5
+2026-02-13,B1320,Lidl,Mixed Salad,Farm C,259,412,78,22,6,6.230479569102751,Delivered,0,1612.12,fresh product,3
+2026-02-04,B1321,Conad,Lettuce,Farm B,248,190,23,21,17,5.179395054830046,Delayed,0,528.56,late delivery,4
+2026-02-15,B1322,Lidl,Rucola,Farm C,301,359,64,29,27,6.115575324249318,Delayed,1,1038.14,poor packaging,3
+2026-04-24,B1323,Conad,Mixed Salad,Farm A,271,334,62,23,21,4.985120062720674,Delivered,2,1757.27,late delivery,5
+2026-02-19,B1324,Eurospin,Lettuce,Farm A,359,168,48,16,5,2.566742307612315,Delivered,2,677.96,fresh product,3
+2026-03-07,B1325,Fruva,Mixed Salad,Farm C,423,239,65,33,1,5.310505297637308,Delivered,1,641.28,poor packaging,4
+2026-04-12,B1326,Conad,Lettuce,Farm A,311,301,88,35,26,4.801948723410889,Delivered,0,1090.91,late delivery,4
+2026-03-05,B1327,Conad,Spinach,Farm B,275,89,72,43,3,2.733517639240686,Delayed,2,270.42,fresh product,4
+2026-01-19,B1328,Eurospin,Rucola,Farm A,191,121,38,34,4,7.1888228524410245,Delivered,2,349.79,good quality,2
+2026-01-06,B1329,Coop,Lettuce,Farm A,284,365,57,47,19,5.4953101783076015,Delivered,0,1772.88,poor packaging,3
+2026-01-02,B1330,Fruva,Mixed Salad,Farm B,324,158,21,45,26,4.397830894963614,Delayed,0,824.65,poor packaging,4
+2026-01-28,B1331,Lidl,Rucola,Farm A,441,196,25,48,10,6.884329233872055,Delivered,1,1126.58,poor packaging,4
+2026-02-07,B1332,Coop,Mixed Salad,Farm C,382,130,74,20,22,5.93339540574184,Delayed,2,1730.82,fresh product,3
+2026-01-02,B1333,Lidl,Mixed Salad,Farm A,209,417,77,22,1,2.1283330800504787,Delayed,0,1943.59,good quality,3
+2026-04-01,B1334,Lidl,Lettuce,Farm B,495,365,94,27,0,4.741367329894567,Delayed,1,626.84,poor packaging,3
+2026-01-04,B1335,Coop,Lettuce,Farm A,393,208,7,42,16,3.1936982580319433,Delivered,2,846.8,good quality,5
+2026-01-03,B1336,Conad,Rucola,Farm C,243,263,44,25,11,4.935633355385649,Delayed,0,644.33,fresh product,1
+2026-01-21,B1337,Fruva,Rucola,Farm C,461,179,85,30,6,6.73673053419301,Delayed,1,232.01,fresh product,4
+2026-02-16,B1338,Fruva,Lettuce,Farm B,120,430,47,28,3,7.087544973670465,Delivered,1,952.12,poor packaging,2
+2026-04-03,B1339,Eurospin,Rucola,Farm C,169,383,14,47,19,5.863653832015462,Delayed,1,1438.91,late delivery,4
+2026-03-21,B1340,Fruva,Spinach,Farm A,464,255,72,28,3,5.341690511769578,Delayed,0,1098.68,late delivery,3
+2026-04-05,B1341,Fruva,Spinach,Farm A,423,285,41,14,26,5.231053238084681,Delayed,2,1591.05,good quality,5
+2026-04-11,B1342,Fruva,Lettuce,Farm B,271,165,45,30,25,5.733879784735266,Delayed,0,1750.82,poor packaging,2
+2026-01-02,B1343,Coop,Lettuce,Farm C,368,212,49,27,25,5.439337745337462,Delivered,2,1894.2,fresh product,2
+2026-03-20,B1344,Lidl,Rucola,Farm B,146,317,77,46,1,2.5139851642818374,Delayed,1,758.0,good quality,5
+2026-01-31,B1345,Lidl,Lettuce,Farm A,324,122,69,27,7,2.66012745794886,Delivered,2,900.49,poor packaging,1
+2026-02-16,B1346,Conad,Spinach,Farm C,471,237,8,5,26,3.2691231064653645,Delayed,2,1633.85,poor packaging,4
+2026-01-18,B1347,Coop,Rucola,Farm A,147,380,53,40,3,5.064016414619403,Delayed,2,1818.24,good quality,1
+2026-03-29,B1348,Conad,Spinach,Farm C,180,249,44,8,10,6.967222277037043,Delayed,1,1865.7,poor packaging,2
+2026-01-23,B1349,Eurospin,Rucola,Farm A,298,303,6,46,5,7.956886773533231,Delayed,0,345.57,fresh product,4
+2026-04-06,B1350,Coop,Mixed Salad,Farm B,329,336,42,46,17,3.9686208550509305,Delivered,2,786.33,fresh product,2
+2026-02-08,B1351,Fruva,Lettuce,Farm A,325,224,88,46,5,7.1652207413280316,Delayed,1,1674.69,good quality,4
+2026-01-07,B1352,Fruva,Mixed Salad,Farm B,333,338,11,5,26,3.579155025080536,Delivered,0,899.66,fresh product,4
+2026-02-20,B1353,Conad,Lettuce,Farm B,333,261,17,43,0,6.916007744183712,Delivered,0,573.32,poor packaging,1
+2026-03-26,B1354,Coop,Lettuce,Farm A,156,401,14,32,12,7.789297964983119,Delayed,1,1448.17,late delivery,2
+2026-03-07,B1355,Eurospin,Rucola,Farm B,354,347,8,35,13,3.8118914785144025,Delayed,2,1270.74,late delivery,2
+2026-03-13,B1356,Coop,Mixed Salad,Farm C,449,184,15,35,21,6.904792067065766,Delayed,1,1835.29,poor packaging,5
+2026-01-18,B1357,Lidl,Rucola,Farm A,243,427,20,6,27,2.85558127198156,Delivered,1,418.35,fresh product,4
+2026-01-31,B1358,Lidl,Rucola,Farm A,145,128,64,46,22,7.777855654186914,Delivered,2,446.38,fresh product,1
+2026-01-03,B1359,Conad,Lettuce,Farm A,341,111,6,23,6,2.7860873266016863,Delayed,0,430.64,fresh product,3
+2026-02-26,B1360,Eurospin,Lettuce,Farm C,429,200,84,45,0,3.26361495579505,Delayed,2,1859.43,late delivery,4
+2026-04-01,B1361,Eurospin,Lettuce,Farm A,109,199,12,33,4,2.0856268073818676,Delivered,2,1665.73,good quality,5
+2026-01-01,B1362,Conad,Rucola,Farm A,151,80,10,47,7,7.7061975484916365,Delayed,2,1378.03,fresh product,4
+2026-01-31,B1363,Eurospin,Spinach,Farm B,211,352,37,13,9,2.106787980325696,Delayed,1,386.3,good quality,1
+2026-03-03,B1364,Lidl,Spinach,Farm A,102,294,10,22,14,2.9604539538122094,Delivered,2,725.92,late delivery,5
+2026-03-29,B1365,Lidl,Spinach,Farm C,357,232,18,44,1,3.38490671112669,Delayed,2,1708.67,late delivery,5
+2026-04-29,B1366,Fruva,Lettuce,Farm A,168,205,52,25,20,4.681005383119572,Delayed,1,288.31,poor packaging,2
+2026-04-23,B1367,Eurospin,Spinach,Farm B,403,110,36,48,27,6.46778866312429,Delayed,1,1542.66,poor packaging,1
+2026-02-08,B1368,Fruva,Lettuce,Farm B,470,119,63,29,3,4.576056700224647,Delayed,0,1453.6,poor packaging,5
+2026-04-01,B1369,Fruva,Rucola,Farm B,296,353,77,17,6,4.564490721126257,Delivered,0,1907.83,fresh product,3
+2026-01-31,B1370,Lidl,Rucola,Farm A,226,300,71,37,29,2.4785805527064264,Delivered,0,1556.1,good quality,1
+2026-02-11,B1371,Conad,Rucola,Farm A,189,183,51,16,0,3.336644841609303,Delivered,2,1111.69,late delivery,3
+2026-03-10,B1372,Lidl,Lettuce,Farm C,313,225,25,46,21,5.650305300899153,Delivered,2,1136.74,late delivery,2
+2026-04-25,B1373,Coop,Lettuce,Farm A,234,162,6,12,13,5.958368842429305,Delivered,2,1716.89,good quality,4
+2026-02-07,B1374,Lidl,Rucola,Farm C,294,271,67,9,17,4.987628320373638,Delayed,1,540.83,late delivery,3
+2026-03-08,B1375,Coop,Rucola,Farm B,226,325,86,35,12,5.004179766771859,Delivered,1,1373.55,good quality,5
+2026-04-21,B1376,Eurospin,Spinach,Farm A,236,358,77,15,6,7.713423712494464,Delayed,1,1526.44,late delivery,5
+2026-01-05,B1377,Conad,Spinach,Farm B,160,441,22,34,2,5.633919630929581,Delayed,2,831.26,good quality,1
+2026-03-24,B1378,Coop,Rucola,Farm A,457,280,59,9,26,2.954988428531924,Delayed,0,1798.72,good quality,1
+2026-02-11,B1379,Fruva,Spinach,Farm C,172,333,66,19,3,2.467220385838198,Delayed,0,475.05,poor packaging,5
+2026-03-03,B1380,Fruva,Rucola,Farm A,196,112,6,26,4,5.372866727051454,Delivered,1,1423.78,good quality,1
+2026-02-25,B1381,Coop,Spinach,Farm A,215,252,58,28,10,3.9473114361949984,Delayed,0,1972.43,late delivery,5
+2026-02-13,B1382,Eurospin,Mixed Salad,Farm B,308,190,51,13,2,4.298376872806804,Delayed,1,1756.08,fresh product,1
+2026-01-24,B1383,Conad,Spinach,Farm B,205,251,28,17,3,2.655133978421088,Delayed,0,464.21,good quality,4
+2026-03-29,B1384,Lidl,Spinach,Farm C,366,347,12,12,0,4.609673182444248,Delayed,1,1193.07,good quality,2
+2026-03-09,B1385,Coop,Lettuce,Farm B,442,340,2,14,10,3.115712588004828,Delivered,2,481.37,fresh product,5
+2026-02-05,B1386,Fruva,Spinach,Farm C,144,409,60,15,28,3.0524677499324664,Delivered,2,390.85,poor packaging,3
+2026-02-06,B1387,Lidl,Lettuce,Farm C,317,168,80,19,4,4.963535872697273,Delayed,0,1127.87,late delivery,1
+2026-03-19,B1388,Coop,Spinach,Farm A,449,415,93,20,5,6.120927295953775,Delayed,2,686.26,late delivery,4
+2026-03-23,B1389,Eurospin,Lettuce,Farm A,174,373,79,23,10,3.733746914844303,Delayed,0,1209.67,fresh product,3
+2026-02-26,B1390,Coop,Rucola,Farm C,487,345,62,13,18,6.994312194295142,Delayed,1,645.61,poor packaging,3
+2026-04-23,B1391,Eurospin,Spinach,Farm C,244,225,80,6,18,7.669334157289722,Delivered,1,393.02,good quality,5
+2026-02-25,B1392,Lidl,Lettuce,Farm C,137,322,72,48,25,7.25777984294891,Delivered,0,1593.51,late delivery,5
+2026-02-25,B1393,Lidl,Mixed Salad,Farm C,139,309,29,14,29,6.514168654384353,Delayed,2,271.71,fresh product,4
+2026-04-19,B1394,Conad,Lettuce,Farm A,189,361,35,47,29,2.59251781209013,Delivered,0,1761.36,fresh product,1
+2026-04-20,B1395,Fruva,Mixed Salad,Farm B,377,230,89,18,11,3.5394393559402806,Delivered,1,1176.31,poor packaging,5
+2026-01-13,B1396,Coop,Lettuce,Farm B,332,226,45,47,5,2.4826592012560056,Delivered,0,242.85,poor packaging,5
+2026-02-25,B1397,Lidl,Lettuce,Farm A,154,242,77,43,24,5.592410676974385,Delayed,1,1462.7,good quality,1
+2026-01-22,B1398,Conad,Rucola,Farm A,386,234,36,6,21,7.571637977462117,Delivered,1,375.8,fresh product,4
+2026-01-10,B1399,Eurospin,Lettuce,Farm C,359,222,75,10,27,3.466290478051031,Delayed,2,1707.75,fresh product,2
+2026-03-18,B1400,Coop,Rucola,Farm B,326,206,57,29,28,6.962901173023262,Delivered,2,1089.08,fresh product,4
+2026-04-26,B1401,Coop,Spinach,Farm A,298,422,10,40,16,6.378120834765832,Delivered,2,1639.27,poor packaging,3
+2026-03-18,B1402,Coop,Rucola,Farm B,496,347,70,5,0,6.153078401262453,Delayed,2,1271.83,poor packaging,3
+2026-04-30,B1403,Fruva,Mixed Salad,Farm C,394,80,40,49,23,4.696755159102447,Delayed,2,645.14,late delivery,1
+2026-01-13,B1404,Lidl,Lettuce,Farm C,250,254,38,27,25,3.0956083884936683,Delayed,2,1600.06,fresh product,2
+2026-03-06,B1405,Fruva,Spinach,Farm B,408,170,56,26,17,3.087955136625879,Delivered,0,208.07,good quality,3
+2026-03-13,B1406,Fruva,Lettuce,Farm A,172,127,17,34,7,2.1181358718545065,Delayed,2,1346.1,fresh product,4
+2026-03-31,B1407,Eurospin,Rucola,Farm B,280,305,28,40,6,7.9214219986115335,Delayed,0,266.23,fresh product,5
+2026-04-30,B1408,Coop,Lettuce,Farm B,184,443,0,19,2,7.7694738262334955,Delivered,1,783.65,good quality,4
+2026-04-12,B1409,Lidl,Lettuce,Farm C,327,167,9,38,3,3.118000858066444,Delayed,2,1086.06,late delivery,3
+2026-03-24,B1410,Fruva,Lettuce,Farm A,405,347,75,25,26,7.059194849742111,Delivered,0,369.76,poor packaging,1
+2026-04-22,B1411,Coop,Spinach,Farm C,214,334,98,35,27,4.429383178634986,Delayed,1,1142.92,good quality,3
+2026-04-30,B1412,Coop,Mixed Salad,Farm A,165,258,10,24,4,2.213778772340836,Delivered,2,510.19,poor packaging,5
+2026-04-21,B1413,Fruva,Lettuce,Farm C,300,376,2,26,7,2.051328620709021,Delayed,2,812.6,fresh product,4
+2026-03-30,B1414,Lidl,Mixed Salad,Farm A,151,191,38,8,28,2.228921635612263,Delivered,1,391.88,good quality,2
+2026-01-06,B1415,Conad,Rucola,Farm C,309,375,88,43,27,6.080368374487737,Delivered,2,573.46,fresh product,1
+2026-04-26,B1416,Eurospin,Mixed Salad,Farm A,150,191,44,30,4,7.815452782748228,Delayed,2,1297.76,good quality,1
+2026-04-20,B1417,Coop,Spinach,Farm B,312,422,60,48,27,4.0685611236157735,Delayed,0,717.42,fresh product,2
+2026-02-23,B1418,Conad,Spinach,Farm B,204,321,47,23,10,5.931394907458064,Delivered,1,1019.16,poor packaging,5
+2026-04-10,B1419,Coop,Rucola,Farm B,456,402,79,30,7,7.965519914519216,Delivered,1,462.02,poor packaging,1
+2026-01-21,B1420,Conad,Lettuce,Farm C,367,164,65,9,8,5.809722277833735,Delayed,0,1349.56,poor packaging,2
+2026-03-14,B1421,Eurospin,Spinach,Farm C,371,292,4,33,14,7.533953469325597,Delayed,1,638.03,late delivery,1
+2026-03-24,B1422,Coop,Mixed Salad,Farm B,287,137,2,38,12,7.4888958545898845,Delivered,0,1988.05,poor packaging,4
+2026-04-06,B1423,Fruva,Spinach,Farm B,466,259,22,39,4,4.431354697576004,Delivered,0,1786.32,good quality,1
+2026-04-20,B1424,Eurospin,Spinach,Farm B,453,98,90,13,4,4.344215304128656,Delayed,2,630.99,late delivery,4
+2026-02-17,B1425,Coop,Mixed Salad,Farm A,386,210,94,29,20,4.810457270146152,Delayed,2,1552.98,poor packaging,3
+2026-01-17,B1426,Fruva,Rucola,Farm C,140,193,51,6,3,3.0206412920724564,Delivered,2,1335.1,poor packaging,5
+2026-04-26,B1427,Eurospin,Mixed Salad,Farm C,143,260,76,7,12,4.793573029027545,Delivered,2,222.59,good quality,4
+2026-03-26,B1428,Fruva,Lettuce,Farm A,236,156,36,34,8,7.51735317687971,Delivered,1,1968.41,poor packaging,2
+2026-03-21,B1429,Lidl,Spinach,Farm C,169,215,23,7,3,7.473199402977208,Delayed,0,1145.79,good quality,4
+2026-01-10,B1430,Lidl,Spinach,Farm B,361,295,23,25,23,2.371826041876462,Delivered,1,1227.32,good quality,2
+2026-03-23,B1431,Fruva,Mixed Salad,Farm A,361,445,79,8,28,7.11413276232491,Delayed,1,1973.06,poor packaging,1
+2026-01-13,B1432,Coop,Rucola,Farm B,497,218,85,40,16,2.273616342956517,Delayed,1,435.06,good quality,5
+2026-01-06,B1433,Lidl,Lettuce,Farm A,331,171,10,39,14,7.010179767601081,Delayed,2,361.46,good quality,1
+2026-04-03,B1434,Conad,Rucola,Farm A,307,152,94,21,26,4.544313111286954,Delayed,2,535.84,late delivery,2
+2026-04-20,B1435,Lidl,Mixed Salad,Farm A,239,407,79,33,2,4.0783959185771135,Delivered,0,1074.29,fresh product,3
+2026-03-02,B1436,Fruva,Rucola,Farm C,395,256,31,42,27,6.002516308013272,Delayed,0,785.84,good quality,4
+2026-01-13,B1437,Coop,Spinach,Farm C,447,221,16,28,20,6.610463258684206,Delayed,2,691.77,fresh product,2
+2026-04-28,B1438,Eurospin,Lettuce,Farm B,112,159,29,35,4,3.310629469932082,Delivered,0,801.67,late delivery,4
+2026-02-09,B1439,Conad,Mixed Salad,Farm C,114,327,43,30,8,6.7340293073641675,Delayed,0,1501.65,poor packaging,2
+2026-03-15,B1440,Fruva,Mixed Salad,Farm B,182,110,65,22,9,7.253920326047515,Delayed,0,354.51,good quality,2
+2026-04-24,B1441,Coop,Lettuce,Farm B,279,374,86,30,10,2.133502111557986,Delivered,2,266.07,fresh product,2
+2026-01-14,B1442,Conad,Spinach,Farm C,485,258,18,11,11,5.944964355537506,Delivered,0,1878.92,fresh product,5
+2026-04-10,B1443,Coop,Spinach,Farm B,175,153,13,13,5,4.115110766032731,Delivered,0,889.34,good quality,4
+2026-04-23,B1444,Lidl,Lettuce,Farm B,161,186,44,15,7,3.8437618594537586,Delayed,1,918.44,good quality,1
+2026-02-01,B1445,Eurospin,Lettuce,Farm A,147,329,97,20,24,7.49310037230018,Delivered,1,1922.61,good quality,2
+2026-01-23,B1446,Coop,Rucola,Farm B,259,364,8,6,24,5.24860685965907,Delayed,0,1875.31,fresh product,2
+2026-04-12,B1447,Fruva,Rucola,Farm A,371,356,9,46,3,2.6803899640694526,Delayed,2,843.09,good quality,3
+2026-04-21,B1448,Conad,Rucola,Farm B,155,160,43,19,3,6.631352877951527,Delayed,0,1715.8,fresh product,2
+2026-04-11,B1449,Fruva,Rucola,Farm B,281,298,51,26,4,7.8671578028718105,Delivered,0,245.05,late delivery,5
+2026-03-07,B1450,Eurospin,Spinach,Farm A,418,278,27,29,13,6.979533877900943,Delayed,2,317.46,good quality,3
+2026-02-21,B1451,Coop,Lettuce,Farm C,264,176,23,12,2,4.313288008042417,Delayed,1,1746.04,good quality,2
+2026-03-22,B1452,Eurospin,Rucola,Farm C,364,412,59,27,29,3.2641275021818084,Delayed,0,357.19,poor packaging,1
+2026-01-07,B1453,Coop,Lettuce,Farm C,220,148,5,5,26,2.8436348244591607,Delayed,0,902.61,good quality,2
+2026-01-07,B1454,Eurospin,Spinach,Farm B,369,422,33,44,12,4.659715916475437,Delayed,1,1690.5,poor packaging,4
+2026-03-09,B1455,Lidl,Mixed Salad,Farm A,148,243,61,24,25,5.046102947810507,Delayed,1,803.45,fresh product,1
+2026-03-10,B1456,Coop,Spinach,Farm A,218,86,99,17,19,4.607614212307951,Delivered,2,1876.69,late delivery,3
+2026-02-28,B1457,Conad,Mixed Salad,Farm C,372,447,51,11,15,4.369141793169265,Delivered,1,1215.93,good quality,5
+2026-01-16,B1458,Conad,Lettuce,Farm C,147,314,63,25,8,7.35606592006941,Delivered,1,1979.77,good quality,1
+2026-04-11,B1459,Fruva,Mixed Salad,Farm C,308,242,39,26,12,2.739408008058824,Delivered,1,1430.21,late delivery,3
+2026-04-18,B1460,Fruva,Lettuce,Farm B,118,134,59,27,7,5.15914826462684,Delayed,0,1862.47,fresh product,3
+2026-02-08,B1461,Conad,Rucola,Farm C,429,199,96,29,24,3.68927560355758,Delayed,0,1593.59,poor packaging,2
+2026-03-20,B1462,Lidl,Lettuce,Farm C,131,344,77,17,23,2.5571568376611276,Delivered,2,247.76,late delivery,4
+2026-03-15,B1463,Eurospin,Rucola,Farm B,495,395,59,33,21,2.461463832412008,Delivered,2,639.11,fresh product,2
+2026-02-03,B1464,Lidl,Spinach,Farm B,344,445,83,30,14,3.7454408439793205,Delayed,0,1014.56,poor packaging,2
+2026-03-25,B1465,Eurospin,Rucola,Farm A,284,284,87,41,6,5.21064068000362,Delayed,0,412.98,good quality,2
+2026-03-27,B1466,Lidl,Mixed Salad,Farm C,256,232,57,18,13,4.026534568961512,Delivered,2,612.53,late delivery,2
+2026-02-23,B1467,Eurospin,Lettuce,Farm C,410,350,63,5,15,4.070305215932342,Delayed,0,1700.25,good quality,5
+2026-03-10,B1468,Eurospin,Mixed Salad,Farm B,348,147,86,25,20,7.234458061261739,Delivered,0,1013.77,poor packaging,3
+2026-04-12,B1469,Coop,Mixed Salad,Farm C,438,248,68,9,5,4.589910575563766,Delivered,0,1294.96,poor packaging,2
+2026-01-21,B1470,Fruva,Rucola,Farm B,317,363,97,30,12,7.111036861176815,Delivered,1,650.72,good quality,5
+2026-02-23,B1471,Conad,Mixed Salad,Farm A,466,155,72,36,10,6.614139432695888,Delivered,0,1982.85,good quality,1
+2026-01-03,B1472,Conad,Rucola,Farm B,100,245,90,42,2,2.266414793636182,Delayed,1,1243.97,late delivery,4
+2026-01-22,B1473,Eurospin,Mixed Salad,Farm B,186,157,31,7,26,5.392420351703025,Delivered,0,1544.14,good quality,1
+2026-02-02,B1474,Lidl,Lettuce,Farm B,479,222,99,37,23,5.069117344777242,Delivered,0,1287.23,poor packaging,1
+2026-02-10,B1475,Eurospin,Lettuce,Farm A,197,225,81,10,19,7.2871354213658535,Delivered,1,1456.36,late delivery,4
+2026-02-01,B1476,Eurospin,Rucola,Farm A,238,434,90,8,9,5.654489930126081,Delivered,1,616.23,fresh product,1
+2026-01-24,B1477,Fruva,Lettuce,Farm C,357,390,10,39,16,2.0534767050304934,Delivered,1,299.84,poor packaging,5
+2026-03-30,B1478,Fruva,Lettuce,Farm C,474,134,99,25,18,7.341855186647386,Delayed,1,457.96,fresh product,3
+2026-01-16,B1479,Coop,Rucola,Farm B,100,437,6,28,4,3.438465037629551,Delayed,1,1407.3,fresh product,5
+2026-02-02,B1480,Fruva,Rucola,Farm A,295,363,86,36,11,2.1680319168347504,Delivered,1,1311.93,late delivery,4
+2026-02-03,B1481,Fruva,Rucola,Farm A,354,360,7,28,19,2.714942273242789,Delayed,1,816.5,late delivery,4
+2026-02-17,B1482,Conad,Spinach,Farm C,117,135,22,39,5,4.742013856261644,Delayed,0,426.51,good quality,3
+2026-02-01,B1483,Eurospin,Mixed Salad,Farm C,355,421,26,19,6,4.402284079182389,Delivered,1,1920.2,poor packaging,5
+2026-03-31,B1484,Coop,Mixed Salad,Farm C,212,218,37,38,16,7.420046082240768,Delayed,1,1789.05,late delivery,5
+2026-03-01,B1485,Eurospin,Spinach,Farm B,472,344,84,17,9,2.214046498163194,Delayed,1,952.03,late delivery,1
+2026-02-21,B1486,Conad,Lettuce,Farm C,260,279,31,37,7,7.386010076603402,Delayed,2,1352.63,late delivery,5
+2026-02-23,B1487,Conad,Spinach,Farm B,357,268,16,18,24,2.488458590161547,Delayed,0,249.47,good quality,4
+2026-02-07,B1488,Coop,Lettuce,Farm A,169,248,78,46,16,4.240811431898294,Delivered,0,307.35,poor packaging,1
+2026-01-17,B1489,Eurospin,Rucola,Farm B,464,238,61,12,29,4.696195229750904,Delayed,0,1280.85,late delivery,3
+2026-02-14,B1490,Conad,Mixed Salad,Farm C,149,360,37,35,3,4.8948321379403925,Delivered,2,1551.84,fresh product,2
+2026-04-29,B1491,Conad,Mixed Salad,Farm A,338,294,35,36,23,2.997291811221445,Delayed,2,352.81,poor packaging,4
+2026-02-27,B1492,Coop,Mixed Salad,Farm C,354,204,17,43,0,5.310693370364621,Delivered,0,219.02,late delivery,4
+2026-01-30,B1493,Eurospin,Rucola,Farm A,486,237,87,49,3,5.636388177109507,Delayed,1,780.73,fresh product,2
+2026-04-13,B1494,Eurospin,Lettuce,Farm A,460,152,84,7,24,2.5311143153784057,Delivered,2,933.58,fresh product,4
+2026-01-11,B1495,Coop,Rucola,Farm B,419,110,94,40,9,4.439229883322079,Delivered,1,1781.01,good quality,1
+2026-03-12,B1496,Lidl,Mixed Salad,Farm B,313,95,28,36,18,4.538314365752089,Delivered,2,1036.75,good quality,4
+2026-04-25,B1497,Coop,Lettuce,Farm B,432,312,69,20,4,7.354161351650852,Delivered,1,1996.76,late delivery,3
+2026-02-02,B1498,Eurospin,Mixed Salad,Farm A,445,319,80,47,14,2.9114363059336377,Delivered,1,1918.31,good quality,5
+2026-04-07,B1499,Coop,Spinach,Farm C,242,394,49,13,25,5.85042226888414,Delivered,0,1299.11,late delivery,4
