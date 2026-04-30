@@ -4,6 +4,7 @@ import numpy as np
 import requests
 from data_utils import load_data
 from ai_utils import generate_ai_response
+from database import save_agent_action
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
 
@@ -315,6 +316,24 @@ st.subheader("🚨 Agent Risk Alerts")
 
 if len(alerts_df) > 0:
     st.dataframe(alerts_df, use_container_width=True)
+
+    st.markdown("### ⚙️ Convert Alerts to Actions")
+
+    for i, alert in alerts_df.iterrows():
+        with st.expander(f"{alert['risk_type']} — Batch {alert['batch_id']}"):
+
+            st.write(f"**Issue:** {alert['issue']}")
+            st.write(f"**Recommended Action:** {alert['recommended_action']}")
+
+            team = st.selectbox(
+                f"Assign Team {i}",
+                ["Operations Team", "Quality Team", "Logistics Team"],
+                key=f"team_{i}"
+            )
+
+            if st.button(f"Create Action {i}"):
+                save_agent_action(alert.to_dict(), assigned_team=team)
+                st.success("✅ Action saved to system")
 else:
     st.success("✅ No major operational risks detected.")
 
