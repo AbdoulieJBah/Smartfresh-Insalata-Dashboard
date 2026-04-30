@@ -5,6 +5,7 @@ import requests
 from data_utils import load_data
 from ai_utils import generate_ai_response
 from database import save_agent_action
+from database import save_alert, save_agent_log
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
 
@@ -236,6 +237,58 @@ revenue_alert, daily_revenue = detect_revenue_drop(df)
 future_revenue_risk = predict_future_revenue_drop(daily_revenue)
 
 # -----------------------------
+# SAVE ALERTS TO DATABASE
+# -----------------------------
+if "alerts_saved" not in st.session_state:
+    st.session_state.alerts_saved = False
+
+if not st.session_state.alerts_saved:
+    if len(alerts_df) > 0:
+        for _, alert in alerts_df.head(50).iterrows():
+            save_alert(alert.to_dict(), status="Open")
+
+        save_agent_log(
+            "Alert Save",
+            f"{min(len(alerts_df), 50)} operational alerts saved by AI Production Agent."
+        )
+
+    if revenue_alert:
+        save_alert(
+            {
+                "risk_type": "Revenue Drop",
+                "batch_id": "N/A",
+                "severity": "High",
+                "issue": f"Revenue dropped by {revenue_alert['drop_percent']}%",
+                "recommended_action": "Review client orders, product mix, waste, defects, and delivery delays."
+            },
+            status="Open"
+        )
+
+        save_agent_log(
+            "Revenue Alert",
+            f"Revenue drop detected and saved: {revenue_alert['drop_percent']}%"
+        )
+
+    if future_revenue_risk and future_revenue_risk["future_revenue_risk_level"] in ["High", "Medium"]:
+        save_alert(
+            {
+                "risk_type": "Future Revenue Risk",
+                "batch_id": "N/A",
+                "severity": future_revenue_risk["future_revenue_risk_level"],
+                "issue": f"Future revenue drop risk is {future_revenue_risk['future_revenue_risk_level']}",
+                "recommended_action": "Prioritize high-value orders and reduce waste, defects, delays, and operational bottlenecks."
+            },
+            status="Open"
+        )
+
+        save_agent_log(
+            "Future Revenue Risk",
+            f"Future revenue risk saved: {future_revenue_risk['future_revenue_risk_level']}"
+        )
+
+    st.session_state.alerts_saved = True
+
+# -----------------------------
 # KPIs
 # -----------------------------
 c1, c2, c3, c4 = st.columns(4)
@@ -244,6 +297,10 @@ c1.metric("Records Monitored", len(df))
 c2.metric("Agent Alerts", len(alerts_df))
 c3.metric("High Severity", (alerts_df["severity"] == "High").sum() if len(alerts_df) else 0)
 c4.metric("Medium Severity", (alerts_df["severity"] == "Medium").sum() if len(alerts_df) else 0)
+
+if st.button("🔄 Save Latest Alerts Again"):
+    st.session_state.alerts_saved = False
+    st.rerun()
 
 st.markdown("---")
 
