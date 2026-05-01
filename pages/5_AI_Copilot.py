@@ -2,6 +2,9 @@ import streamlit as st
 import json
 from data_utils import load_data, calculate_kpis
 from ai_utils import generate_ai_response
+from auth_utils import require_role
+
+require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 from production_tools import (
     calculate_from_colli,
     calculate_from_cases,
