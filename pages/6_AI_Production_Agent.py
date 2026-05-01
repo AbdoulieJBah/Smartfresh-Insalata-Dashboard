@@ -5,6 +5,8 @@ import requests
 import json
 import random
 
+from auth_utils import require_role
+require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 from data_utils import load_data
 from ai_utils import generate_ai_response
 from database import (
