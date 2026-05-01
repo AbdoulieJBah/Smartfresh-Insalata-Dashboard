@@ -129,6 +129,16 @@ if "user" not in st.session_state:
     st.session_state.user = None
 
 # -----------------------------
+# HIDE SIDEBAR BEFORE LOGIN
+# -----------------------------
+if not st.session_state.authenticated:
+    st.markdown("""
+    <style>
+    [data-testid="stSidebar"] {display:none;}
+    </style>
+    """, unsafe_allow_html=True)
+
+# -----------------------------
 # LOGIN SCREEN
 # -----------------------------
 if not st.session_state.authenticated:
