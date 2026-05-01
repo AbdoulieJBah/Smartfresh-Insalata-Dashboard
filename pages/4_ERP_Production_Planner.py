@@ -5,13 +5,21 @@ import math
 from datetime import datetime, timedelta
 import plotly.express as px
 from data_utils import load_data
-from auth_utils import require_role
+from auth_utils import require_role, get_current_user
 
-require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
+require_role(["Admin", "Manager", "Operations"])
 
 st.set_page_config(page_title="ERP Production Planner", layout="wide")
 
+user = get_current_user()
+role = user.get("role", "User")
+
 st.title("🏭 ERP Production Planner — Packaging, Shifts & Machine Optimization")
+
+st.write(
+    f"Welcome **{user.get('name', 'User')}**. "
+    f"You are viewing this page as **{role}**."
+)
 
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
@@ -36,6 +44,18 @@ shifts = {
 if "client" not in df.columns:
     df["client"] = df["customer"] if "customer" in df.columns else "Unknown"
 
+if "product_name" not in df.columns:
+    df["product_name"] = "Unknown Product"
+
+if "batch_id" not in df.columns:
+    df["batch_id"] = "N/A"
+
+if "order_quantity" not in df.columns:
+    if "quantity_sold" in df.columns:
+        df["order_quantity"] = df["quantity_sold"]
+    else:
+        df["order_quantity"] = 0
+
 if "colli_ordered" not in df.columns:
     df["colli_ordered"] = np.ceil(df["order_quantity"] / 4).astype(int)
 
@@ -49,29 +69,45 @@ if "departure_datetime" not in df.columns:
 df["departure_datetime"] = pd.to_datetime(df["departure_datetime"], errors="coerce")
 
 # -----------------------------
+# ROLE MESSAGE
+# -----------------------------
+st.subheader("🧭 Role-Based Planning View")
+
+if role == "Operations":
+    st.info("Operations view: full access to planning controls, shift balancing, and machine optimization.")
+elif role == "Manager":
+    st.info("Manager view: strategic review of production capacity, workload balance, and scheduling risks.")
+else:
+    st.info("Admin view: full ERP planning and optimization control.")
+
+st.markdown("---")
+
+# -----------------------------
 # SIDEBAR SETTINGS
 # -----------------------------
 st.sidebar.header("⚙️ ERP Planner Settings")
 
-buste_per_collo = st.sidebar.number_input("Buste per Collo", value=4)
-grams_per_busta = st.sidebar.number_input("Grams per Busta", value=125)
-waste_percent = st.sidebar.slider("Waste / Machine Loss %", 0, 20, 5)
-colli_per_pallet = st.sidebar.number_input("Colli per Pedana", value=192)
-kg_per_incoming_case = st.sidebar.number_input("Kg per Incoming Case", value=6)
+buste_per_collo = st.sidebar.number_input("Buste per Collo", value=4, disabled=role == "Manager")
+grams_per_busta = st.sidebar.number_input("Grams per Busta", value=125, disabled=role == "Manager")
+waste_percent = st.sidebar.slider("Waste / Machine Loss %", 0, 20, 5, disabled=role == "Manager")
+colli_per_pallet = st.sidebar.number_input("Colli per Pedana", value=192, disabled=role == "Manager")
+kg_per_incoming_case = st.sidebar.number_input("Kg per Incoming Case", value=6, disabled=role == "Manager")
 
 orders_to_optimize = st.sidebar.slider("Orders to Optimize", 10, 150, 40)
 
 selected_machines = st.sidebar.multiselect(
     "Available Machines",
     list(machines.keys()),
-    default=list(machines.keys())
+    default=list(machines.keys()),
+    disabled=role == "Manager"
 )
 
 balance_weight = st.sidebar.slider(
     "Shift Balance Priority",
     0,
     10,
-    5
+    5,
+    disabled=role == "Manager"
 )
 
 if not selected_machines:
@@ -133,18 +169,11 @@ for _, row in orders.iterrows():
             start_time = availability[(shift_name, machine)]
             finish_time = start_time + timedelta(minutes=production_minutes)
 
-            shift_overtime = max(
-                0,
-                (finish_time - shift_info["end"]).total_seconds() / 60
-            )
+            shift_overtime = max(0, (finish_time - shift_info["end"]).total_seconds() / 60)
 
             departure_time = row["departure_datetime"]
 
-            lateness = max(
-                0,
-                (finish_time - departure_time).total_seconds() / 60
-            )
-
+            lateness = max(0, (finish_time - departure_time).total_seconds() / 60)
             slack = (departure_time - finish_time).total_seconds() / 60
 
             avg_shift_minutes = (
@@ -239,6 +268,28 @@ k3.metric("At Risk", (opt_df["status"] == "At Risk").sum())
 k4.metric("Urgent", (opt_df["status"] == "Urgent").sum())
 k5.metric("Incoming Cases", f"{opt_df['incoming_cases_needed'].sum():,}")
 k6.metric("Pedane Needed", f"{opt_df['pedane_needed'].sum():,}")
+
+st.markdown("---")
+
+# -----------------------------
+# PLANNING INTELLIGENCE
+# -----------------------------
+st.subheader("🧠 Planning Intelligence")
+
+late_orders = (opt_df["status"] == "Late").sum()
+risk_orders = (opt_df["status"] == "At Risk").sum()
+urgent_orders = (opt_df["status"] == "Urgent").sum()
+
+if late_orders > 0:
+    st.error(f"🔴 {late_orders} orders are late. Immediate replanning required.")
+elif risk_orders > 0:
+    st.warning(f"🟡 {risk_orders} orders are at risk. Consider faster machine allocation.")
+elif urgent_orders > 0:
+    st.warning(f"🟠 {urgent_orders} urgent orders should be monitored closely.")
+else:
+    st.success("✅ Production plan is currently feasible and on time.")
+
+st.markdown("---")
 
 # -----------------------------
 # SHIFT BALANCE
@@ -375,9 +426,12 @@ st.dataframe(
     use_container_width=True
 )
 
-st.download_button(
-    "Download Optimized Production Plan",
-    opt_df.to_csv(index=False),
-    "smartfresh_optimized_production_plan.csv",
-    "text/csv"
-)
+if role in ["Admin", "Operations"]:
+    st.download_button(
+        "Download Optimized Production Plan",
+        opt_df.to_csv(index=False),
+        "smartfresh_optimized_production_plan.csv",
+        "text/csv"
+    )
+else:
+    st.info("Manager view is read-only. Download access is limited to Admin and Operations roles.")
