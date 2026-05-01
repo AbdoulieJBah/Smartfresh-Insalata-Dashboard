@@ -1,4 +1,7 @@
 import streamlit as st
+from auth_utils import require_role
+
+require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 from database import (
     load_alerts,
     update_alert_status,
