@@ -7,7 +7,7 @@ from ai_utils import generate_ai_response
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
 
-require_role(["Admin", "Manager"])
+require_role(["Admin", "Manager" , "Operations", "Quality"])
 
 st.set_page_config(page_title="AI Copilot", layout="wide")
 
