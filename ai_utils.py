@@ -6,11 +6,13 @@ import google.generativeai as genai
 def get_api_keys():
     keys = []
 
+    # Render environment variables
     for i in range(1, 6):
         key = os.getenv(f"GEMINI_API_KEY_{i}")
         if key:
             keys.append(key)
 
+    # Streamlit secrets fallback
     try:
         for i in range(1, 6):
             key_name = f"GEMINI_API_KEY_{i}"
@@ -27,34 +29,10 @@ def generate_ai_response(prompt):
     keys = get_api_keys()
 
     if not keys:
-        return "⚠️ No Gemini API key found in Render environment variables."
+        return "⚠️ No Gemini API key found."
 
     models = [
-    "gemini-2.5-flash",
-    "gemini-1.5-flash"
-]
-
-    last_error = ""
-
-    for key in keys:
-        for model_name in models:
-            try:
-                genai.configure(api_key=key)
-                model = genai.GenerativeModel(model_name)
-                response = model.generate_content(prompt)
-                return response.text
-
-
-@st.cache_data(ttl=120)
-def generate_ai_response(prompt):
-    keys = get_api_keys()
-
-    if not keys:
-        return "⚠️ No Gemini API key found in Render environment variables."
-
-    models = [
-        "gemini-2.5-flash",
-        "gemini-1.5-flash"
+        "gemini-2.5-flash"
     ]
 
     last_error = ""
