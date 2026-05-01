@@ -9,3 +9,4 @@ requests
 pydantic
 google-generativeai
 python-multipart
+scikit-learn
