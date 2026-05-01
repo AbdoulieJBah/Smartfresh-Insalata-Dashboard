@@ -5,6 +5,9 @@ import math
 from datetime import datetime, timedelta
 import plotly.express as px
 from data_utils import load_data
+from auth_utils import require_role
+
+require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 st.set_page_config(page_title="ERP Production Planner", layout="wide")
 
