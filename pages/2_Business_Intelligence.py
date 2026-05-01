@@ -2,6 +2,9 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 from data_utils import load_data, calculate_kpis
+from auth_utils import require_role
+
+require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 st.set_page_config(page_title="Business Intelligence", layout="wide")
 
