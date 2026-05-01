@@ -29,11 +29,7 @@ def generate_ai_response(prompt):
     if not keys:
         return "⚠️ No Gemini API key found in Render environment variables."
 
-    models = [
-        "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-pro"
-    ]
+    models = ["gemini-2.0-flash"]
 
     last_error = ""
 
