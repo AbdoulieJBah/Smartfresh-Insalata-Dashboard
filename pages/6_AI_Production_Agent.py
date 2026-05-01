@@ -30,6 +30,9 @@ st.set_page_config(page_title="AI Production Agent", layout="wide")
 
 st.title("🧠 SmartFresh AI Production Agent")
 
+import os
+st.write(os.getenv("GEMINI_API_KEY_1"))
+
 st.write(
     "Autonomous AI agent for risk detection, backend risk scoring, ML-based risk prediction, "
     "multi-agent planning, auto-execution, Slack/email notifications, and real-time streaming simulation."
