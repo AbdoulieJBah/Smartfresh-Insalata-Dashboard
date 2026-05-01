@@ -4,6 +4,7 @@ import plotly.express as px
 
 from data_utils import load_data
 from ai_utils import generate_ai_response
+from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
 
 require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
@@ -435,7 +436,7 @@ Include next actions.
 """
 
     with st.spinner("AI Copilot reasoning..."):
-        response = generate_ai_response(context)
+        response = generate_ai_response_cached(context)
 
     st.session_state.chat_history.append(("ai", response))
 
