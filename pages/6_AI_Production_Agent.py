@@ -10,6 +10,7 @@ require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 from data_utils import load_data
 from ai_utils import generate_ai_response
+from ai_utils import generate_ai_response_cached
 from database import (
     save_agent_action,
     save_alert_and_action,
@@ -827,7 +828,7 @@ Highlight critical issues with ⚠️.
 """
 
     with st.spinner("AI Agent reasoning..."):
-        response = generate_ai_response(prompt)
+        response = generate_ai_response_cached(context)
         st.markdown(response)
 
 
