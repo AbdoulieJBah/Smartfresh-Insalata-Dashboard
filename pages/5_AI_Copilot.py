@@ -1,322 +1,128 @@
 import streamlit as st
-import json
-from data_utils import load_data, calculate_kpis
+import pandas as pd
+from data_utils import load_data
 from ai_utils import generate_ai_response
 from auth_utils import require_role
 
 require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
-from production_tools import (
-    calculate_from_colli,
-    calculate_from_cases,
-    calculate_from_kg,
-    estimate_machine_schedule
-)
 
 st.set_page_config(page_title="AI Copilot", layout="wide")
 
-st.title("🤖 SmartFresh AI Copilot — Operations & Production Assistant")
-
+# -----------------------------
+# LOAD DATA
+# -----------------------------
 df = load_data()
-kpis = calculate_kpis(df)
+df.columns = df.columns.str.strip().str.lower()
 
+# -----------------------------
+# HEADER
+# -----------------------------
 st.markdown("""
-Ask questions about production, inventory, waste, suppliers, deliveries, traceability, and ERP planning.
-
-This copilot can also run real production tools:
-- Colli → cases / kg / pedane
-- Incoming cases → possible colli
-- Available kg → possible colli
-- Machine start-time scheduling
+### 🤖 SmartFresh AI Copilot
+Ask questions about production, revenue, risks, logistics, and operations.
 """)
 
-if "smartfresh_chat" not in st.session_state:
-    st.session_state.smartfresh_chat = []
+st.markdown("---")
 
+# -----------------------------
+# QUICK INSIGHTS (BI STYLE)
+# -----------------------------
+c1, c2, c3, c4 = st.columns(4)
 
-def run_tool(tool_name, args):
-    if tool_name == "calculate_from_colli":
-        return calculate_from_colli(**args)
-    if tool_name == "calculate_from_cases":
-        return calculate_from_cases(**args)
-    if tool_name == "calculate_from_kg":
-        return calculate_from_kg(**args)
-    if tool_name == "estimate_machine_schedule":
-        return estimate_machine_schedule(**args)
+c1.metric("Total Revenue", f"€{df['revenue'].sum():,.0f}" if "revenue" in df.columns else "N/A")
+c2.metric("Total Orders", len(df))
+c3.metric("Avg Temperature", f"{df['temperature'].mean():.1f}°C" if "temperature" in df.columns else "N/A")
+c4.metric("Delayed Deliveries",
+          (df["delivery_status"].astype(str).str.lower() == "delayed").sum()
+          if "delivery_status" in df.columns else 0)
 
-    return {"error": "Unknown tool"}
+st.markdown("---")
 
+# -----------------------------
+# SUGGESTED QUESTIONS
+# -----------------------------
+st.subheader("💡 Suggested Questions")
 
-def detect_tool_request(question):
-    q = question.lower()
+suggestions = [
+    "Why did revenue drop recently?",
+    "Which clients generate the most revenue?",
+    "What are the biggest operational risks?",
+    "Which products have highest waste?",
+    "Show me delivery delays impact",
+    "What should I prioritize today?"
+]
 
-    if "incoming cases" in q or ("cases" in q and "produce" in q):
-        return "calculate_from_cases"
+cols = st.columns(3)
 
-    if "available kg" in q or ("kg" in q and "make" in q):
-        return "calculate_from_kg"
+for i, question in enumerate(suggestions):
+    if cols[i % 3].button(question):
+        st.session_state["user_prompt"] = question
 
-    if "colli" in q and ("cases" in q or "pedane" in q or "pallet" in q):
-        return "calculate_from_colli"
+st.markdown("---")
 
-    if "machine" in q or "departure" in q or "start time" in q:
-        return "estimate_machine_schedule"
+# -----------------------------
+# CHAT INTERFACE
+# -----------------------------
+st.subheader("💬 Ask SmartFresh AI")
 
-    return None
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
+# User input
+user_input = st.chat_input("Ask about operations, revenue, risks...")
 
-for msg in st.session_state.smartfresh_chat:
-    with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+if "user_prompt" in st.session_state:
+    user_input = st.session_state.pop("user_prompt")
 
-question = st.chat_input("Ask SmartFresh AI...")
+# Handle input
+if user_input:
+    st.session_state.chat_history.append(("user", user_input))
 
-if question:
-    st.session_state.smartfresh_chat.append({
-        "role": "user",
-        "content": question
-    })
+    # Build context-aware prompt
+    context = f"""
+You are an AI assistant for a fresh produce company.
 
-    with st.chat_message("user"):
-        st.markdown(question)
+Dataset summary:
+- Total records: {len(df)}
+- Columns: {list(df.columns)}
 
-    tool_name = detect_tool_request(question)
+Answer this business question:
+{user_input}
 
-    with st.chat_message("assistant"):
-        if tool_name:
-            st.info(f"🔧 Suggested tool: `{tool_name}`")
-            st.warning("Enter the values below so the tool can calculate accurately.")
-
-            with st.form("tool_form"):
-                if tool_name == "calculate_from_colli":
-                    colli = st.number_input("Colli ordered", value=3456)
-                    buste_per_collo = st.number_input("Buste per collo", value=4)
-                    grams_per_busta = st.number_input("Grams per busta", value=125)
-                    kg_per_case = st.number_input("Kg per incoming case", value=6)
-                    colli_per_pallet = st.number_input("Colli per pallet / pedana", value=192)
-                    waste_percent = st.number_input("Waste %", value=5)
-
-                    submitted = st.form_submit_button("Run Tool")
-
-                    if submitted:
-                        result = run_tool(
-                            "calculate_from_colli",
-                            {
-                                "colli": colli,
-                                "buste_per_collo": buste_per_collo,
-                                "grams_per_busta": grams_per_busta,
-                                "kg_per_case": kg_per_case,
-                                "colli_per_pallet": colli_per_pallet,
-                                "waste_percent": waste_percent
-                            }
-                        )
-
-                        st.json(result)
-
-                        prompt = f"""
-You are a production planning expert for a fresh produce packaging company.
-
-User question:
-{question}
-
-Tool result:
-{json.dumps(result, indent=2)}
-
-Explain the result clearly:
-- total buste
-- total kg
-- incoming cases needed
-- pedane needed
-- operational recommendation
-- highlight risks with ⚠️ if needed
+Give insights, not generic answers.
+Use bullet points.
+Highlight important risks with ⚠️.
 """
 
-                        answer = generate_ai_response(prompt)
-                        st.markdown(answer)
+    with st.spinner("AI thinking..."):
+        response = generate_ai_response(context)
 
-                        st.session_state.smartfresh_chat.append({
-                            "role": "assistant",
-                            "content": answer
-                        })
+    st.session_state.chat_history.append(("ai", response))
 
-                elif tool_name == "calculate_from_cases":
-                    incoming_cases = st.number_input("Incoming cases", value=288)
-                    kg_per_case = st.number_input("Kg per incoming case", value=6)
-                    buste_per_collo = st.number_input("Buste per collo", value=4)
-                    grams_per_busta = st.number_input("Grams per busta", value=125)
-                    colli_per_pallet = st.number_input("Colli per pallet / pedana", value=192)
-                    waste_percent = st.number_input("Waste %", value=0)
+# -----------------------------
+# DISPLAY CHAT
+# -----------------------------
+for role, message in st.session_state.chat_history:
+    if role == "user":
+        with st.chat_message("user"):
+            st.write(message)
+    else:
+        with st.chat_message("assistant"):
+            st.markdown(message)
 
-                    submitted = st.form_submit_button("Run Tool")
+# -----------------------------
+# QUICK ACTIONS
+# -----------------------------
+st.markdown("---")
+st.subheader("⚡ Quick AI Actions")
 
-                    if submitted:
-                        result = run_tool(
-                            "calculate_from_cases",
-                            {
-                                "incoming_cases": incoming_cases,
-                                "kg_per_case": kg_per_case,
-                                "buste_per_collo": buste_per_collo,
-                                "grams_per_busta": grams_per_busta,
-                                "colli_per_pallet": colli_per_pallet,
-                                "waste_percent": waste_percent
-                            }
-                        )
+qa1, qa2, qa3 = st.columns(3)
 
-                        st.json(result)
+if qa1.button("📉 Explain Revenue"):
+    st.session_state["user_prompt"] = "Explain recent revenue performance and issues"
 
-                        prompt = f"""
-You are a production planning expert.
+if qa2.button("⚠️ Show Risks"):
+    st.session_state["user_prompt"] = "What are the biggest operational risks right now?"
 
-User question:
-{question}
-
-Tool result:
-{json.dumps(result, indent=2)}
-
-Explain:
-- available kg
-- usable kg after waste
-- possible buste
-- possible colli
-- pedane needed
-- whether this could satisfy a production order
-"""
-
-                        answer = generate_ai_response(prompt)
-                        st.markdown(answer)
-
-                        st.session_state.smartfresh_chat.append({
-                            "role": "assistant",
-                            "content": answer
-                        })
-
-                elif tool_name == "calculate_from_kg":
-                    available_kg = st.number_input("Available kg", value=1728)
-                    buste_per_collo = st.number_input("Buste per collo", value=4)
-                    grams_per_busta = st.number_input("Grams per busta", value=125)
-                    kg_per_case = st.number_input("Kg per incoming case", value=6)
-                    colli_per_pallet = st.number_input("Colli per pallet / pedana", value=192)
-                    waste_percent = st.number_input("Waste %", value=0)
-
-                    submitted = st.form_submit_button("Run Tool")
-
-                    if submitted:
-                        result = run_tool(
-                            "calculate_from_kg",
-                            {
-                                "available_kg": available_kg,
-                                "buste_per_collo": buste_per_collo,
-                                "grams_per_busta": grams_per_busta,
-                                "kg_per_case": kg_per_case,
-                                "colli_per_pallet": colli_per_pallet,
-                                "waste_percent": waste_percent
-                            }
-                        )
-
-                        st.json(result)
-
-                        prompt = f"""
-You are a production planning expert.
-
-User question:
-{question}
-
-Tool result:
-{json.dumps(result, indent=2)}
-
-Explain clearly:
-- how many buste can be produced
-- how many colli can be produced
-- equivalent cases
-- pedane needed
-- recommendation
-"""
-
-                        answer = generate_ai_response(prompt)
-                        st.markdown(answer)
-
-                        st.session_state.smartfresh_chat.append({
-                            "role": "assistant",
-                            "content": answer
-                        })
-
-                elif tool_name == "estimate_machine_schedule":
-                    total_buste = st.number_input("Total buste", value=13824)
-                    machine_speed_buste_per_hour = st.number_input("Machine speed buste/hour", value=4000)
-                    setup_minutes = st.number_input("Setup minutes", value=30)
-                    departure_datetime = st.text_input("Departure datetime", value="2026-04-30 18:00")
-
-                    submitted = st.form_submit_button("Run Tool")
-
-                    if submitted:
-                        result = run_tool(
-                            "estimate_machine_schedule",
-                            {
-                                "total_buste": total_buste,
-                                "machine_speed_buste_per_hour": machine_speed_buste_per_hour,
-                                "setup_minutes": setup_minutes,
-                                "departure_datetime": departure_datetime
-                            }
-                        )
-
-                        st.json(result)
-
-                        prompt = f"""
-You are a production scheduling expert.
-
-User question:
-{question}
-
-Tool result:
-{json.dumps(result, indent=2)}
-
-Explain:
-- production duration
-- setup time
-- recommended start time
-- departure risk
-- practical recommendation
-"""
-
-                        answer = generate_ai_response(prompt)
-                        st.markdown(answer)
-
-                        st.session_state.smartfresh_chat.append({
-                            "role": "assistant",
-                            "content": answer
-                        })
-
-        else:
-            sample_data = df.sample(min(25, len(df))).to_dict(orient="records")
-
-            prompt = f"""
-You are SmartFresh AI, an operations intelligence assistant for a fresh produce company.
-
-Key KPIs:
-- Total production: {kpis["total_production"]}
-- Total sales: {kpis["total_sales"]}
-- Waste rate: {kpis["waste_rate"]:.2f}%
-- Defect rate: {kpis["defect_rate"]:.2f}%
-- Delayed deliveries: {kpis["delayed"]}
-- Total revenue: €{kpis["revenue"]:.2f}
-
-Dataset sample:
-{sample_data}
-
-User question:
-{question}
-
-Answer like a professional operations analyst:
-- concise bullet points
-- clear calculations if needed
-- highlight risks with ⚠️
-- give practical recommendations
-"""
-
-            with st.spinner("SmartFresh AI is analyzing..."):
-                answer = generate_ai_response(prompt)
-                st.markdown(answer)
-
-            st.session_state.smartfresh_chat.append({
-                "role": "assistant",
-                "content": answer
-            })
+if qa3.button("📦 Optimize Operations"):
+    st.session_state["user_prompt"] = "What actions should operations team take today?"
