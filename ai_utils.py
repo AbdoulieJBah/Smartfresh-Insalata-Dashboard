@@ -35,7 +35,7 @@ def generate_ai_response(prompt):
         try:
             genai.configure(api_key=key)
 
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.0-flash")
 
             response = model.generate_content(prompt)
 
