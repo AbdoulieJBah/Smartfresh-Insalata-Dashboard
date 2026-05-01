@@ -792,7 +792,7 @@ else:
 st.markdown("---")
 st.subheader("🧠 Agent Decision Summary")
 
-run_agent = auto_mode or st.button("Run AI Agent Analysis")
+run_agent = st.button("Run AI Agent Analysis")
 
 if run_agent:
     top_alerts = alerts_df.head(20).to_dict(orient="records") if len(alerts_df) else []
@@ -828,7 +828,7 @@ Highlight critical issues with ⚠️.
 """
 
     with st.spinner("AI Agent reasoning..."):
-        response = generate_ai_response_cached(prompt))
+        response = generate_ai_response_cached(prompt)
         st.markdown(response)
 
 
