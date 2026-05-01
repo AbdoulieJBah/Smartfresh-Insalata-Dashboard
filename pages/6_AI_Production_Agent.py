@@ -7,6 +7,7 @@ import random
 
 from auth_utils import require_role
 require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
+
 from data_utils import load_data
 from ai_utils import generate_ai_response
 from database import (
@@ -26,7 +27,7 @@ st.title("🧠 SmartFresh AI Production Agent")
 
 st.write(
     "This agent monitors operations, detects risks, analyzes revenue drops, predicts future revenue risk, "
-    "creates alerts, auto-generates actions, and simulates real-time operational events."
+    "creates alerts, auto-generates actions, and connects to the FastAPI backend for risk scoring."
 )
 
 # -----------------------------
@@ -48,10 +49,14 @@ st.caption(
     "Streaming Simulation creates live operational events."
 )
 
+# -----------------------------
+# LOAD DATA
+# -----------------------------
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
-API_URL = "https://smartfresh-insalata-dashboard.onrender.com/risk-score"
+# ✅ NEW BACKEND API URL
+API_URL = "https://smartfresh-api.onrender.com/risk-score"
 
 
 # -----------------------------
@@ -544,7 +549,7 @@ st.markdown("---")
 # -----------------------------
 # TRACEABILITY + BACKEND RISK
 # -----------------------------
-st.subheader("🔎 Batch Traceability & Risk Analysis")
+st.subheader("🔎 Batch Traceability & Backend Risk Analysis")
 
 if "batch_id" in df.columns:
     selected_batch = st.selectbox(
@@ -582,22 +587,31 @@ if "batch_id" in df.columns:
 
         if st.button("🔍 Analyze Batch Risk"):
             try:
-                response = requests.post(API_URL, json=payload, timeout=10)
+                with st.spinner("Calling SmartFresh FastAPI backend..."):
+                    response = requests.post(API_URL, json=payload, timeout=30)
 
                 if response.status_code == 200:
                     result = response.json()
 
                     r1, r2 = st.columns(2)
-                    r1.metric("Risk Score", result["risk_score"])
-                    r2.metric("Risk Category", result["risk_category"])
+                    r1.metric("Risk Score", result.get("risk_score", "N/A"))
+                    r2.metric("Risk Category", result.get("risk_category", "N/A"))
 
-                    for reason in result["risk_reasons"]:
+                    for reason in result.get("risk_reasons", []):
                         st.warning(f"⚠️ {reason}")
-                else:
-                    st.error("Backend API failed.")
 
-            except Exception:
+                    st.success("✅ Backend API connected successfully.")
+
+                else:
+                    st.error(f"Backend API failed with status code: {response.status_code}")
+                    st.write(response.text)
+
+            except requests.exceptions.Timeout:
+                st.error("⚠️ Backend API timeout. Render free service may be waking up. Try again in 30 seconds.")
+
+            except Exception as e:
                 st.error("⚠️ Backend unavailable.")
+                st.write(str(e))
 else:
     st.warning("Dataset does not contain batch_id column.")
 
