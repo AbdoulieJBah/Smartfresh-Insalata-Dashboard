@@ -7,14 +7,8 @@ require_role(["Admin", "Manager"])
 
 st.set_page_config(page_title="Executive Dashboard", layout="wide")
 
-# -----------------------------
-# USER CONTEXT
-# -----------------------------
 user = get_current_user()
 
-# -----------------------------
-# HEADER
-# -----------------------------
 st.title("📊 Executive Dashboard — Strategic Operations Overview")
 
 st.write(
@@ -22,16 +16,13 @@ st.write(
     "This dashboard provides an executive-level view of production, sales, waste, defects, revenue, and supplier performance."
 )
 
-# -----------------------------
-# LOAD DATA
-# -----------------------------
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
 kpis = calculate_kpis(df)
 
 # -----------------------------
-# EXECUTIVE KPI CARDS
+# EXECUTIVE KPIs
 # -----------------------------
 st.subheader("📌 Executive KPIs")
 
@@ -54,28 +45,20 @@ st.markdown("---")
 # -----------------------------
 st.subheader("🧠 Executive Status Summary")
 
-summary_messages = []
-
 if kpis["waste_rate"] > 8:
-    summary_messages.append("⚠️ Waste rate is above target and should be reviewed by operations and quality teams.")
+    st.warning("⚠️ Waste rate is above target and should be reviewed by operations and quality teams.")
 else:
-    summary_messages.append("✅ Waste rate appears under control.")
+    st.success("✅ Waste rate appears under control.")
 
 if kpis["defect_rate"] > 2:
-    summary_messages.append("⚠️ Defect rate is elevated and may indicate quality or supplier issues.")
+    st.warning("⚠️ Defect rate is elevated and may indicate quality or supplier issues.")
 else:
-    summary_messages.append("✅ Defect rate appears acceptable.")
+    st.success("✅ Defect rate appears acceptable.")
 
 if kpis["delayed"] > 0:
-    summary_messages.append("⚠️ Delivery delays detected. Logistics performance should be monitored.")
+    st.warning("⚠️ Delivery delays detected. Logistics performance should be monitored.")
 else:
-    summary_messages.append("✅ No major delivery delay issue detected.")
-
-for msg in summary_messages:
-    if "⚠️" in msg:
-        st.warning(msg)
-    else:
-        st.success(msg)
+    st.success("✅ No major delivery delay issue detected.")
 
 st.markdown("---")
 
@@ -84,11 +67,11 @@ st.markdown("---")
 # -----------------------------
 st.subheader("🏭 Production vs Sales Performance")
 
-product_summary = df.groupby("product_name")[[
-    "quantity_produced",
-    "quantity_sold",
-    "waste_quantity"
-]].sum().reset_index()
+product_summary = (
+    df.groupby("product_name")[["quantity_produced", "quantity_sold", "waste_quantity"]]
+    .sum()
+    .reset_index()
+)
 
 fig = px.bar(
     product_summary,
@@ -112,22 +95,23 @@ fig_waste = px.bar(
 )
 st.plotly_chart(fig_waste, use_container_width=True)
 
-top_waste_product = product_summary.sort_values("waste_quantity", ascending=False).iloc[0]
-
-st.info(
-    f"Highest waste product: **{top_waste_product['product_name']}** "
-    f"with **{top_waste_product['waste_quantity']:,.0f}** units/kg waste."
-)
+if not product_summary.empty:
+    top_waste_product = product_summary.sort_values("waste_quantity", ascending=False).iloc[0]
+    st.info(
+        f"Highest waste product: **{top_waste_product['product_name']}** "
+        f"with **{top_waste_product['waste_quantity']:,.0f}** units/kg waste."
+    )
 
 # -----------------------------
 # SUPPLIER QUALITY
 # -----------------------------
 st.subheader("🏭 Supplier Quality Performance")
 
-supplier_summary = df.groupby("supplier")[[
-    "waste_quantity",
-    "defect_count"
-]].sum().reset_index()
+supplier_summary = (
+    df.groupby("supplier")[["waste_quantity", "defect_count"]]
+    .sum()
+    .reset_index()
+)
 
 supplier_summary["supplier_risk_score"] = (
     supplier_summary["waste_quantity"] * 0.4
@@ -143,12 +127,12 @@ fig_supplier = px.bar(
 )
 st.plotly_chart(fig_supplier, use_container_width=True)
 
-top_supplier_risk = supplier_summary.sort_values("supplier_risk_score", ascending=False).iloc[0]
-
-st.warning(
-    f"Supplier requiring attention: **{top_supplier_risk['supplier']}** "
-    f"with the highest combined waste/defect risk."
-)
+if not supplier_summary.empty:
+    top_supplier_risk = supplier_summary.sort_values("supplier_risk_score", ascending=False).iloc[0]
+    st.warning(
+        f"Supplier requiring attention: **{top_supplier_risk['supplier']}** "
+        "with the highest combined waste/defect risk."
+    )
 
 # -----------------------------
 # REVENUE TREND
@@ -156,10 +140,9 @@ st.warning(
 if "date" in df.columns and "revenue" in df.columns:
     st.subheader("📈 Revenue Trend")
 
-    df["date"] = df["date"].astype(str)
-
     revenue_trend = (
-        df.groupby("date")["revenue"]
+        df.assign(date=df["date"].astype(str))
+        .groupby("date")["revenue"]
         .sum()
         .reset_index()
         .sort_values("date")
@@ -182,7 +165,7 @@ st.subheader("🎯 Executive Recommendations")
 
 recommendations = []
 
- if kpis["waste_rate"] > 8:
+if kpis["waste_rate"] > 8:
     recommendations.append("Prioritize waste reduction initiatives on high-waste products.")
 
 if kpis["defect_rate"] > 2:
