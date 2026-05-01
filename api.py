@@ -1,9 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from database import (
+    load_alerts,
+    load_agent_actions,
+    load_agent_logs,
+    load_stream_events,
+    update_alert_status,
+    update_action_status
+)
 
 app = FastAPI(title="SmartFresh AI Backend API")
 
 
+# -----------------------------
+# MODELS
+# -----------------------------
 class RiskInput(BaseModel):
     product_name: str
     supplier: str
@@ -17,11 +28,33 @@ class RiskInput(BaseModel):
     delivery_delay_days: int
 
 
+class StatusUpdate(BaseModel):
+    id: int
+    status: str
+
+
+# -----------------------------
+# HOME
+# -----------------------------
 @app.get("/")
 def home():
-    return {"message": "SmartFresh AI Backend API is running"}
+    return {
+        "message": "SmartFresh AI Backend API is running",
+        "available_endpoints": [
+            "/risk-score",
+            "/alerts",
+            "/actions",
+            "/agent-logs",
+            "/stream-events",
+            "/update-alert-status",
+            "/update-action-status"
+        ]
+    }
 
 
+# -----------------------------
+# RISK SCORE
+# -----------------------------
 @app.post("/risk-score")
 def risk_score(data: RiskInput):
     score = 0
@@ -70,3 +103,59 @@ def risk_score(data: RiskInput):
         "risk_category": category,
         "risk_reasons": reasons if reasons else ["Low operational risk"]
     }
+
+
+# -----------------------------
+# ALERTS API
+# -----------------------------
+@app.get("/alerts")
+def get_alerts():
+    df = load_alerts()
+    return df.to_dict(orient="records")
+
+
+@app.post("/update-alert-status")
+def update_alert(update: StatusUpdate):
+    update_alert_status(update.id, update.status)
+    return {
+        "message": "Alert status updated",
+        "id": update.id,
+        "status": update.status
+    }
+
+
+# -----------------------------
+# ACTIONS API
+# -----------------------------
+@app.get("/actions")
+def get_actions():
+    df = load_agent_actions()
+    return df.to_dict(orient="records")
+
+
+@app.post("/update-action-status")
+def update_action(update: StatusUpdate):
+    update_action_status(update.id, update.status)
+    return {
+        "message": "Action status updated",
+        "id": update.id,
+        "status": update.status
+    }
+
+
+# -----------------------------
+# LOGS API
+# -----------------------------
+@app.get("/agent-logs")
+def get_agent_logs():
+    df = load_agent_logs()
+    return df.to_dict(orient="records")
+
+
+# -----------------------------
+# STREAM EVENTS API
+# -----------------------------
+@app.get("/stream-events")
+def get_stream_events():
+    df = load_stream_events(limit=100)
+    return df.to_dict(orient="records")
