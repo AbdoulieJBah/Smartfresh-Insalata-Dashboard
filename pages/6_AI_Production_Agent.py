@@ -62,6 +62,21 @@ df.columns = df.columns.str.strip().str.lower()
 
 API_URL = "https://smartfresh-api.onrender.com/risk-score"
 
+# 🔥 TEST ALERT (temporary)
+if st.button("🚨 Send Test Alert to Slack"):
+    save_alert_and_action(
+        {
+            "risk_type": "TEST ALERT",
+            "batch_id": "TEST123",
+            "severity": "High",
+            "issue": "Testing Slack integration",
+            "recommended_action": "No action"
+        },
+        status="Open",
+        autonomous_mode=True
+    )
+    st.success("Test alert sent!")
+
 # -----------------------------
 # TRAIN ML RISK MODEL
 # -----------------------------
