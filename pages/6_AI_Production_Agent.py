@@ -2,14 +2,20 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
+import json
+import random
 
 from data_utils import load_data
 from ai_utils import generate_ai_response
 from database import (
     save_agent_action,
-    save_alert,
+    save_alert_and_action,
     save_agent_log,
-    load_alerts
+    load_alerts,
+    save_stream_event,
+    load_stream_events,
+    calculate_priority,
+    assign_team
 )
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
@@ -18,14 +24,27 @@ st.title("🧠 SmartFresh AI Production Agent")
 
 st.write(
     "This agent monitors operations, detects risks, analyzes revenue drops, predicts future revenue risk, "
-    "and recommends autonomous production decisions."
+    "creates alerts, auto-generates actions, and simulates real-time operational events."
 )
 
 # -----------------------------
-# AUTO MONITORING MODE
+# CONTROL MODES
 # -----------------------------
-auto_mode = st.toggle("⚙️ Auto Monitoring Mode", value=True)
-st.caption("When enabled, the AI Agent automatically monitors risks and updates alerts.")
+c_auto, c_autonomous, c_stream = st.columns(3)
+
+with c_auto:
+    auto_mode = st.toggle("⚙️ Auto Monitoring Mode", value=True)
+
+with c_autonomous:
+    autonomous_mode = st.toggle("🤖 Autonomous Action Mode", value=True)
+
+with c_stream:
+    streaming_mode = st.toggle("📡 Streaming Simulation", value=True)
+
+st.caption(
+    "Auto Monitoring saves alerts automatically. Autonomous Mode converts alerts into actions. "
+    "Streaming Simulation creates live operational events."
+)
 
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
@@ -103,7 +122,14 @@ def detect_agent_risks(df):
                 "recommended_action": "Reassign to faster machine or prioritize in current shift."
             })
 
-    return pd.DataFrame(alerts)
+    alerts_df = pd.DataFrame(alerts)
+
+    if not alerts_df.empty:
+        alerts_df["priority_score"] = alerts_df.apply(lambda x: calculate_priority(x.to_dict()), axis=1)
+        alerts_df["assigned_team"] = alerts_df.apply(lambda x: assign_team(x.to_dict()), axis=1)
+        alerts_df = alerts_df.sort_values("priority_score", ascending=False)
+
+    return alerts_df
 
 
 # -----------------------------
@@ -119,13 +145,14 @@ def detect_revenue_drop(df):
     rev_df[date_col] = pd.to_datetime(rev_df[date_col], errors="coerce")
     rev_df = rev_df.dropna(subset=[date_col])
 
-    required_cols = ["batch_id", "quantity_sold", "waste_quantity", "defect_count", "delivery_status", "temperature"]
+    required_cols = [
+        "batch_id", "quantity_sold", "waste_quantity",
+        "defect_count", "delivery_status", "temperature"
+    ]
+
     for col in required_cols:
         if col not in rev_df.columns:
-            if col == "delivery_status":
-                rev_df[col] = "Unknown"
-            else:
-                rev_df[col] = 0
+            rev_df[col] = "Unknown" if col == "delivery_status" else 0
 
     daily_revenue = (
         rev_df.groupby(date_col)
@@ -255,6 +282,59 @@ def predict_future_revenue_drop(daily_revenue):
 
 
 # -----------------------------
+# STREAMING SIMULATION
+# -----------------------------
+def simulate_stream_event(df):
+    if df.empty:
+        return None
+
+    row = df.sample(1).iloc[0]
+
+    event_type = random.choice([
+        "Temperature Update",
+        "Delivery Status Update",
+        "Production Signal",
+        "Quality Signal",
+        "Inventory Signal"
+    ])
+
+    batch_id = row.get("batch_id", "Unknown")
+    product = row.get("product_name", "Unknown")
+    client = row.get("client", row.get("customer", "Unknown"))
+
+    severity = "Info"
+    message = f"{event_type} received for batch {batch_id}"
+
+    if event_type == "Temperature Update" and row.get("temperature", 0) > 6:
+        severity = "High"
+        message = f"Temperature risk detected for {product}, batch {batch_id}"
+
+    elif event_type == "Delivery Status Update" and str(row.get("delivery_status", "")).lower() == "delayed":
+        severity = "Medium"
+        message = f"Delayed delivery detected for client {client}, batch {batch_id}"
+
+    elif event_type == "Quality Signal" and row.get("defect_count", 0) > 25:
+        severity = "High"
+        message = f"Quality defect signal detected for batch {batch_id}"
+
+    payload = json.dumps({
+        "batch_id": str(batch_id),
+        "product": str(product),
+        "client": str(client),
+        "event_type": event_type
+    })
+
+    save_stream_event(event_type, str(batch_id), severity, message, payload)
+
+    return {
+        "event_type": event_type,
+        "batch_id": batch_id,
+        "severity": severity,
+        "message": message
+    }
+
+
+# -----------------------------
 # RUN DETECTION
 # -----------------------------
 alerts_df = detect_agent_risks(df)
@@ -263,7 +343,7 @@ future_revenue_risk = predict_future_revenue_drop(daily_revenue)
 
 
 # -----------------------------
-# SAVE ALERTS TO DATABASE
+# SAVE ALERTS + AUTO ACTIONS
 # -----------------------------
 if "alerts_saved" not in st.session_state:
     st.session_state.alerts_saved = False
@@ -273,23 +353,30 @@ should_save_alerts = auto_mode and not st.session_state.alerts_saved
 if should_save_alerts:
     if len(alerts_df) > 0:
         for _, alert in alerts_df.head(50).iterrows():
-            save_alert(alert.to_dict(), status="Open")
+            save_alert_and_action(
+                alert.to_dict(),
+                status="Open",
+                autonomous_mode=autonomous_mode
+            )
 
         save_agent_log(
             "Alert Save",
-            f"{min(len(alerts_df), 50)} operational alerts saved by AI Production Agent."
+            f"{min(len(alerts_df), 50)} operational alerts saved. Autonomous actions: {autonomous_mode}."
         )
 
     if revenue_alert:
-        save_alert(
-            {
-                "risk_type": "Revenue Drop",
-                "batch_id": "N/A",
-                "severity": "High",
-                "issue": f"Revenue dropped by {revenue_alert['drop_percent']}%",
-                "recommended_action": "Review client orders, product mix, waste, defects, and delivery delays."
-            },
-            status="Open"
+        revenue_dict = {
+            "risk_type": "Revenue Drop",
+            "batch_id": "N/A",
+            "severity": "High",
+            "issue": f"Revenue dropped by {revenue_alert['drop_percent']}%",
+            "recommended_action": "Review client orders, product mix, waste, defects, and delivery delays."
+        }
+
+        save_alert_and_action(
+            revenue_dict,
+            status="Open",
+            autonomous_mode=autonomous_mode
         )
 
         save_agent_log(
@@ -298,15 +385,18 @@ if should_save_alerts:
         )
 
     if future_revenue_risk and future_revenue_risk["future_revenue_risk_level"] in ["High", "Medium"]:
-        save_alert(
-            {
-                "risk_type": "Future Revenue Risk",
-                "batch_id": "N/A",
-                "severity": future_revenue_risk["future_revenue_risk_level"],
-                "issue": f"Future revenue drop risk is {future_revenue_risk['future_revenue_risk_level']}",
-                "recommended_action": "Prioritize high-value orders and reduce waste, defects, delays, and operational bottlenecks."
-            },
-            status="Open"
+        future_dict = {
+            "risk_type": "Future Revenue Risk",
+            "batch_id": "N/A",
+            "severity": future_revenue_risk["future_revenue_risk_level"],
+            "issue": f"Future revenue drop risk is {future_revenue_risk['future_revenue_risk_level']}",
+            "recommended_action": "Prioritize high-value orders and reduce waste, defects, delays, and operational bottlenecks."
+        }
+
+        save_alert_and_action(
+            future_dict,
+            status="Open",
+            autonomous_mode=autonomous_mode
         )
 
         save_agent_log(
@@ -318,14 +408,30 @@ if should_save_alerts:
 
 
 # -----------------------------
+# STREAMING EXECUTION
+# -----------------------------
+if streaming_mode:
+    if st.button("📡 Simulate Live Event"):
+        event = simulate_stream_event(df)
+        if event:
+            if event["severity"] == "High":
+                st.error(f"🚨 {event['message']}")
+            elif event["severity"] == "Medium":
+                st.warning(f"⚠️ {event['message']}")
+            else:
+                st.info(f"ℹ️ {event['message']}")
+
+
+# -----------------------------
 # KPIs
 # -----------------------------
-c1, c2, c3, c4 = st.columns(4)
+c1, c2, c3, c4, c5 = st.columns(5)
 
 c1.metric("Records Monitored", len(df))
 c2.metric("Agent Alerts", len(alerts_df))
 c3.metric("High Severity", (alerts_df["severity"] == "High").sum() if len(alerts_df) else 0)
 c4.metric("Medium Severity", (alerts_df["severity"] == "Medium").sum() if len(alerts_df) else 0)
+c5.metric("Autonomous Mode", "ON" if autonomous_mode else "OFF")
 
 if st.button("🔄 Save Latest Alerts Again"):
     st.session_state.alerts_saved = False
@@ -351,6 +457,7 @@ if revenue_alert:
     r4.metric("Latest Delays", revenue_alert["latest_delays"])
 
     st.markdown("### Possible Causes")
+
     if revenue_alert["latest_orders"] < revenue_alert["previous_orders"]:
         st.write("- ⚠️ Lower order volume")
     if revenue_alert["latest_quantity_sold"] < revenue_alert["previous_quantity_sold"]:
@@ -390,6 +497,7 @@ if future_revenue_risk:
         st.success("🟢 Low future revenue drop risk.")
 
     st.markdown("### Prediction Reasons")
+
     for reason in future_revenue_risk["risk_reasons"]:
         st.write(f"- {reason}")
 else:
@@ -406,17 +514,19 @@ st.subheader("🚨 Agent Risk Alerts")
 if len(alerts_df) > 0:
     st.dataframe(alerts_df, use_container_width=True)
 
-    st.markdown("### ⚙️ Convert Alerts to Actions")
+    st.markdown("### ⚙️ Manual Action Creation")
 
     for i, alert in alerts_df.head(25).iterrows():
-        with st.expander(f"{alert['risk_type']} — Batch {alert['batch_id']}"):
-
+        with st.expander(f"{alert['risk_type']} — Batch {alert['batch_id']} — Priority {alert['priority_score']}"):
             st.write(f"**Issue:** {alert['issue']}")
             st.write(f"**Recommended Action:** {alert['recommended_action']}")
+            st.write(f"**Suggested Team:** {alert['assigned_team']}")
 
             team = st.selectbox(
                 f"Assign Team {i}",
-                ["Operations Team", "Quality Team", "Logistics Team"],
+                ["Operations Team", "Quality Team", "Logistics Team", "Management Team"],
+                index=["Operations Team", "Quality Team", "Logistics Team", "Management Team"].index(alert["assigned_team"])
+                if alert["assigned_team"] in ["Operations Team", "Quality Team", "Logistics Team", "Management Team"] else 0,
                 key=f"team_{i}"
             )
 
@@ -514,6 +624,11 @@ Revenue drop alert:
 Future revenue drop prediction:
 {future_revenue_risk}
 
+System modes:
+- Auto Monitoring Mode: {auto_mode}
+- Autonomous Action Mode: {autonomous_mode}
+- Streaming Simulation: {streaming_mode}
+
 Analyze:
 1. Current operational health
 2. Reasons revenue may have dropped
@@ -534,41 +649,52 @@ st.markdown("---")
 
 
 # -----------------------------
-# SIMULATED AUTONOMOUS ACTIONS
+# AUTONOMOUS ACTION SUMMARY
 # -----------------------------
-st.subheader("⚙️ Simulated Agent Actions")
+st.subheader("⚙️ Autonomous Agent Action Summary")
+
+if autonomous_mode:
+    st.success("🤖 Autonomous Mode is ON — alerts are automatically converted into assigned actions.")
+else:
+    st.info("Manual Mode is ON — alerts are detected but actions must be created manually.")
 
 if revenue_alert:
-    st.warning("💰 Agent Action: Revenue drop detected — review client orders, product mix, waste, and delayed deliveries.")
+    st.warning("💰 Revenue drop detected — management review recommended.")
 
 if future_revenue_risk and future_revenue_risk["future_revenue_risk_level"] in ["High", "Medium"]:
-    st.warning("🔮 Agent Action: Future revenue risk detected — prioritize high-value orders and reduce operational bottlenecks.")
+    st.warning("🔮 Future revenue risk detected — prioritize high-value orders and reduce bottlenecks.")
 
 if len(alerts_df) > 0:
     for _, alert in alerts_df.head(10).iterrows():
-        if alert["risk_type"] == "Schedule Risk":
-            st.warning(f"⚠️ Prioritize batch {alert['batch_id']} for faster machine assignment.")
-
-        elif alert["risk_type"] == "Cold Chain Risk":
-            st.error(f"🌡️ Inspect cold chain for batch {alert['batch_id']}.")
-
-        elif alert["risk_type"] == "High Waste":
-            st.warning(f"📦 Review supplier/product quality for batch {alert['batch_id']}.")
-
-        elif alert["risk_type"] == "Delivery Delay":
-            st.info(f"🚚 Notify logistics for client {alert['client']}.")
-
-        elif alert["risk_type"] == "Quality Defect":
-            st.error(f"🧪 Trigger quality inspection for batch {alert['batch_id']}.")
+        st.write(
+            f"**{alert['risk_type']}** | Batch: `{alert['batch_id']}` | "
+            f"Priority: `{alert['priority_score']}` | Assigned: `{alert['assigned_team']}`"
+        )
 else:
     if not revenue_alert and not future_revenue_risk:
         st.success("✅ No agent actions required.")
+
+st.markdown("---")
+
+
+# -----------------------------
+# LIVE STREAMING FEED
+# -----------------------------
+st.subheader("📡 Kafka-Style Streaming Simulation Feed")
+
+stream_events = load_stream_events(limit=20)
+
+if stream_events.empty:
+    st.info("No streaming events yet. Click 'Simulate Live Event' above.")
+else:
+    st.dataframe(stream_events, use_container_width=True)
+
+st.markdown("---")
 
 
 # -----------------------------
 # LIVE ALERTS FEED
 # -----------------------------
-st.markdown("---")
 st.subheader("📡 Live Alerts Feed")
 
 if st.button("🔄 Refresh Alerts Feed"):
