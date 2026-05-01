@@ -1,18 +1,16 @@
+import os
 import streamlit as st
 import google.generativeai as genai
-import os
 
 
 def get_api_keys():
     keys = []
 
-    # ✅ 1. Try Render environment variables FIRST
     for i in range(1, 6):
         key = os.getenv(f"GEMINI_API_KEY_{i}")
         if key:
             keys.append(key)
 
-    # ✅ 2. Try Streamlit secrets ONLY if available
     try:
         for i in range(1, 6):
             key_name = f"GEMINI_API_KEY_{i}"
@@ -21,41 +19,51 @@ def get_api_keys():
     except Exception:
         pass
 
-    return keys
+    return list(dict.fromkeys(keys))
 
 
+@st.cache_data(ttl=120)
 def generate_ai_response(prompt):
     keys = get_api_keys()
 
     if not keys:
-        return "⚠️ No Gemini API key found. Add GEMINI_API_KEY_1 in Render Environment Variables."
+        return "⚠️ No Gemini API key found in Render environment variables."
 
-    # Try each key until one works
+    models = [
+        "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-pro"
+    ]
+
+    last_error = ""
+
     for key in keys:
-        try:
-            genai.configure(api_key=key)
+        for model_name in models:
+            try:
+                genai.configure(api_key=key)
+                model = genai.GenerativeModel(model_name)
+                response = model.generate_content(prompt)
+                return response.text
 
-            model = genai.GenerativeModel("gemini-2.0-flash")
+            except Exception as e:
+                last_error = str(e)
 
-            response = model.generate_content(prompt)
+                if "429" in last_error or "quota" in last_error.lower():
+                    continue
 
-            return response.text
+                if "404" in last_error or "not found" in last_error.lower():
+                    continue
 
-        except Exception as e:
-            error_msg = str(e)
-
-            # Handle quota errors → try next key
-            if "429" in error_msg:
                 continue
 
-            return f"⚠️ AI error: {e}"
+    return f"""⚠️ AI quota reached or all Gemini models failed.
 
-    # Fallback if all keys fail
-    return """⚠️ AI quota reached on all keys.
+Last error:
+{last_error}
 
 Fallback insights:
 - Check delayed deliveries
-- Review high waste batches
+- Review high-waste batches
 - Monitor temperature deviations
 - Inspect defect-heavy production lines
 """
