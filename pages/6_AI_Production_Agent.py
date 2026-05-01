@@ -6,7 +6,7 @@ import random
 import time
 
 from auth_utils import require_role
-require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
+require_role(["Admin", "Manager"])
 
 from data_utils import load_data
 from ai_utils import generate_ai_response
