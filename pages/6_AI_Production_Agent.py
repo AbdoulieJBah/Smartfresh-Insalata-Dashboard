@@ -828,7 +828,7 @@ Highlight critical issues with ⚠️.
 """
 
     with st.spinner("AI Agent reasoning..."):
-        response = generate_ai_response_cached(context)
+        response = generate_ai_response_cached(prompt))
         st.markdown(response)
 
 
