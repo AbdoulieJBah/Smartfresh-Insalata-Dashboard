@@ -44,6 +44,29 @@ def generate_ai_response(prompt):
                 response = model.generate_content(prompt)
                 return response.text
 
+
+@st.cache_data(ttl=120)
+def generate_ai_response(prompt):
+    keys = get_api_keys()
+
+    if not keys:
+        return "⚠️ No Gemini API key found in Render environment variables."
+
+    models = [
+        "gemini-2.5-flash",
+        "gemini-1.5-flash"
+    ]
+
+    last_error = ""
+
+    for key in keys:
+        for model_name in models:
+            try:
+                genai.configure(api_key=key)
+                model = genai.GenerativeModel(model_name)
+                response = model.generate_content(prompt)
+                return response.text
+
             except Exception as e:
                 last_error = str(e)
 
@@ -66,3 +89,8 @@ Fallback insights:
 - Monitor temperature deviations
 - Inspect defect-heavy production lines
 """
+
+
+@st.cache_data(ttl=60)
+def generate_ai_response_cached(prompt):
+    return generate_ai_response(prompt)
