@@ -62,20 +62,33 @@ df.columns = df.columns.str.strip().str.lower()
 
 API_URL = "https://smartfresh-api.onrender.com/risk-score"
 
-# 🔥 TEST ALERT (temporary)
+# 🔥 TEST SLACK / EMAIL ALERT BUTTON
 if st.button("🚨 Send Test Alert to Slack"):
+    test_alert = {
+        "risk_type": "TEST ALERT",
+        "batch_id": "TEST123",
+        "severity": "High",
+        "priority_score": 100,
+        "assigned_team": "Operations Team",
+        "issue": "Testing Slack integration",
+        "recommended_action": "No action"
+    }
+
     save_alert_and_action(
-        {
-            "risk_type": "TEST ALERT",
-            "batch_id": "TEST123",
-            "severity": "High",
-            "issue": "Testing Slack integration",
-            "recommended_action": "No action"
-        },
+        test_alert,
         status="Open",
         autonomous_mode=True
     )
-    st.success("Test alert sent!")
+
+    notify_result = notify_critical_alert(test_alert)
+
+    save_agent_log(
+        "TEST_NOTIFICATION",
+        f"Test notification result: {notify_result}"
+    )
+
+    st.write(notify_result)
+    st.success("Test alert triggered.")
 
 # -----------------------------
 # TRAIN ML RISK MODEL
