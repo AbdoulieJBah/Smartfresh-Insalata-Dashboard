@@ -317,8 +317,8 @@ SmartFresh AI is a full-stack operations intelligence system that:
 # -----------------------------
 st.markdown("---")
 
-st.markdown("### 🥬 SmartFresh AI • Abdoulie J Bah")
-st.caption("AI Engineer • Data Scientist • BI Developer")
+st.markdown("### 🥬 SmartFresh AI • Build by Abdoulie J Bah")
+st.caption("AI Engineer • Data Scientist • Business Intelligence Developer")
 
 c1, c2, c3 = st.columns([1, 2, 1])
 
