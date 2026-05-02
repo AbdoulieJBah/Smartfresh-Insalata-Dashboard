@@ -3,11 +3,10 @@ import pandas as pd
 import plotly.express as px
 
 from data_utils import load_data
-from ai_utils import generate_ai_response
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
 
-require_role(["Admin", "Manager" , "Operations", "Quality"])
+require_role(["Admin", "Manager", "Operations", "Quality"])
 
 st.set_page_config(page_title="AI Copilot", layout="wide")
 
@@ -32,6 +31,9 @@ required_numeric_cols = [
 for col in required_numeric_cols:
     if col not in df.columns:
         df[col] = 0
+
+for col in required_numeric_cols:
+    df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
 if "delivery_status" not in df.columns:
     df["delivery_status"] = "Unknown"
@@ -89,10 +91,16 @@ st.markdown("---")
 def calculate_revenue_summary(data):
     total_revenue = data["revenue"].sum()
     avg_revenue = data["revenue"].mean()
-    top_client = (
-        data.groupby("client")["revenue"].sum().sort_values(ascending=False).head(1)
-        if "client" in data.columns else None
-    )
+
+    if "client" in data.columns and not data.empty:
+        top_client = (
+            data.groupby("client")["revenue"]
+            .sum()
+            .sort_values(ascending=False)
+            .head(1)
+        )
+    else:
+        top_client = None
 
     return {
         "total_revenue": round(total_revenue, 2),
@@ -176,7 +184,10 @@ def detect_revenue_trend(data):
     if pd.isna(latest["rolling_3"]) or pd.isna(latest["rolling_7"]):
         return None
 
-    drop_risk = ((latest["rolling_7"] - latest["rolling_3"]) / latest["rolling_7"]) * 100 if latest["rolling_7"] else 0
+    drop_risk = (
+        ((latest["rolling_7"] - latest["rolling_3"]) / latest["rolling_7"]) * 100
+        if latest["rolling_7"] else 0
+    )
 
     return {
         "latest_date": str(latest["date"].date()),
