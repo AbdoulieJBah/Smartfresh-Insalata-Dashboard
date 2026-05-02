@@ -10,3 +10,4 @@ pydantic
 google-generativeai
 python-multipart
 scikit-learn
+xgboost
