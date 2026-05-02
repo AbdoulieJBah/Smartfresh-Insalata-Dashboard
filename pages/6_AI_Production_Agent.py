@@ -101,7 +101,7 @@ ml_model, ml_features = train_risk_model(df)
 # -----------------------------
 # RISK DETECTION
 # -----------------------------
-def detect_agent_risks(data):
+def detect_agent_risks(data, ml_model=None, ml_features=None):
     alerts = []
 
     for _, row in data.iterrows():
@@ -116,6 +116,23 @@ def detect_agent_risks(data):
 
         waste_rate = (waste_quantity / quantity_produced) * 100 if quantity_produced else 0
 
+        # -----------------------------
+        # ML RISK PREDICTION
+        # -----------------------------
+        ml_result = {
+            "ml_risk_probability": 0,
+            "ml_risk_level": "Unavailable"
+        }
+
+        if ml_model is not None and ml_features is not None:
+            ml_result = predict_ml_risk(ml_model, ml_features, row)
+
+        ml_probability = ml_result["ml_risk_probability"]
+        ml_level = ml_result["ml_risk_level"]
+
+        # -----------------------------
+        # RULE-BASED ALERTS
+        # -----------------------------
         if waste_rate > 8:
             alerts.append({
                 "risk_type": "High Waste",
@@ -124,7 +141,9 @@ def detect_agent_risks(data):
                 "product": product,
                 "severity": "High",
                 "issue": f"Waste rate is {waste_rate:.2f}%",
-                "recommended_action": "Review raw material quality, supplier performance, and machine settings."
+                "recommended_action": "Review raw material quality, supplier performance, and machine settings.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
             })
 
         if temperature > 6:
@@ -135,7 +154,9 @@ def detect_agent_risks(data):
                 "product": product,
                 "severity": "High",
                 "issue": f"Temperature is {temperature:.1f}°C",
-                "recommended_action": "Inspect cold storage, transport conditions, and shipment readiness."
+                "recommended_action": "Inspect cold storage, transport conditions, and shipment readiness.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
             })
 
         if str(row.get("delivery_status", "")).lower() == "delayed":
@@ -146,7 +167,9 @@ def detect_agent_risks(data):
                 "product": product,
                 "severity": "Medium",
                 "issue": "Delivery is delayed",
-                "recommended_action": "Notify logistics team and review dispatch priority."
+                "recommended_action": "Notify logistics team and review dispatch priority.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
             })
 
         if defect_count > 25:
@@ -157,7 +180,9 @@ def detect_agent_risks(data):
                 "product": product,
                 "severity": "High",
                 "issue": f"Defect count is {defect_count}",
-                "recommended_action": "Trigger quality inspection and supplier root-cause analysis."
+                "recommended_action": "Trigger quality inspection and supplier root-cause analysis.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
             })
 
         if "slack_minutes" in data.columns and row.get("slack_minutes", 999) < 60:
@@ -168,7 +193,25 @@ def detect_agent_risks(data):
                 "product": product,
                 "severity": "High",
                 "issue": "Order has less than 60 minutes slack before departure",
-                "recommended_action": "Prioritize the order or reassign it to a faster machine."
+                "recommended_action": "Prioritize the order or reassign it to a faster machine.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
+            })
+
+        # -----------------------------
+        # ML-ONLY ALERT
+        # -----------------------------
+        if ml_probability >= 70:
+            alerts.append({
+                "risk_type": "ML Predicted Risk",
+                "batch_id": batch,
+                "client": client,
+                "product": product,
+                "severity": "High",
+                "issue": f"ML model predicts high operational risk: {ml_probability:.2f}%",
+                "recommended_action": "Investigate this batch immediately and review waste, defects, temperature, and delivery status.",
+                "ml_risk_probability": ml_probability,
+                "ml_risk_level": ml_level
             })
 
     alerts_df = pd.DataFrame(alerts)
@@ -176,6 +219,15 @@ def detect_agent_risks(data):
     if not alerts_df.empty:
         alerts_df["priority_score"] = alerts_df.apply(
             lambda x: calculate_priority(x.to_dict()),
+            axis=1
+        )
+
+        # Boost priority using ML risk
+        alerts_df["priority_score"] = alerts_df.apply(
+            lambda x: min(
+                100,
+                x["priority_score"] + int(x.get("ml_risk_probability", 0) * 0.25)
+            ),
             axis=1
         )
 
@@ -403,7 +455,7 @@ def simulate_stream_event(data):
 # -----------------------------
 # RUN DETECTION
 # -----------------------------
-alerts_df = detect_agent_risks(df)
+alerts_df = detect_agent_risks(df, ml_model, ml_features)
 revenue_alert, daily_revenue = detect_revenue_drop(df)
 future_revenue_risk = predict_future_revenue_drop(daily_revenue)
 
@@ -652,15 +704,17 @@ st.subheader("🚨 Agent Risk Alerts")
 
 if len(alerts_df) > 0:
     display_cols = [
-        "risk_type",
-        "batch_id",
-        "severity",
-        "priority_score",
-        "assigned_team",
-        "planner_recommendation",
-        "execution_action",
-        "execution_status"
-    ]
+    "risk_type",
+    "batch_id",
+    "severity",
+    "ml_risk_probability",
+    "ml_risk_level",
+    "priority_score",
+    "assigned_team",
+    "planner_recommendation",
+    "execution_action",
+    "execution_status"
+]
 
     available_cols = [col for col in display_cols if col in alerts_df.columns]
 
