@@ -9,8 +9,8 @@ from auth_utils import require_role
 require_role(["Admin", "Manager"])
 
 from data_utils import load_data
-from ai_utils import generate_ai_response
 from ai_utils import generate_ai_response_cached
+
 from database import (
     save_agent_action,
     save_alert_and_action,
@@ -23,7 +23,7 @@ from database import (
 )
 
 from notifications import notify_critical_alert
-from ml_risk_model import train_risk_model, predict_ml_risk
+from ml_risk_model import train_risk_model, predict_ml_risk, get_feature_importance
 from multi_agent import multi_agent_decision
 
 
@@ -31,10 +31,10 @@ st.set_page_config(page_title="AI Production Agent", layout="wide")
 
 st.title("🧠 SmartFresh AI Production Agent")
 
-
 st.write(
-    "Autonomous AI agent for risk detection, backend risk scoring, ML-based risk prediction, "
-    "multi-agent planning, auto-execution, Slack/email notifications, and real-time streaming simulation."
+    "Autonomous AI agent for operational risk detection, ML-based prediction, "
+    "multi-agent planning, FastAPI backend scoring, Slack/email notifications, "
+    "and real-time streaming simulation."
 )
 
 # -----------------------------
@@ -64,38 +64,22 @@ df.columns = df.columns.str.strip().str.lower()
 
 API_URL = "https://smartfresh-api.onrender.com/risk-score"
 
-# 🔥 TEST SLACK / EMAIL ALERT BUTTON
-if st.button("🚨 Send Test Alert to Slack"):
-    test_alert = {
-        "risk_type": "TEST ALERT",
-        "batch_id": "TEST123",
-        "severity": "High",
-        "priority_score": 100,
-        "assigned_team": "Operations Team",
-        "issue": "Testing Slack integration",
-        "recommended_action": "No action"
-    }
-
-    save_alert_and_action(
-        test_alert,
-        status="Open",
-        autonomous_mode=True
-    )
-
-    notify_result = notify_critical_alert(test_alert)
-
-    save_agent_log(
-        "TEST_NOTIFICATION",
-        f"Test notification result: {notify_result}"
-    )
-
-    st.write(notify_result)
-    st.success("Test alert triggered.")
-
 # -----------------------------
 # TRAIN ML RISK MODEL
 # -----------------------------
-ml_model, ml_features = train_risk_model(df)
+ml_model, ml_features, ml_metrics = train_risk_model(df)
+
+st.caption(
+    f"ML Model: {ml_metrics['model_type']} | "
+    f"Balanced Accuracy: {ml_metrics['balanced_accuracy']} | "
+    f"F1 Score: {ml_metrics['f1_score']}"
+)
+
+feature_importance_df = get_feature_importance(ml_model, ml_features)
+
+if not feature_importance_df.empty:
+    with st.expander("📊 ML Feature Importance"):
+        st.dataframe(feature_importance_df, use_container_width=True)
 
 
 # -----------------------------
@@ -116,9 +100,6 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
 
         waste_rate = (waste_quantity / quantity_produced) * 100 if quantity_produced else 0
 
-        # -----------------------------
-        # ML RISK PREDICTION
-        # -----------------------------
         ml_result = {
             "ml_risk_probability": 0,
             "ml_risk_level": "Unavailable"
@@ -130,9 +111,6 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
         ml_probability = ml_result["ml_risk_probability"]
         ml_level = ml_result["ml_risk_level"]
 
-        # -----------------------------
-        # RULE-BASED ALERTS
-        # -----------------------------
         if waste_rate > 8:
             alerts.append({
                 "risk_type": "High Waste",
@@ -198,9 +176,6 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
                 "ml_risk_level": ml_level
             })
 
-        # -----------------------------
-        # ML-ONLY ALERT
-        # -----------------------------
         if ml_probability >= 70:
             alerts.append({
                 "risk_type": "ML Predicted Risk",
@@ -222,7 +197,6 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
             axis=1
         )
 
-        # Boost priority using ML risk
         alerts_df["priority_score"] = alerts_df.apply(
             lambda x: min(
                 100,
@@ -244,6 +218,7 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
         alerts_df["planner_recommendation"] = decisions.apply(
             lambda x: x["planner_recommendation"]
         )
+
         alerts_df["execute"] = decisions.apply(lambda x: x["execute"])
         alerts_df["execution_action"] = decisions.apply(lambda x: x["execution_action"])
         alerts_df["execution_status"] = decisions.apply(lambda x: x["execution_status"])
@@ -634,7 +609,7 @@ k1.metric("Records Monitored", len(df))
 k2.metric("Agent Alerts", len(alerts_df))
 k3.metric("High Severity", (alerts_df["severity"] == "High").sum() if len(alerts_df) else 0)
 k4.metric("Autonomous Mode", "ON" if autonomous_mode else "OFF")
-k5.metric("ML Model", "Active" if ml_model is not None else "Unavailable")
+k5.metric("ML Model", ml_metrics["model_type"])
 
 if st.button("🔄 Save Latest Alerts Again"):
     st.session_state.alerts_saved = False
@@ -704,17 +679,17 @@ st.subheader("🚨 Agent Risk Alerts")
 
 if len(alerts_df) > 0:
     display_cols = [
-    "risk_type",
-    "batch_id",
-    "severity",
-    "ml_risk_probability",
-    "ml_risk_level",
-    "priority_score",
-    "assigned_team",
-    "planner_recommendation",
-    "execution_action",
-    "execution_status"
-]
+        "risk_type",
+        "batch_id",
+        "severity",
+        "ml_risk_probability",
+        "ml_risk_level",
+        "priority_score",
+        "assigned_team",
+        "planner_recommendation",
+        "execution_action",
+        "execution_status"
+    ]
 
     available_cols = [col for col in display_cols if col in alerts_df.columns]
 
@@ -867,7 +842,9 @@ System modes:
 - Auto Monitoring Mode: {auto_mode}
 - Autonomous Action Mode: {autonomous_mode}
 - Streaming Simulation: {streaming_mode}
-- ML Risk Model Active: {ml_model is not None}
+- ML Model: {ml_metrics['model_type']}
+- ML Balanced Accuracy: {ml_metrics['balanced_accuracy']}
+- ML F1 Score: {ml_metrics['f1_score']}
 
 Analyze:
 1. Current operational health
