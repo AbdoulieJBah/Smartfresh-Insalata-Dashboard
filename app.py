@@ -67,11 +67,6 @@ section[data-testid="stSidebarNav"] { display: none; }
     border: 1px solid #eef2f7;
 }
 
-.sidebar-item:hover {
-    background: #ecfdf5;
-    border-color: #bbf7d0;
-}
-
 .hero-card {
     padding: 36px;
     border-radius: 24px;
@@ -207,7 +202,6 @@ if st.sidebar.button("Logout"):
     st.session_state.user = None
     st.rerun()
 
-# Role-aware sidebar content
 if user_role in ["Admin", "Manager"]:
     st.sidebar.markdown("""
     <div class="sidebar-section">Strategic Layer</div>
@@ -215,17 +209,27 @@ if user_role in ["Admin", "Manager"]:
     <div class="sidebar-item">📈 Business Intelligence</div>
     """, unsafe_allow_html=True)
 
-if user_role in ["Admin", "Operations", "Manager"]:
+if user_role in ["Admin", "Manager", "Operations", "Logistics"]:
     st.sidebar.markdown("""
     <div class="sidebar-section">Operations Layer</div>
     <div class="sidebar-item">🥬 Operations Control</div>
+    """, unsafe_allow_html=True)
+
+if user_role in ["Admin", "Manager", "Operations"]:
+    st.sidebar.markdown("""
+    <div class="sidebar-section">Planning Layer</div>
     <div class="sidebar-item">🏭 ERP Production Planner</div>
     """, unsafe_allow_html=True)
 
-if user_role in ["Admin", "Manager", "Operations", "Quality", "Logistics"]:
+if user_role in ["Admin", "Manager", "Operations", "Quality"]:
     st.sidebar.markdown("""
-    <div class="sidebar-section">AI Layer</div>
+    <div class="sidebar-section">AI Assistant Layer</div>
     <div class="sidebar-item">🤖 AI Copilot</div>
+    """, unsafe_allow_html=True)
+
+if user_role in ["Admin", "Manager"]:
+    st.sidebar.markdown("""
+    <div class="sidebar-section">AI Control Layer</div>
     <div class="sidebar-item">🧠 AI Production Agent</div>
     """, unsafe_allow_html=True)
 
@@ -243,8 +247,8 @@ st.markdown("""
     <div class="hero-title">🥬 SmartFresh AI</div>
     <div class="hero-subtitle">
         End-to-end operations intelligence platform combining business intelligence,
-        AI-driven risk detection, autonomous action creation, streaming simulation,
-        and task tracking to support real production decisions.
+        ML-driven risk prediction, autonomous AI agents, FastAPI backend scoring,
+        Slack/email notifications, and real-time streaming simulation.
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -263,8 +267,8 @@ u3.metric("Account Status", current_user["status"])
 
 st.info(
     "Use the sidebar to access the modules available for your role. "
-    "The system supports Business Intelligence, Operations Control, AI Agent monitoring, "
-    "autonomous action creation, and task status tracking."
+    "SmartFresh AI supports business intelligence, operations control, ERP planning, "
+    "AI copilot assistance, autonomous agent monitoring, and task tracking."
 )
 
 # -----------------------------
@@ -283,15 +287,15 @@ if uploaded_file is not None:
     else:
         st.session_state.smartfresh_df = pd.read_excel(uploaded_file)
 
-    st.success("Dataset loaded")
+    st.success("Dataset loaded successfully")
 
 elif "smartfresh_df" not in st.session_state:
     try:
         st.session_state.smartfresh_df = pd.read_csv("smartfresh_insalata_real_workflow_dataset.csv")
-        st.info("Using SmartFresh dataset v2")
+        st.info("Using SmartFresh dataset from repository")
     except Exception:
         st.session_state.smartfresh_df = generate_sample_data()
-        st.warning("Using generated sample data")
+        st.warning("Default dataset not found — using generated sample data")
 
 # -----------------------------
 # PLATFORM OVERVIEW
@@ -302,14 +306,15 @@ st.markdown("""
 SmartFresh AI is a full-stack operations intelligence system that:
 
 - Monitors production, inventory, quality, and logistics
-- Detects operational risks in real time
+- Detects operational risks using rules and Machine Learning
+- Predicts batch-level risk using an XGBoost-style ML pipeline
 - Explains revenue changes and business impact
-- Predicts future performance risks
 - Converts insights into trackable actions
-- Supports multi-user roles for managers, operations, quality, and logistics teams
+- Sends Slack and email alerts for critical issues
+- Supports multi-user role-based access
 - Simulates Kafka-style live event streaming for real-time monitoring
 
-👉 This transforms dashboards into **AI-driven decision systems**
+👉 This transforms dashboards into **AI-driven decision systems**.
 """)
 
 # -----------------------------
@@ -317,7 +322,7 @@ SmartFresh AI is a full-stack operations intelligence system that:
 # -----------------------------
 st.markdown("---")
 
-st.markdown("### 🥬 SmartFresh AI • Build by Abdoulie J Bah")
+st.markdown("### 🥬 SmartFresh AI • Built by Abdoulie J Bah")
 st.caption("AI Engineer • Data Scientist • Business Intelligence Developer")
 
 c1, c2, c3 = st.columns([1, 2, 1])
