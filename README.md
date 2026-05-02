@@ -87,7 +87,7 @@ Autonomous risk monitoring layer:
 
 ## 🏗 Architecture
 
----text
+
 User
 ↓
 Streamlit Frontend
@@ -101,7 +101,7 @@ FastAPI Backend Risk Engine
 CSV / Database Layer
 ↓
 Slack + Email Notification Layer
----
+
 
 ## ⚙️ Tech Stack
 
