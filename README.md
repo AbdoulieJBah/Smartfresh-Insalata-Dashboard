@@ -87,22 +87,20 @@ Autonomous risk monitoring layer:
 
 ## 🏗 Architecture
 
-```text
 User
- ↓
+↓
 Streamlit Frontend
- ↓
+↓
 Business Intelligence + AI Copilot + AI Production Agent
- ↓
+↓
 Machine Learning Risk Model
- ↓
+↓
 FastAPI Backend Risk Engine
- ↓
+↓
 CSV / Database Layer
- ↓
+↓
 Slack + Email Notification Layer
 
----
 
 ## ⚙️ Tech Stack
 
@@ -119,7 +117,7 @@ Slack + Email Notification Layer
 - Slack Webhooks  
 - SMTP Email Alerts  
 
----
+
 
 ## 👥 Role-Based Access
 
@@ -129,7 +127,7 @@ Slack + Email Notification Layer
 - **Quality**: Quality analysis and AI Copilot  
 - **Logistics**: Delivery tracking and execution  
 
----
+
 
 ## 🗂 Dataset
 
@@ -148,7 +146,7 @@ The project uses a realistic SmartFresh dataset including:
 - Feedback text and ratings  
 - Expiry and logistics data  
 
----
+
 
 ## 🚀 Run Locally
 
@@ -165,7 +163,6 @@ Run FastAPI backend:
 
 uvicorn api:app –reload
 
----
 
 ## 🔐 Environment Variables
 
@@ -179,7 +176,6 @@ SMTP_USER=your_email
 SMTP_PASSWORD=your_app_password
 ALERT_EMAIL_TO=receiver_email
 
----
 
 ## 🎯 Vision
 
@@ -189,7 +185,7 @@ SmartFresh AI transforms operations:
 - From alerts → actions  
 - From analysis → automation  
 
----
+
 
 ## 👤 Author
 
@@ -199,7 +195,6 @@ AI Engineer • Data Scientist • Business Intelligence Developer
 🔗 LinkedIn: https://www.linkedin.com/in/abdoulie-j-bah-b71263244  
 💻 GitHub: https://github.com/AbdoulieJBah  
 
----
 
 ## 🔥 Key Idea
 
