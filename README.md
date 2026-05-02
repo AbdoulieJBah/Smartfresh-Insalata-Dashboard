@@ -86,7 +86,8 @@ Autonomous risk monitoring layer:
 - Feature importance display
 
 ## 🏗 Architecture
---- text
+
+---text
 User
 ↓
 Streamlit Frontend
