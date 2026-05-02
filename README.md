@@ -100,7 +100,7 @@ FastAPI Backend Risk Engine
 CSV / Database Layer
 ↓
 Slack + Email Notification Layer
-
+---
 
 ## ⚙️ Tech Stack
 
