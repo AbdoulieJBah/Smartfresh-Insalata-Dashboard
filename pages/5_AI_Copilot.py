@@ -6,7 +6,7 @@ from utils import inject_css
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
-from utils import setup_page
+from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
 
 require_role(["Admin", "Manager", "Operations", "Quality"])
 
