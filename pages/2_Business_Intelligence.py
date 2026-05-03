@@ -5,10 +5,11 @@ import pandas as pd
 from utils import inject_css
 from data_utils import load_data, calculate_kpis
 from auth_utils import require_role, get_current_user
+from utils import setup_page
 
 require_role(["Admin", "Manager", "Quality"])
 
-st.set_page_config(page_title="Business Intelligence", layout="wide")
+setup_page("Business Intelligence")
 
 inject_css()
 
