@@ -1,6 +1,7 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+
 from data_utils import load_data, calculate_kpis
 from auth_utils import require_role, get_current_user
 
@@ -9,17 +10,152 @@ require_role(["Admin", "Manager", "Quality"])
 st.set_page_config(page_title="Business Intelligence", layout="wide")
 
 # -----------------------------
+# PREMIUM UI HELPERS
+# -----------------------------
+def inject_page_css():
+    st.markdown("""
+    <style>
+    .bi-hero {
+        padding: 28px;
+        border-radius: 24px;
+        background:
+            linear-gradient(135deg, rgba(15,23,42,0.96), rgba(6,78,59,0.76)),
+            radial-gradient(circle at top right, rgba(34,197,94,0.22), transparent 35%);
+        border: 1px solid rgba(34,197,94,0.35);
+        box-shadow: 0 18px 48px rgba(0,0,0,0.35);
+        margin-bottom: 24px;
+    }
+
+    .bi-hero h1 {
+        font-size: 2.2rem;
+        font-weight: 950;
+        color: #ffffff;
+        margin-bottom: 8px;
+    }
+
+    .bi-hero p {
+        color: #d1d5db;
+        font-size: 1rem;
+        line-height: 1.65;
+        margin: 0;
+    }
+
+    .section-title {
+        font-size: 1.22rem;
+        font-weight: 850;
+        color: #ffffff;
+        margin: 1.5rem 0 0.8rem 0;
+    }
+
+    .metric-card {
+        padding: 20px;
+        border-radius: 18px;
+        background: rgba(15,23,42,0.88);
+        border: 1px solid rgba(34,197,94,0.24);
+        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+        min-height: 120px;
+    }
+
+    .metric-label {
+        color: #9ca3af;
+        font-size: 0.86rem;
+        font-weight: 700;
+    }
+
+    .metric-value {
+        color: #ffffff;
+        font-size: 1.8rem;
+        font-weight: 900;
+        margin-top: 10px;
+    }
+
+    .metric-note {
+        color: #86efac;
+        font-size: 0.82rem;
+        margin-top: 8px;
+        font-weight: 650;
+    }
+
+    .insight-card {
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: rgba(15,23,42,0.82);
+        border: 1px solid rgba(148,163,184,0.18);
+        margin-bottom: 10px;
+        color: #e5e7eb;
+    }
+
+    .insight-good {
+        border-left: 4px solid #22c55e;
+    }
+
+    .insight-risk {
+        border-left: 4px solid #f59e0b;
+    }
+
+    .premium-panel {
+        padding: 20px;
+        border-radius: 18px;
+        background: rgba(15,23,42,0.78);
+        border: 1px solid rgba(34,197,94,0.18);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.24);
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+
+def metric_card(label, value, note=""):
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">{label}</div>
+        <div class="metric-value">{value}</div>
+        <div class="metric-note">{note}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def insight_card(message, risk=False):
+    css_class = "insight-risk" if risk else "insight-good"
+    st.markdown(f"""
+    <div class="insight-card {css_class}">
+        {message}
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def style_plotly(fig):
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#e5e7eb"),
+        title_font=dict(size=18, color="#ffffff"),
+        legend=dict(
+            bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#e5e7eb")
+        ),
+        margin=dict(l=20, r=20, t=55, b=25),
+    )
+    fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
+    fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
+    return fig
+
+
+def safe_numeric(data, cols):
+    for col in cols:
+        if col not in data.columns:
+            data[col] = 0
+        data[col] = pd.to_numeric(data[col], errors="coerce").fillna(0)
+    return data
+
+
+inject_page_css()
+
+# -----------------------------
 # USER CONTEXT
 # -----------------------------
 user = get_current_user()
 role = user.get("role", "User")
-
-st.title("📊 Business Intelligence — Strategic, Quality & Revenue Insights")
-
-st.write(
-    f"Welcome **{user.get('name', 'User')}**. "
-    f"You are viewing this page as **{role}**."
-)
 
 # -----------------------------
 # LOAD DATA
@@ -27,9 +163,6 @@ st.write(
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
-# -----------------------------
-# SAFE COLUMN SETUP
-# -----------------------------
 required_numeric_cols = [
     "revenue",
     "waste_quantity",
@@ -40,9 +173,7 @@ required_numeric_cols = [
     "quantity_produced",
 ]
 
-for col in required_numeric_cols:
-    if col not in df.columns:
-        df[col] = 0
+df = safe_numeric(df, required_numeric_cols)
 
 if "client" not in df.columns:
     df["client"] = df["customer"] if "customer" in df.columns else "Unknown"
@@ -84,7 +215,7 @@ def analyze_sentiment(text):
 
     if positive_score > negative_score:
         return "Positive"
-    elif negative_score > positive_score:
+    if negative_score > positive_score:
         return "Negative"
     return "Neutral"
 
@@ -106,22 +237,34 @@ else:
 df["sentiment_score"] = df["sentiment"].apply(sentiment_score)
 
 # -----------------------------
-# ROLE-BASED VIEW MESSAGE
+# HEADER
 # -----------------------------
-st.subheader("🧭 Role-Based Intelligence View")
+st.markdown(f"""
+<div class="bi-hero">
+    <h1>📊 Business Intelligence</h1>
+    <p>
+        Welcome <b>{user.get('name', 'User')}</b>. You are viewing this page as <b>{role}</b>.
+        This module combines revenue intelligence, supplier quality, feedback sentiment,
+        operational risk, and trend analytics.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# -----------------------------
+# ROLE VIEW
+# -----------------------------
+st.markdown('<div class="section-title">🧭 Role-Based Intelligence View</div>', unsafe_allow_html=True)
 
 if role == "Manager":
-    st.info("Manager view: focused on revenue, clients, business performance, and strategic risks.")
+    insight_card("Manager view: focused on revenue, clients, business performance, and strategic risks.")
 elif role == "Operations":
-    st.info("Operations view: focused on production, waste, delays, temperature, and operational bottlenecks.")
+    insight_card("Operations view: focused on production, waste, delays, temperature, and operational bottlenecks.")
 elif role == "Quality":
-    st.info("Quality view: focused on defects, waste, supplier quality, sentiment, and temperature risks.")
+    insight_card("Quality view: focused on defects, waste, supplier quality, sentiment, and temperature risks.")
 elif role == "Logistics":
-    st.info("Logistics view: focused on delivery delays, dispatch risks, and client impact.")
+    insight_card("Logistics view: focused on delivery delays, dispatch risks, and client impact.")
 else:
-    st.info("Admin view: full business, quality, operations, and logistics intelligence.")
-
-st.markdown("---")
+    insight_card("Admin view: full business, quality, operations, and logistics intelligence.")
 
 # -----------------------------
 # KPIs
@@ -132,29 +275,36 @@ total_suppliers = df["supplier"].nunique()
 avg_rating = df["rating"].mean() if "rating" in df.columns else 0
 
 positive_count = (df["sentiment"] == "Positive").sum()
+neutral_count = (df["sentiment"] == "Neutral").sum()
 negative_count = (df["sentiment"] == "Negative").sum()
 
-st.subheader("📌 Strategic KPIs")
+st.markdown('<div class="section-title">📌 Strategic KPIs</div>', unsafe_allow_html=True)
 
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Total Revenue", f"€{total_revenue:,.2f}")
-c2.metric("Clients", total_clients)
-c3.metric("Suppliers", total_suppliers)
-c4.metric("Avg Feedback Rating", f"{avg_rating:.2f}")
+with c1:
+    metric_card("Total Revenue", f"€{total_revenue:,.2f}", "Business performance")
+with c2:
+    metric_card("Clients", f"{total_clients}", "Unique customer base")
+with c3:
+    metric_card("Suppliers", f"{total_suppliers}", "Supplier network")
+with c4:
+    metric_card("Avg Rating", f"{avg_rating:.2f}", "Feedback quality")
 
 c5, c6, c7, c8 = st.columns(4)
-c5.metric("Total Defects", f"{kpis['total_defects']:,}")
-c6.metric("Defect Rate", f"{kpis['defect_rate']:.2f}%")
-c7.metric("Waste Rate", f"{kpis['waste_rate']:.2f}%")
-c8.metric("Negative Feedback", negative_count)
-
-st.markdown("---")
+with c5:
+    metric_card("Total Defects", f"{kpis['total_defects']:,}", "Quality exceptions")
+with c6:
+    metric_card("Defect Rate", f"{kpis['defect_rate']:.2f}%", "Target threshold: 2%")
+with c7:
+    metric_card("Waste Rate", f"{kpis['waste_rate']:.2f}%", "Target threshold: 8%")
+with c8:
+    metric_card("Negative Feedback", f"{negative_count}", "Sentiment risk")
 
 # -----------------------------
 # REVENUE DROP INTELLIGENCE
 # -----------------------------
 if role in ["Admin", "Manager", "Operations"]:
-    st.subheader("📉 Revenue Drop Intelligence")
+    st.markdown('<div class="section-title">📉 Revenue Drop Intelligence</div>', unsafe_allow_html=True)
 
     if date_col in df.columns and "revenue" in df.columns:
         rev_df = df.copy()
@@ -186,13 +336,20 @@ if role in ["Admin", "Manager", "Operations"]:
             revenue_change_pct = (revenue_change / previous_revenue) * 100 if previous_revenue else 0
 
             r1, r2, r3, r4 = st.columns(4)
-            r1.metric("Previous Revenue", f"€{previous_revenue:,.2f}")
-            r2.metric("Latest Revenue", f"€{latest_revenue:,.2f}")
-            r3.metric("Revenue Change", f"€{revenue_change:,.2f}", f"{revenue_change_pct:.2f}%")
-            r4.metric("Latest Orders", int(latest["orders"]))
+            with r1:
+                metric_card("Previous Revenue", f"€{previous_revenue:,.2f}", "Previous period")
+            with r2:
+                metric_card("Latest Revenue", f"€{latest_revenue:,.2f}", "Latest period")
+            with r3:
+                metric_card("Revenue Change", f"€{revenue_change:,.2f}", f"{revenue_change_pct:.2f}%")
+            with r4:
+                metric_card("Latest Orders", f"{int(latest['orders'])}", "Order count")
 
             if revenue_change < 0:
-                st.warning(f"⚠️ Revenue decreased by {abs(revenue_change_pct):.2f}% compared with the previous period.")
+                insight_card(
+                    f"⚠️ Revenue decreased by <b>{abs(revenue_change_pct):.2f}%</b> compared with the previous period.",
+                    risk=True
+                )
 
                 possible_causes = []
 
@@ -208,19 +365,14 @@ if role in ["Admin", "Manager", "Operations"]:
                     possible_causes.append("More delayed deliveries")
 
                 if possible_causes:
-                    st.markdown("**Likely reasons for revenue decline:**")
                     for cause in possible_causes:
-                        st.write(f"- ⚠️ {cause}")
+                        insight_card(f"⚠️ Likely cause: {cause}", risk=True)
                 else:
-                    st.info("Revenue dropped, but no obvious operational cause was detected from the available metrics.")
+                    insight_card("Revenue dropped, but no obvious operational cause was detected.", risk=True)
 
-                st.markdown("**Recommended BI actions:**")
-                st.write("- Review client revenue contribution for the latest period")
-                st.write("- Check which products had the largest revenue decrease")
-                st.write("- Investigate supplier quality, waste, defects, and delayed deliveries")
-                st.write("- Review production schedule and machine allocation for the affected period")
+                insight_card("Recommended actions: review client contribution, product revenue drops, supplier quality, and delivery performance.")
             else:
-                st.success(f"✅ Revenue increased by {revenue_change_pct:.2f}% compared with the previous period.")
+                insight_card(f"✅ Revenue increased by <b>{revenue_change_pct:.2f}%</b> compared with the previous period.")
 
             fig_revenue_drop = px.line(
                 daily_revenue,
@@ -229,20 +381,19 @@ if role in ["Admin", "Manager", "Operations"]:
                 title="Daily Revenue Trend",
                 markers=True
             )
+            fig_revenue_drop = style_plotly(fig_revenue_drop)
             st.plotly_chart(fig_revenue_drop, use_container_width=True)
 
         else:
-            st.info("Not enough date periods available to compare revenue changes.")
+            insight_card("Not enough date periods available to compare revenue changes.", risk=True)
     else:
-        st.warning("Revenue Drop Intelligence requires date/order_date and revenue columns.")
-
-    st.markdown("---")
+        insight_card("Revenue Drop Intelligence requires date/order_date and revenue columns.", risk=True)
 
 # -----------------------------
 # REVENUE INSIGHTS
 # -----------------------------
 if role in ["Admin", "Manager"]:
-    st.subheader("💰 Revenue Insights")
+    st.markdown('<div class="section-title">💰 Revenue Insights</div>', unsafe_allow_html=True)
 
     client_revenue = (
         df.groupby("client")["revenue"]
@@ -251,14 +402,6 @@ if role in ["Admin", "Manager"]:
         .sort_values("revenue", ascending=False)
     )
 
-    fig_client = px.bar(
-        client_revenue,
-        x="client",
-        y="revenue",
-        title="Revenue by Client"
-    )
-    st.plotly_chart(fig_client, use_container_width=True)
-
     product_revenue = (
         df.groupby("product_name")["revenue"]
         .sum()
@@ -266,41 +409,59 @@ if role in ["Admin", "Manager"]:
         .sort_values("revenue", ascending=False)
     )
 
-    fig_product = px.bar(
-        product_revenue,
-        x="product_name",
-        y="revenue",
-        title="Revenue by Product"
-    )
-    st.plotly_chart(fig_product, use_container_width=True)
+    rc1, rc2 = st.columns(2)
 
-    st.subheader("⚠️ Client Dependency Insight")
+    with rc1:
+        fig_client = px.bar(
+            client_revenue,
+            x="client",
+            y="revenue",
+            title="Revenue by Client"
+        )
+        fig_client = style_plotly(fig_client)
+        st.plotly_chart(fig_client, use_container_width=True)
 
-    client_revenue["revenue_share_%"] = (
-        client_revenue["revenue"] / client_revenue["revenue"].sum()
-    ) * 100
+    with rc2:
+        fig_product = px.bar(
+            product_revenue,
+            x="product_name",
+            y="revenue",
+            title="Revenue by Product"
+        )
+        fig_product = style_plotly(fig_product)
+        st.plotly_chart(fig_product, use_container_width=True)
 
-    top_client = client_revenue.iloc[0]
+    st.markdown('<div class="section-title">⚠️ Client Dependency Insight</div>', unsafe_allow_html=True)
 
-    st.info(
-        f"Top client **{top_client['client']}** contributes "
-        f"**{top_client['revenue_share_%']:.2f}%** of total revenue."
-    )
+    if client_revenue["revenue"].sum() > 0:
+        client_revenue["revenue_share_%"] = (
+            client_revenue["revenue"] / client_revenue["revenue"].sum()
+        ) * 100
 
-    if top_client["revenue_share_%"] > 40:
-        st.warning("⚠️ High client concentration risk detected.")
+        top_client = client_revenue.iloc[0]
+
+        insight_card(
+            f"Top client <b>{top_client['client']}</b> contributes "
+            f"<b>{top_client['revenue_share_%']:.2f}%</b> of total revenue.",
+            risk=top_client["revenue_share_%"] > 40
+        )
+
+        if top_client["revenue_share_%"] > 40:
+            insight_card("⚠️ High client concentration risk detected.", risk=True)
+        else:
+            insight_card("✅ Revenue is reasonably distributed across clients.")
+
+        st.dataframe(client_revenue, use_container_width=True)
     else:
-        st.success("✅ Revenue is reasonably distributed across clients.")
-
-    st.dataframe(client_revenue, use_container_width=True)
-
-    st.markdown("---")
+        insight_card("No revenue available for client dependency analysis.", risk=True)
 
 # -----------------------------
 # SUPPLIER QUALITY PERFORMANCE
 # -----------------------------
+supplier_perf = pd.DataFrame()
+
 if role in ["Admin", "Manager", "Operations", "Quality"]:
-    st.subheader("🏭 Supplier Quality Performance")
+    st.markdown('<div class="section-title">🏭 Supplier Quality Performance</div>', unsafe_allow_html=True)
 
     supplier_perf = (
         df.groupby("supplier")
@@ -326,84 +487,100 @@ if role in ["Admin", "Manager", "Operations", "Quality"]:
 
     supplier_perf = supplier_perf.sort_values("quality_risk_score", ascending=False)
 
+    sc1, sc2 = st.columns(2)
+
+    with sc1:
+        fig_supplier_risk = px.bar(
+            supplier_perf,
+            x="supplier",
+            y="quality_risk_score",
+            title="Supplier Quality Risk Score"
+        )
+        fig_supplier_risk = style_plotly(fig_supplier_risk)
+        st.plotly_chart(fig_supplier_risk, use_container_width=True)
+
+    with sc2:
+        fig_supplier_quality = px.bar(
+            supplier_perf,
+            x="supplier",
+            y=["total_defects", "total_waste"],
+            barmode="group",
+            title="Supplier Defects and Waste"
+        )
+        fig_supplier_quality = style_plotly(fig_supplier_quality)
+        st.plotly_chart(fig_supplier_quality, use_container_width=True)
+
     st.dataframe(supplier_perf, use_container_width=True)
-
-    fig_supplier_risk = px.bar(
-        supplier_perf,
-        x="supplier",
-        y="quality_risk_score",
-        title="Supplier Quality Risk Score"
-    )
-    st.plotly_chart(fig_supplier_risk, use_container_width=True)
-
-    fig_supplier_quality = px.bar(
-        supplier_perf,
-        x="supplier",
-        y=["total_defects", "total_waste"],
-        barmode="group",
-        title="Supplier Defects and Waste"
-    )
-    st.plotly_chart(fig_supplier_quality, use_container_width=True)
-
-    st.markdown("---")
 
 # -----------------------------
 # TEMPERATURE RISK
 # -----------------------------
 if role in ["Admin", "Operations", "Quality"]:
-    st.subheader("🌡️ Temperature Risk Records")
+    st.markdown('<div class="section-title">🌡️ Temperature Risk Records</div>', unsafe_allow_html=True)
 
     temp_issues = df[df["temperature"] > 6]
 
     if len(temp_issues) > 0:
-        st.dataframe(
-            temp_issues[[
-                "batch_id",
-                "product_name",
-                "supplier",
-                "temperature",
-                "defect_count",
-                "waste_quantity"
-            ]],
-            use_container_width=True
-        )
-    else:
-        st.success("✅ No temperature risk records detected.")
+        insight_card(f"⚠️ {len(temp_issues)} temperature risk records detected.", risk=True)
 
-    st.markdown("---")
+        available_cols = [
+            "batch_id",
+            "product_name",
+            "supplier",
+            "temperature",
+            "defect_count",
+            "waste_quantity"
+        ]
+        available_cols = [col for col in available_cols if col in temp_issues.columns]
+
+        st.dataframe(temp_issues[available_cols], use_container_width=True)
+    else:
+        insight_card("✅ No temperature risk records detected.")
 
 # -----------------------------
 # SENTIMENT ANALYSIS
 # -----------------------------
 if role in ["Admin", "Manager", "Quality"]:
-    st.subheader("💬 Supplier Feedback Sentiment")
+    st.markdown('<div class="section-title">💬 Supplier Feedback Sentiment</div>', unsafe_allow_html=True)
 
     sentiment_counts = df["sentiment"].value_counts().reset_index()
     sentiment_counts.columns = ["Sentiment", "Count"]
 
     s1, s2, s3 = st.columns(3)
-    s1.metric("Positive Feedback", positive_count)
-    s2.metric("Neutral Feedback", (df["sentiment"] == "Neutral").sum())
-    s3.metric("Negative Feedback", negative_count)
+    with s1:
+        metric_card("Positive Feedback", f"{positive_count}", "Customer/supplier signals")
+    with s2:
+        metric_card("Neutral Feedback", f"{neutral_count}", "Neutral records")
+    with s3:
+        metric_card("Negative Feedback", f"{negative_count}", "Potential quality risk")
 
-    fig_sentiment = px.pie(
-        sentiment_counts,
-        names="Sentiment",
-        values="Count",
-        title="Feedback Sentiment Distribution",
-        hole=0.4
-    )
-    st.plotly_chart(fig_sentiment, use_container_width=True)
+    sent1, sent2 = st.columns(2)
 
-    fig_supplier_sentiment = px.bar(
-        supplier_perf.sort_values("avg_sentiment_score"),
-        x="supplier",
-        y="avg_sentiment_score",
-        title="Average Sentiment Score by Supplier"
-    )
-    st.plotly_chart(fig_supplier_sentiment, use_container_width=True)
+    with sent1:
+        fig_sentiment = px.pie(
+            sentiment_counts,
+            names="Sentiment",
+            values="Count",
+            title="Feedback Sentiment Distribution",
+            hole=0.45
+        )
+        fig_sentiment = style_plotly(fig_sentiment)
+        st.plotly_chart(fig_sentiment, use_container_width=True)
 
-    st.subheader("⚠️ Negative Feedback Alerts")
+    with sent2:
+        if not supplier_perf.empty:
+            fig_supplier_sentiment = px.bar(
+                supplier_perf.sort_values("avg_sentiment_score"),
+                x="supplier",
+                y="avg_sentiment_score",
+                title="Average Sentiment Score by Supplier"
+            )
+            fig_supplier_sentiment = style_plotly(fig_supplier_sentiment)
+            st.plotly_chart(fig_supplier_sentiment, use_container_width=True)
+        else:
+            insight_card("Supplier sentiment requires supplier performance data.", risk=True)
+
+    st.markdown('<div class="section-title">⚠️ Negative Feedback Alerts</div>', unsafe_allow_html=True)
 
     negative_df = df[df["sentiment"] == "Negative"]
 
@@ -419,26 +596,22 @@ if role in ["Admin", "Manager", "Quality"]:
         ]
         available_cols = [col for col in available_cols if col in negative_df.columns]
 
-        st.dataframe(
-            negative_df[available_cols],
-            use_container_width=True
-        )
+        st.dataframe(negative_df[available_cols], use_container_width=True)
     else:
-        st.success("✅ No negative feedback detected.")
-
-    st.markdown("---")
+        insight_card("✅ No negative feedback detected.")
 
 # -----------------------------
 # BUSINESS & QUALITY TRENDS
 # -----------------------------
-st.subheader("📈 Business & Quality Trends Over Time")
+st.markdown('<div class="section-title">📈 Business & Quality Trends Over Time</div>', unsafe_allow_html=True)
 
 if date_col in df.columns:
     trend_df = df.copy()
     trend_df[date_col] = pd.to_datetime(trend_df[date_col], errors="coerce")
 
     trend_df = (
-        trend_df.groupby(date_col)
+        trend_df.dropna(subset=[date_col])
+        .groupby(date_col)
         .agg(
             revenue=("revenue", "sum"),
             waste=("waste_quantity", "sum"),
@@ -448,25 +621,31 @@ if date_col in df.columns:
         .sort_values(date_col)
     )
 
+    t1, t2 = st.columns(2)
+
     if role in ["Admin", "Manager"]:
-        fig_revenue_trend = px.line(
-            trend_df,
-            x=date_col,
-            y="revenue",
-            title="Revenue Trend Over Time",
-            markers=True
-        )
-        st.plotly_chart(fig_revenue_trend, use_container_width=True)
+        with t1:
+            fig_revenue_trend = px.line(
+                trend_df,
+                x=date_col,
+                y="revenue",
+                title="Revenue Trend Over Time",
+                markers=True
+            )
+            fig_revenue_trend = style_plotly(fig_revenue_trend)
+            st.plotly_chart(fig_revenue_trend, use_container_width=True)
 
     if role in ["Admin", "Manager", "Operations", "Quality"]:
-        fig_waste_trend = px.line(
-            trend_df,
-            x=date_col,
-            y="waste",
-            title="Waste Trend Over Time",
-            markers=True
-        )
-        st.plotly_chart(fig_waste_trend, use_container_width=True)
+        with t2:
+            fig_waste_trend = px.line(
+                trend_df,
+                x=date_col,
+                y="waste",
+                title="Waste Trend Over Time",
+                markers=True
+            )
+            fig_waste_trend = style_plotly(fig_waste_trend)
+            st.plotly_chart(fig_waste_trend, use_container_width=True)
 
         fig_defect_trend = px.line(
             trend_df,
@@ -475,7 +654,10 @@ if date_col in df.columns:
             title="Defect Trend Over Time",
             markers=True
         )
+        fig_defect_trend = style_plotly(fig_defect_trend)
         st.plotly_chart(fig_defect_trend, use_container_width=True)
+else:
+    insight_card("Trend analysis requires date or order_date column.", risk=True)
 
 # -----------------------------
 # DOWNLOAD
