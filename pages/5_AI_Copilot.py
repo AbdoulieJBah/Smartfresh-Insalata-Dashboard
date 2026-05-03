@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+from utils import inject_css
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
@@ -9,6 +10,8 @@ from auth_utils import require_role
 require_role(["Admin", "Manager", "Operations", "Quality"])
 
 st.set_page_config(page_title="AI Copilot", layout="wide")
+
+inject_css()
 
 # -----------------------------
 # PREMIUM UI HELPERS
