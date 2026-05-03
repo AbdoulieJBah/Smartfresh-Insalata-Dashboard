@@ -6,6 +6,7 @@ import random
 import time
 import plotly.express as px
 
+from utils import inject_css
 from auth_utils import require_role
 require_role(["Admin", "Manager"])
 
@@ -28,6 +29,8 @@ from ml_risk_model import train_risk_model, predict_ml_risk, get_feature_importa
 from multi_agent import multi_agent_decision
 
 st.set_page_config(page_title="AI Production Agent", layout="wide")
+
+inject_css()
 
 # -----------------------------
 # PREMIUM UI HELPERS
