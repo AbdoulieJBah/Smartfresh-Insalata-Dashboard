@@ -274,3 +274,12 @@ def style_plotly(fig):
     fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
     fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
     return fig
+    
+def setup_page(title, icon="🥬"):
+    st.set_page_config(
+        page_title=title,
+        page_icon=icon,
+        layout="wide",
+        initial_sidebar_state="expanded"
+    )
+    inject_css()
