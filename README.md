@@ -31,27 +31,51 @@ SmartFresh AI transforms operational data into decisions by combining:
 - FastAPI backend risk scoring
 - ERP-style production planning
 
-## 🧩 Core Features
+## 📸 Platform Preview
+
+### 🔐 Login Page
+![Login](assets/login.png)
+
+---
+
+### 🏠 Home / Workspace
+![Home](assets/home.png)
+
+---
 
 ### 📊 Executive Dashboard
+![Executive Dashboard](assets/executive_dashboard.png)
+
 - Strategic production, sales, stock, waste, defects, revenue, and delivery KPIs
 - Supplier risk overview
 - Executive recommendations
 
+---
+
 ### 📈 Business Intelligence
+![Business Intelligence](assets/business_intelligence.png)
+
 - Revenue trends and revenue drop intelligence
 - Client dependency analysis
 - Supplier quality scoring
 - Feedback sentiment analysis
 - Quality and business trend monitoring
 
+---
+
 ### 🥬 Operations Control
+![Operations Control](assets/operations_control.png)
+
 - Inventory and expiry monitoring
 - Delivery status tracking
 - Delayed delivery analysis
 - Stock by product
 
+---
+
 ### 🏭 ERP Production Planner
+![ERP Planner](assets/erp_planner.png)
+
 Simulates production planning logic:
 
 - Colli → Buste → Kg → Incoming cases → Pedane
@@ -60,7 +84,11 @@ Simulates production planning logic:
 - Production timeline
 - Deadline and slack-time optimization
 
+---
+
 ### 🤖 AI Copilot
+![AI Copilot](assets/ai_copilot.png)
+
 An AI assistant for operational questions:
 
 - Uses real calculation tools
@@ -68,7 +96,11 @@ An AI assistant for operational questions:
 - Generates business recommendations
 - Provides charts and multi-agent summaries
 
+---
+
 ### 🧠 AI Production Agent
+![AI Agent](assets/ai_agent.png)
+
 Autonomous risk monitoring layer:
 
 - Detects waste, defects, cold-chain risk, delivery delay, and schedule risk
@@ -77,6 +109,16 @@ Autonomous risk monitoring layer:
 - Sends Slack/email notifications
 - Simulates Kafka-style streaming events
 - Connects to FastAPI backend for risk scoring
+
+---
+
+### 📋 Agent Actions Center
+![Agent Actions](assets/agent_actions.png)
+
+- Alerts management
+- Task tracking
+- Priority-based execution system
+
 
 ### 🧪 Machine Learning Risk Model
 - XGBoost-style risk prediction pipeline
