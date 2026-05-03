@@ -5,10 +5,11 @@ import plotly.express as px
 from utils import inject_css
 from data_utils import load_data, calculate_kpis
 from auth_utils import require_role, get_current_user
+from utils import setup_page
 
 require_role(["Admin", "Manager"])
 
-st.set_page_config(page_title="Executive Dashboard", layout="wide")
+setup_page("Executive Dashboard")
 
 inject_css()
 
