@@ -1,7 +1,7 @@
 import streamlit as st
 from auth_utils import require_role
 from utils import inject_css
-from utils import setup_page
+from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
 
 require_role(["Admin", "Manager", "Operations", "Logistics"])
 
