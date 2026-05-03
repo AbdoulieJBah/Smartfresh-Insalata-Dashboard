@@ -1,6 +1,10 @@
-# 🥬 SmartFresh AI — Operations Intelligence Platform
+# SmartFresh AI — Operations Intelligence Platform
 
-## 🌐 Live Demo
+![SmartFresh Banner](PASTE_IMAGE_LINK_HERE)
+
+AI-powered platform combining machine learning, business intelligence, and autonomous AI agents for real-time decision-making.
+
+## 🚀 Live Demo
 https://smartfresh-insalata-dashboard-q7kkr8vgaj2zfgggkra8sf.streamlit.app
 
 ## 🚀 Overview
