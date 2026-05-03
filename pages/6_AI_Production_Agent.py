@@ -8,6 +8,7 @@ import plotly.express as px
 
 from utils import inject_css
 from auth_utils import require_role
+from utils import setup_page
 require_role(["Admin", "Manager"])
 
 from data_utils import load_data
@@ -28,7 +29,7 @@ from notifications import notify_critical_alert
 from ml_risk_model import train_risk_model, predict_ml_risk, get_feature_importance
 from multi_agent import multi_agent_decision
 
-st.set_page_config(page_title="AI Production Agent", layout="wide")
+setup_page("AI Production Agent")
 
 inject_css()
 
