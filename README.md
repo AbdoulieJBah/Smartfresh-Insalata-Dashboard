@@ -1,6 +1,7 @@
 # SmartFresh AI — Operations Intelligence Platform
 
-![SmartFresh Banner](PASTE_IMAGE_LINK_HERE)
+![SmartFresh Banner](assets
+/SmartFresh AI Banner.PNG)
 
 AI-powered platform combining machine learning, business intelligence, and autonomous AI agents for real-time decision-making.
 
