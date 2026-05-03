@@ -1,183 +1,67 @@
-import streamlit as st
+import time
 import pandas as pd
 import plotly.express as px
+import streamlit as st
 
-from utils import inject_css
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
-from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
+from utils import (
+    setup_page,
+    premium_hero,
+    metric_card,
+    agent_card,
+    insight_card,
+    section_title,
+    style_plotly,
+)
 
 require_role(["Admin", "Manager", "Operations", "Quality"])
 
-setup_page("AI Copilot")
-
-inject_css()
+setup_page("AI Copilot", icon="🤖")
 
 # -----------------------------
-# PREMIUM UI HELPERS
+# PAGE CSS
 # -----------------------------
-def inject_page_css():
-    st.markdown("""
-    <style>
-    .copilot-hero {
-        padding: 30px;
-        border-radius: 26px;
-        background:
-            linear-gradient(135deg, rgba(15,23,42,0.97), rgba(6,78,59,0.78)),
-            radial-gradient(circle at top right, rgba(34,197,94,0.24), transparent 35%);
-        border: 1px solid rgba(34,197,94,0.36);
-        box-shadow: 0 18px 50px rgba(0,0,0,0.38);
-        margin-bottom: 24px;
-    }
+st.markdown("""
+<style>
+[data-testid="stChatMessage"] {
+    background: rgba(15,23,42,0.72);
+    border: 1px solid rgba(34,197,94,0.18);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
 
-    .copilot-hero h1 {
-        font-size: 2.25rem;
-        font-weight: 950;
-        color: #ffffff;
-        margin-bottom: 8px;
-    }
+.quick-box {
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(15,23,42,0.78);
+    border: 1px solid rgba(34,197,94,0.24);
+    color: #e5e7eb;
+    font-weight: 800;
+    text-align: center;
+}
 
-    .copilot-hero p {
-        color: #d1d5db;
-        font-size: 1rem;
-        line-height: 1.65;
-        margin: 0;
-    }
+.voice-card {
+    padding: 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(15,23,42,0.82));
+    border: 1px solid rgba(34,197,94,0.30);
+    margin-bottom: 16px;
+}
+</style>
+""", unsafe_allow_html=True)
 
-    .section-title {
-        font-size: 1.22rem;
-        font-weight: 850;
-        color: #ffffff;
-        margin: 1.5rem 0 0.8rem 0;
-    }
-
-    .metric-card {
-        padding: 18px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.88);
-        border: 1px solid rgba(34,197,94,0.24);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-        min-height: 115px;
-    }
-
-    .metric-label {
-        color: #9ca3af;
-        font-size: 0.82rem;
-        font-weight: 700;
-    }
-
-    .metric-value {
-        color: #ffffff;
-        font-size: 1.55rem;
-        font-weight: 900;
-        margin-top: 10px;
-    }
-
-    .metric-note {
-        color: #86efac;
-        font-size: 0.8rem;
-        margin-top: 8px;
-        font-weight: 650;
-    }
-
-    .agent-card {
-        padding: 20px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.84);
-        border: 1px solid rgba(34,197,94,0.22);
-        box-shadow: 0 10px 28px rgba(0,0,0,0.26);
-        color: #e5e7eb;
-        min-height: 165px;
-        margin-bottom: 10px;
-    }
-
-    .agent-title {
-        color: #86efac;
-        font-size: 1rem;
-        font-weight: 850;
-        margin-bottom: 10px;
-    }
-
-    .insight-card {
-        padding: 18px 20px;
-        border-radius: 16px;
-        background: rgba(15,23,42,0.82);
-        border: 1px solid rgba(148,163,184,0.18);
-        margin-bottom: 10px;
-        color: #e5e7eb;
-    }
-
-    .insight-good { border-left: 4px solid #22c55e; }
-    .insight-risk { border-left: 4px solid #f59e0b; }
-    .insight-critical { border-left: 4px solid #ef4444; }
-
-    .question-chip {
-        display: inline-block;
-        padding: 10px 14px;
-        border-radius: 999px;
-        background: rgba(15,23,42,0.86);
-        border: 1px solid rgba(34,197,94,0.25);
-        color: #e5e7eb;
-        font-weight: 650;
-        margin-bottom: 8px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-
-def metric_card(label, value, note=""):
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">{label}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-note">{note}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def agent_card(title, body):
-    st.markdown(f"""
-    <div class="agent-card">
-        <div class="agent-title">{title}</div>
-        <div>{body}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def insight_card(message, level="good"):
-    css_class = {
-        "good": "insight-good",
-        "risk": "insight-risk",
-        "critical": "insight-critical",
-    }.get(level, "insight-good")
-
-    st.markdown(f"""
-    <div class="insight-card {css_class}">
-        {message}
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def style_plotly(fig):
-    fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#e5e7eb"),
-        title_font=dict(size=18, color="#ffffff"),
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#e5e7eb")
-        ),
-        margin=dict(l=20, r=20, t=55, b=25),
-    )
-    fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
-    fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
-    return fig
-
-
-inject_page_css()
+# -----------------------------
+# HEADER
+# -----------------------------
+premium_hero(
+    "🤖 SmartFresh AI Copilot",
+    "ChatGPT-style autonomous decision assistant for revenue, operations, suppliers, logistics, quality risks, and executive recommendations.",
+    badge="Autonomous AI Decision Assistant"
+)
 
 # -----------------------------
 # LOAD DATA
@@ -185,9 +69,6 @@ inject_page_css()
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
-# -----------------------------
-# SAFE COLUMN SETUP
-# -----------------------------
 required_numeric_cols = [
     "revenue",
     "waste_quantity",
@@ -200,8 +81,6 @@ required_numeric_cols = [
 for col in required_numeric_cols:
     if col not in df.columns:
         df[col] = 0
-
-for col in required_numeric_cols:
     df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
 if "delivery_status" not in df.columns:
@@ -220,20 +99,6 @@ if "date" in df.columns:
     df["date"] = pd.to_datetime(df["date"], errors="coerce")
 
 # -----------------------------
-# HEADER
-# -----------------------------
-st.markdown("""
-<div class="copilot-hero">
-    <h1>🤖 SmartFresh AI Copilot</h1>
-    <p>
-        Autonomous decision assistant for business intelligence, production risks, quality,
-        logistics, and operational decision-making. Ask questions, trigger tools, and receive
-        AI-generated recommendations grounded in operational data.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# -----------------------------
 # SESSION MEMORY
 # -----------------------------
 if "chat_history" not in st.session_state:
@@ -248,46 +113,46 @@ if "user_prompt" not in st.session_state:
 # -----------------------------
 # CONTROL PANEL
 # -----------------------------
-st.markdown('<div class="section-title">⚙️ Copilot Control Panel</div>', unsafe_allow_html=True)
+section_title("⚙️ Copilot Control Panel")
 
-control_1, control_2, control_3 = st.columns(3)
+control_1, control_2, control_3, control_4 = st.columns(4)
 
 with control_1:
-    auto_mode = st.toggle("🤖 Autonomous Copilot Mode", value=True)
+    auto_mode = st.toggle("🤖 Autonomous Mode", value=True)
 
 with control_2:
     show_charts = st.toggle("📊 Show Charts", value=True)
 
 with control_3:
-    voice_ready = st.toggle("🎤 Voice-ready Mode", value=False)
+    voice_ready = st.toggle("🎤 Voice Input", value=True)
+
+with control_4:
+    stream_response = st.toggle("⚡ Streaming Response", value=True)
 
 insight_card(
-    "Autonomous Mode generates proactive recommendations. Voice-ready Mode lets you paste dictated text.",
+    "Copilot can answer questions, run internal analytical tools, provide recommendations, and keep short-term memory.",
     level="good"
 )
 
 # -----------------------------
-# TOOL EXECUTION FUNCTIONS
+# ANALYTICAL TOOLS
 # -----------------------------
 def calculate_revenue_summary(data):
     total_revenue = data["revenue"].sum()
     avg_revenue = data["revenue"].mean()
 
-    if "client" in data.columns and not data.empty:
-        top_client = (
-            data.groupby("client")["revenue"]
-            .sum()
-            .sort_values(ascending=False)
-            .head(1)
-        )
-    else:
-        top_client = None
+    top_client = (
+        data.groupby("client")["revenue"]
+        .sum()
+        .sort_values(ascending=False)
+        .head(1)
+    )
 
     return {
         "total_revenue": round(total_revenue, 2),
         "avg_revenue": round(avg_revenue, 2),
-        "top_client": top_client.index[0] if top_client is not None and len(top_client) else "N/A",
-        "top_client_revenue": round(top_client.iloc[0], 2) if top_client is not None and len(top_client) else 0,
+        "top_client": top_client.index[0] if len(top_client) else "N/A",
+        "top_client_revenue": round(top_client.iloc[0], 2) if len(top_client) else 0,
     }
 
 
@@ -306,7 +171,7 @@ def calculate_operations_risks(data):
 
 
 def calculate_product_performance(data):
-    product_perf = (
+    return (
         data.groupby("product_name")
         .agg(
             revenue=("revenue", "sum"),
@@ -317,8 +182,6 @@ def calculate_product_performance(data):
         .reset_index()
         .sort_values("revenue", ascending=False)
     )
-
-    return product_perf
 
 
 def calculate_supplier_performance(data):
@@ -381,10 +244,10 @@ def detect_revenue_trend(data):
 def run_tool(question, data):
     q = question.lower()
 
-    if "revenue" in q or "client" in q:
+    if "revenue" in q or "client" in q or "sales" in q:
         return "Revenue Tool", calculate_revenue_summary(data)
 
-    if "risk" in q or "delay" in q or "temperature" in q or "waste" in q:
+    if "risk" in q or "delay" in q or "temperature" in q or "waste" in q or "defect" in q:
         return "Operations Risk Tool", calculate_operations_risks(data)
 
     if "product" in q:
@@ -393,44 +256,58 @@ def run_tool(question, data):
     if "supplier" in q:
         return "Supplier Performance Tool", calculate_supplier_performance(data).head(10).to_dict(orient="records")
 
+    if "trend" in q or "drop" in q:
+        return "Revenue Trend Tool", detect_revenue_trend(data)
+
     return "General Operations Tool", {
         "records": len(data),
         "columns": list(data.columns)
     }
 
 
+def stream_text(text):
+    words = text.split(" ")
+    for word in words:
+        yield word + " "
+        time.sleep(0.015)
+
+
 # -----------------------------
-# KPI SUMMARY
+# KPI SNAPSHOT
 # -----------------------------
 revenue_summary = calculate_revenue_summary(df)
 risk_summary = calculate_operations_risks(df)
 revenue_trend = detect_revenue_trend(df)
 
-st.markdown('<div class="section-title">📌 Copilot Intelligence Snapshot</div>', unsafe_allow_html=True)
+section_title("📌 Copilot Intelligence Snapshot")
 
 c1, c2, c3, c4, c5 = st.columns(5)
 
 with c1:
     metric_card("Total Revenue", f"€{revenue_summary['total_revenue']:,.0f}", "Business value")
+
 with c2:
     metric_card("Total Orders", f"{len(df)}", "Records monitored")
+
 with c3:
     metric_card("Top Client", revenue_summary["top_client"], "Revenue leader")
+
 with c4:
     metric_card("Delayed Deliveries", f"{risk_summary['delayed_deliveries']}", "Logistics risk")
+
 with c5:
     metric_card("High Temp Records", f"{risk_summary['high_temperature_records']}", "Cold-chain risk")
 
 # -----------------------------
-# AUTONOMOUS MULTI-AGENT SUMMARY
+# AUTONOMOUS AGENTS
 # -----------------------------
 if auto_mode:
-    st.markdown('<div class="section-title">🧠 Autonomous Multi-Agent Intelligence</div>', unsafe_allow_html=True)
+    section_title("🧠 Autonomous Multi-Agent Intelligence")
 
     bi_agent = f"""
-    Total revenue is <b>€{revenue_summary['total_revenue']:,.2f}</b><br>
+    Total revenue: <b>€{revenue_summary['total_revenue']:,.2f}</b><br>
     Top client: <b>{revenue_summary['top_client']}</b><br>
-    Revenue contribution: <b>€{revenue_summary['top_client_revenue']:,.2f}</b>
+    Top client revenue: <b>€{revenue_summary['top_client_revenue']:,.2f}</b>
     """
 
     operations_agent = f"""
@@ -449,8 +326,8 @@ if auto_mode:
     """
 
     executive_agent = """
-    Focus on revenue protection, supplier reliability, and operational bottlenecks.<br>
-    Escalate high-risk suppliers and repeated delays.
+    Focus on revenue protection, supplier reliability, quality risk, and bottlenecks.<br>
+    Escalate repeated delays and high-risk suppliers.
     """
 
     a1, a2, a3 = st.columns(3)
@@ -473,10 +350,10 @@ if auto_mode:
         agent_card("👔 Executive Agent", executive_agent)
 
 # -----------------------------
-# CHARTS INSIDE COPILOT
+# CHARTS
 # -----------------------------
 if show_charts:
-    st.markdown('<div class="section-title">📊 Copilot Visual Intelligence</div>', unsafe_allow_html=True)
+    section_title("📊 Copilot Visual Intelligence")
 
     chart1, chart2 = st.columns(2)
 
@@ -494,8 +371,7 @@ if show_charts:
             y="revenue",
             title="Revenue by Client"
         )
-        fig_client = style_plotly(fig_client)
-        st.plotly_chart(fig_client, use_container_width=True)
+        st.plotly_chart(style_plotly(fig_client), use_container_width=True)
 
     with chart2:
         supplier_perf = calculate_supplier_performance(df)
@@ -506,8 +382,7 @@ if show_charts:
             y="risk_score",
             title="Supplier Risk Score"
         )
-        fig_supplier = style_plotly(fig_supplier)
-        st.plotly_chart(fig_supplier, use_container_width=True)
+        st.plotly_chart(style_plotly(fig_supplier), use_container_width=True)
 
     if "date" in df.columns:
         revenue_daily = (
@@ -525,13 +400,12 @@ if show_charts:
             title="Revenue Trend Over Time",
             markers=True
         )
-        fig_trend = style_plotly(fig_trend)
-        st.plotly_chart(fig_trend, use_container_width=True)
+        st.plotly_chart(style_plotly(fig_trend), use_container_width=True)
 
 # -----------------------------
-# SUGGESTED QUESTIONS
+# QUICK QUESTIONS
 # -----------------------------
-st.markdown('<div class="section-title">💡 Suggested Questions</div>', unsafe_allow_html=True)
+section_title("⚡ Quick AI Questions")
 
 suggestions = [
     "Why did revenue drop recently?",
@@ -552,23 +426,45 @@ for i, question in enumerate(suggestions):
         st.rerun()
 
 # -----------------------------
-# VOICE-READY INPUT
+# VOICE INPUT
 # -----------------------------
 if voice_ready:
-    st.markdown('<div class="section-title">🎤 Voice-ready Input</div>', unsafe_allow_html=True)
+    section_title("🎤 Voice AI Input")
+
+    st.markdown("""
+    <div class="voice-card">
+        <b>Voice-ready mode:</b> Use your browser/device microphone dictation, then paste or type the transcribed text below.
+        If your Streamlit version supports audio capture, you can also record audio for reference.
+    </div>
+    """, unsafe_allow_html=True)
+
     voice_text = st.text_area(
-        "Paste dictated speech here",
+        "Speak using your device dictation or paste voice transcription here",
         placeholder="Example: What should the operations team prioritize today?"
     )
 
-    if st.button("Use Voice Text", use_container_width=True):
-        st.session_state.user_prompt = voice_text
-        st.rerun()
+    audio_file = None
+    if hasattr(st, "audio_input"):
+        audio_file = st.audio_input("Optional: record voice note")
+
+    v1, v2 = st.columns(2)
+
+    with v1:
+        if st.button("Use Voice Text", use_container_width=True):
+            if voice_text.strip():
+                st.session_state.user_prompt = voice_text.strip()
+                st.rerun()
+            else:
+                st.warning("Please enter or dictate text first.")
+
+    with v2:
+        if audio_file is not None:
+            st.info("Audio captured. For now, use the text box for the actual AI question.")
 
 # -----------------------------
 # CHAT INTERFACE
 # -----------------------------
-st.markdown('<div class="section-title">💬 Ask SmartFresh AI</div>', unsafe_allow_html=True)
+section_title("💬 Ask SmartFresh AI")
 
 user_input = st.chat_input("Ask about operations, revenue, risks, suppliers, logistics...")
 
@@ -616,32 +512,39 @@ User question:
 {user_input}
 
 Answer as an autonomous decision-making assistant.
-Give clear business recommendations.
-Use bullet points.
-Highlight critical risks with ⚠️.
-Include next actions.
+
+Format:
+- Start with a short executive insight.
+- Use clear bullet points.
+- Highlight risks with ⚠️.
+- Include business recommendations.
+- Include next actions.
+- Keep it concise but useful.
 """
 
-    with st.spinner("AI Copilot reasoning..."):
+    with st.spinner("🧠 SmartFresh AI is reasoning..."):
         response = generate_ai_response_cached(context)
 
     st.session_state.chat_history.append(("ai", response))
 
 # -----------------------------
-# DISPLAY CHAT MEMORY
+# DISPLAY CHAT
 # -----------------------------
 for role, message in st.session_state.chat_history:
     if role == "user":
-        with st.chat_message("user"):
-            st.write(message)
-    else:
-        with st.chat_message("assistant"):
+        with st.chat_message("user", avatar="🧑‍💻"):
             st.markdown(message)
+    else:
+        with st.chat_message("assistant", avatar="🤖"):
+            if stream_response:
+                st.write_stream(stream_text(message))
+            else:
+                st.markdown(message)
 
 # -----------------------------
 # MEMORY PANEL
 # -----------------------------
-st.markdown('<div class="section-title">🧠 Copilot Memory</div>', unsafe_allow_html=True)
+section_title("🧠 Copilot Memory")
 
 if len(st.session_state.copilot_memory) == 0:
     insight_card("No memory yet. Ask a question to create memory.", level="risk")
@@ -656,9 +559,9 @@ if st.button("🧹 Clear Copilot Memory", use_container_width=True):
     st.rerun()
 
 # -----------------------------
-# AUTONOMOUS DECISION OUTPUT
+# AUTONOMOUS RECOMMENDATIONS
 # -----------------------------
-st.markdown('<div class="section-title">⚡ Autonomous Decision Recommendations</div>', unsafe_allow_html=True)
+section_title("⚡ Autonomous Decision Recommendations")
 
 recommendations = []
 
