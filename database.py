@@ -16,7 +16,11 @@ def now():
 
 
 def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
+    return hashlib.sha256(str(password).encode()).hexdigest()
+
+
+def normalize_email(email):
+    return str(email).strip().lower()
 
 
 def add_column_if_missing(cursor, table_name, column_name, column_definition):
@@ -33,9 +37,6 @@ def init_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    # -----------------------------
-    # USERS TABLE
-    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,9 +49,6 @@ def init_db():
     )
     """)
 
-    # -----------------------------
-    # ALERTS TABLE
-    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS alerts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -67,9 +65,6 @@ def init_db():
     )
     """)
 
-    # -----------------------------
-    # AGENT ACTIONS TABLE
-    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS agent_actions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,9 +85,6 @@ def init_db():
     )
     """)
 
-    # -----------------------------
-    # AGENT LOGS TABLE
-    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS agent_logs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -103,9 +95,6 @@ def init_db():
     )
     """)
 
-    # -----------------------------
-    # STREAM EVENTS TABLE
-    # -----------------------------
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS stream_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -118,9 +107,6 @@ def init_db():
     )
     """)
 
-    # -----------------------------
-    # SAFE MIGRATIONS FOR OLD DB
-    # -----------------------------
     add_column_if_missing(cursor, "alerts", "priority_score", "INTEGER")
     add_column_if_missing(cursor, "alerts", "assigned_team", "TEXT")
     add_column_if_missing(cursor, "alerts", "source", "TEXT")
@@ -132,9 +118,6 @@ def init_db():
 
     add_column_if_missing(cursor, "agent_logs", "user_email", "TEXT")
 
-    # -----------------------------
-    # DEFAULT USERS
-    # -----------------------------
     default_users = [
         ("Admin User", "admin@smartfresh.ai", "admin123", "Admin"),
         ("Manager User", "manager@smartfresh.ai", "manager123", "Manager"),
@@ -144,7 +127,12 @@ def init_db():
     ]
 
     for name, email, password, role in default_users:
-        cursor.execute("SELECT id FROM users WHERE email = ?", (email,))
+        email = normalize_email(email)
+
+        cursor.execute(
+            "SELECT id FROM users WHERE LOWER(TRIM(email)) = ?",
+            (email,)
+        )
         exists = cursor.fetchone()
 
         if not exists:
@@ -175,14 +163,19 @@ def init_db():
 # LOGIN / USER FUNCTIONS
 # -----------------------------
 def authenticate_user(email, password):
+    email = normalize_email(email)
+
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
     SELECT id, name, email, role, status
     FROM users
-    WHERE email = ? AND password_hash = ?
-    """, (email, hash_password(password)))
+    WHERE LOWER(TRIM(email)) = ? AND password_hash = ?
+    """, (
+        email,
+        hash_password(password)
+    ))
 
     user = cursor.fetchone()
     conn.close()
@@ -237,6 +230,8 @@ def calculate_priority(alert):
         score += 25
     if "schedule" in risk_type:
         score += 15
+    if "ml" in risk_type:
+        score += 20
 
     return min(score, 100)
 
@@ -253,6 +248,8 @@ def assign_team(alert):
     if "revenue" in risk_type:
         return "Management Team"
     if "schedule" in risk_type:
+        return "Operations Team"
+    if "ml" in risk_type:
         return "Operations Team"
 
     return "Operations Team"
