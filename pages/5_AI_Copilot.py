@@ -6,10 +6,11 @@ from utils import inject_css
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
 from auth_utils import require_role
+from utils import setup_page
 
 require_role(["Admin", "Manager", "Operations", "Quality"])
 
-st.set_page_config(page_title="AI Copilot", layout="wide")
+setup_page("AI Copilot")
 
 inject_css()
 
