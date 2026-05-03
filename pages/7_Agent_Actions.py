@@ -1,5 +1,6 @@
 import streamlit as st
 from auth_utils import require_role
+from utils import inject_css
 
 require_role(["Admin", "Manager", "Operations", "Logistics"])
 
@@ -13,6 +14,8 @@ from database import (
 )
 
 st.set_page_config(page_title="Agent Actions", layout="wide")
+
+inject_css()
 
 # -----------------------------
 # PREMIUM UI HELPERS
