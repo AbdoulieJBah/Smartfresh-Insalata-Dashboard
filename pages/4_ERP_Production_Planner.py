@@ -8,7 +8,7 @@ import plotly.express as px
 from utils import inject_css
 from data_utils import load_data
 from auth_utils import require_role, get_current_user
-from utils import setup_page
+from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
 
 require_role(["Admin", "Manager", "Operations"])
 
