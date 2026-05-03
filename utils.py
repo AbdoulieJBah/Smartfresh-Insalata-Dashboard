@@ -4,10 +4,14 @@ import streamlit as st
 def inject_css():
     st.markdown("""
     <style>
-    .stApp {
+    /* =============================
+       GLOBAL APP BACKGROUND
+    ============================= */
+    .stApp,
+    [data-testid="stAppViewContainer"] {
         background:
-            radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 28%),
-            radial-gradient(circle at top right, rgba(59,130,246,0.10), transparent 26%),
+            radial-gradient(circle at 18% 18%, rgba(34,197,94,0.18), transparent 30%),
+            radial-gradient(circle at 90% 10%, rgba(59,130,246,0.10), transparent 28%),
             linear-gradient(135deg, #020403 0%, #050807 45%, #07130c 100%) !important;
         color: #f8fafc !important;
     }
@@ -18,6 +22,9 @@ def inject_css():
         max-width: 1350px;
     }
 
+    /* =============================
+       SIDEBAR
+    ============================= */
     [data-testid="stSidebar"] {
         background:
             linear-gradient(180deg, #06120d 0%, #081b12 55%, #020403 100%) !important;
@@ -32,28 +39,35 @@ def inject_css():
         display: none;
     }
 
+    /* =============================
+       TYPOGRAPHY
+    ============================= */
     h1, h2, h3, h4 {
         color: #ffffff !important;
         letter-spacing: -0.02em;
+        font-weight: 850 !important;
     }
 
     p, span, label, div {
         font-family: Inter, "Segoe UI", Arial, sans-serif;
     }
 
+    /* =============================
+       PREMIUM HERO
+    ============================= */
     .premium-hero {
         position: relative;
         overflow: hidden;
-        padding: 36px 40px;
+        padding: 38px 42px;
         border-radius: 30px;
         background:
-            linear-gradient(135deg, rgba(15,23,42,0.98), rgba(6,78,59,0.78)),
-            radial-gradient(circle at top right, rgba(34,197,94,0.32), transparent 38%);
+            linear-gradient(135deg, rgba(15,23,42,0.98), rgba(6,78,59,0.82)),
+            radial-gradient(circle at top right, rgba(34,197,94,0.34), transparent 40%);
         border: 1px solid rgba(34,197,94,0.45);
         box-shadow:
-            0 26px 70px rgba(0,0,0,0.48),
+            0 26px 70px rgba(0,0,0,0.50),
             inset 0 1px 0 rgba(255,255,255,0.08);
-        margin-bottom: 28px;
+        margin-bottom: 30px;
         animation: fadeInUp 0.65s ease both;
     }
 
@@ -61,15 +75,15 @@ def inject_css():
         content: "";
         position: absolute;
         inset: -2px;
-        background: linear-gradient(90deg, transparent, rgba(34,197,94,0.18), transparent);
+        background: linear-gradient(90deg, transparent, rgba(34,197,94,0.20), transparent);
         transform: translateX(-100%);
         animation: shimmer 4s infinite;
     }
 
     .premium-hero h1 {
         position: relative;
-        font-size: 2.65rem;
-        font-weight: 950;
+        font-size: 2.7rem;
+        font-weight: 950 !important;
         margin-bottom: 10px;
         z-index: 2;
     }
@@ -92,11 +106,14 @@ def inject_css():
         background: rgba(34,197,94,0.16);
         color: #86efac;
         border: 1px solid rgba(34,197,94,0.35);
-        font-weight: 800;
+        font-weight: 850;
         font-size: 0.78rem;
         margin-bottom: 12px;
     }
 
+    /* =============================
+       GLASS CARDS
+    ============================= */
     .glass-card,
     .metric-card,
     .agent-card,
@@ -121,25 +138,25 @@ def inject_css():
         border-color: rgba(34,197,94,0.48);
         box-shadow:
             0 24px 60px rgba(0,0,0,0.45),
-            0 0 25px rgba(34,197,94,0.10);
+            0 0 25px rgba(34,197,94,0.12);
     }
 
     .metric-card {
-        padding: 21px;
-        min-height: 120px;
+        padding: 22px;
+        min-height: 122px;
     }
 
     .metric-label {
         color: #9ca3af;
         font-size: 0.82rem;
-        font-weight: 800;
+        font-weight: 850;
         letter-spacing: 0.03em;
         text-transform: uppercase;
     }
 
     .metric-value {
         color: #ffffff;
-        font-size: 1.78rem;
+        font-size: 1.8rem;
         font-weight: 950;
         margin-top: 10px;
         word-break: break-word;
@@ -176,10 +193,10 @@ def inject_css():
     .insight-critical { border-left: 4px solid #ef4444; }
 
     .section-title {
-        font-size: 1.26rem;
+        font-size: 1.28rem;
         font-weight: 950;
         color: #ffffff;
-        margin: 1.8rem 0 0.95rem 0;
+        margin: 1.85rem 0 0.95rem 0;
         letter-spacing: -0.02em;
     }
 
@@ -190,12 +207,15 @@ def inject_css():
         margin-bottom: 1rem;
     }
 
+    /* =============================
+       STATUS PILLS
+    ============================= */
     .status-pill {
         display: inline-block;
         padding: 6px 11px;
         border-radius: 999px;
         font-size: 0.78rem;
-        font-weight: 800;
+        font-weight: 850;
         border: 1px solid rgba(255,255,255,0.12);
     }
 
@@ -217,12 +237,26 @@ def inject_css():
         border-color: rgba(239,68,68,0.35);
     }
 
+    /* =============================
+       STREAMLIT BUILT-IN COMPONENTS
+    ============================= */
     div[data-testid="stMetric"] {
         background: rgba(15,23,42,0.78);
         border: 1px solid rgba(34,197,94,0.24);
         border-radius: 20px;
         padding: 18px;
         box-shadow: 0 14px 36px rgba(0,0,0,0.30);
+    }
+
+    [data-testid="stMetricValue"] {
+        font-size: 28px !important;
+        font-weight: 850 !important;
+        color: #ffffff !important;
+    }
+
+    [data-testid="stMetricLabel"] {
+        opacity: 0.75;
+        font-weight: 750 !important;
     }
 
     div[data-testid="stAlert"] {
@@ -245,7 +279,7 @@ def inject_css():
     .stDownloadButton > button:hover {
         border-color: #86efac !important;
         box-shadow: 0 0 24px rgba(34,197,94,0.40);
-        transform: translateY(-1px);
+        transform: translateY(-1px) scale(1.01);
     }
 
     input, textarea {
@@ -255,11 +289,14 @@ def inject_css():
         color: #f8fafc !important;
     }
 
-    [data-testid="stDataFrame"] {
+    [data-testid="stDataFrame"],
+    .stDataFrame,
+    .stPlotlyChart {
         border-radius: 18px;
         overflow: hidden;
         border: 1px solid rgba(34,197,94,0.20);
         box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+        background: rgba(15,23,42,0.46);
     }
 
     [data-testid="stExpander"] {
@@ -273,6 +310,9 @@ def inject_css():
         font-weight: 750;
     }
 
+    /* =============================
+       ANIMATIONS
+    ============================= */
     @keyframes fadeInUp {
         from {
             opacity: 0;
@@ -290,10 +330,16 @@ def inject_css():
         100% { transform: translateX(100%); }
     }
 
+    /* =============================
+       HIDE STREAMLIT DEFAULTS
+    ============================= */
     #MainMenu { visibility: hidden; }
     footer { visibility: hidden; }
     header { background: transparent !important; }
 
+    /* =============================
+       MOBILE
+    ============================= */
     @media (max-width: 768px) {
         .premium-hero {
             padding: 24px;
@@ -387,6 +433,16 @@ def glass_card(content):
     st.markdown(f"""
     <div class="glass-card" style="padding: 20px; margin-bottom: 12px;">
         {content}
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def premium_metric(label, value, subtitle=""):
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">{label}</div>
+        <div class="metric-value">{value}</div>
+        <div class="metric-note">{subtitle}</div>
     </div>
     """, unsafe_allow_html=True)
 
