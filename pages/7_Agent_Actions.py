@@ -98,7 +98,7 @@ def inject_page_css():
     </style>
     """, unsafe_allow_html=True)
 
-
+inject_page_css()
 
 
 # -----------------------------
