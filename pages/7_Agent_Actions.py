@@ -99,31 +99,7 @@ def inject_page_css():
     """, unsafe_allow_html=True)
 
 
-def metric_card(label, value, note=""):
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">{label}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-note">{note}</div>
-    </div>
-    """, unsafe_allow_html=True)
 
-
-def insight_card(message, level="good"):
-    css_class = {
-        "good": "insight-good",
-        "risk": "insight-risk",
-        "critical": "insight-critical",
-    }.get(level, "insight-good")
-
-    st.markdown(f"""
-    <div class="insight-card {css_class}">
-        {message}
-    </div>
-    """, unsafe_allow_html=True)
-
-
-inject_page_css()
 
 # -----------------------------
 # HEADER
