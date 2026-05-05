@@ -12,6 +12,7 @@ require_role(["Admin", "Manager"])
 
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
+from machine_simulator import generate_machine_snapshot, summarize_machine_health
 
 from database import (
     save_agent_action,
@@ -124,46 +125,7 @@ def inject_page_css():
     """, unsafe_allow_html=True)
 
 
-def metric_card(label, value, note=""):
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">{label}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-note">{note}</div>
-    </div>
-    """, unsafe_allow_html=True)
 
-
-def insight_card(message, level="good"):
-    css_class = {
-        "good": "insight-good",
-        "risk": "insight-risk",
-        "critical": "insight-critical",
-    }.get(level, "insight-good")
-
-    st.markdown(f"""
-    <div class="insight-card {css_class}">
-        {message}
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def style_plotly(fig):
-    fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#e5e7eb"),
-        title_font=dict(size=18, color="#ffffff"),
-        legend=dict(bgcolor="rgba(0,0,0,0)", font=dict(color="#e5e7eb")),
-        margin=dict(l=20, r=20, t=55, b=25),
-    )
-    fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
-    fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
-    return fig
-
-
-inject_page_css()
 
 # -----------------------------
 # HEADER
@@ -238,6 +200,52 @@ if not feature_importance_df.empty:
         fig_importance = style_plotly(fig_importance)
         st.plotly_chart(fig_importance, use_container_width=True)
         st.dataframe(feature_importance_df, use_container_width=True)
+
+
+# -----------------------------
+# INDUSTRY 4.0 MACHINE SNAPSHOT
+# -----------------------------
+section_title("🏭 Industry 4.0 Machine Snapshot")
+
+machine_df = generate_machine_snapshot()
+machine_summary = summarize_machine_health(machine_df)
+
+mc1, mc2, mc3, mc4, mc5 = st.columns(5)
+
+with mc1:
+    metric_card("Machines", machine_summary["machines"], "Connected assets")
+
+with mc2:
+    metric_card("Running", machine_summary["running"], "Active")
+
+with mc3:
+    metric_card("Warnings", machine_summary["warnings"], "Attention needed")
+
+with mc4:
+    metric_card("Stopped", machine_summary["stopped"], "Downtime risk")
+
+with mc5:
+    metric_card("Avg Risk", machine_summary["avg_risk_score"], "Machine risk")
+
+high_machine_risk = machine_df[machine_df["risk_level"].isin(["High", "Medium"])]
+
+if high_machine_risk.empty:
+    insight_card("✅ No major simulated machine risk detected.", level="good")
+else:
+    for _, row in high_machine_risk.iterrows():
+        level = "critical" if row["risk_level"] == "High" else "risk"
+        insight_card(
+            f"""
+            <b>{row['machine']}</b> — {row['line']}<br>
+            <b>Risk:</b> {row['risk_level']} ({row['risk_score']}/100)<br>
+            <b>Reason:</b> {row['risk_reasons']}
+            """,
+            level=level
+        )
+
+with st.expander("📋 View Simulated Machine Feed"):
+    st.dataframe(machine_df, use_container_width=True)
+
 
 # -----------------------------
 # RISK DETECTION
