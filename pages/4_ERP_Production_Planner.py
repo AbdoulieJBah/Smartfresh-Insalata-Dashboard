@@ -7,15 +7,25 @@ import plotly.express as px
 
 from data_utils import load_data
 from auth_utils import require_role, get_current_user
-from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
+from ai_utils import generate_ai_response_cached
+
+from utils import (
+    setup_page,
+    metric_card,
+    insight_card,
+    section_title,
+    style_plotly,
+    set_copilot_context,
+    render_global_copilot,
+)
 
 require_role(["Admin", "Manager", "Operations"])
 
-setup_page("ERP Production Planner")
+setup_page("ERP Production Planner", icon="🏭")
 
 
 # -----------------------------
-# PREMIUM UI HELPERS
+# PAGE CSS
 # -----------------------------
 def inject_page_css():
     st.markdown("""
@@ -44,99 +54,8 @@ def inject_page_css():
         line-height: 1.65;
         margin: 0;
     }
-
-    .section-title {
-        font-size: 1.22rem;
-        font-weight: 850;
-        color: #ffffff;
-        margin: 1.5rem 0 0.8rem 0;
-    }
-
-    .metric-card {
-        padding: 18px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.88);
-        border: 1px solid rgba(34,197,94,0.24);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-        min-height: 115px;
-    }
-
-    .metric-label {
-        color: #9ca3af;
-        font-size: 0.82rem;
-        font-weight: 700;
-    }
-
-    .metric-value {
-        color: #ffffff;
-        font-size: 1.65rem;
-        font-weight: 900;
-        margin-top: 10px;
-    }
-
-    .metric-note {
-        color: #86efac;
-        font-size: 0.8rem;
-        margin-top: 8px;
-        font-weight: 650;
-    }
-
-    .insight-card {
-        padding: 18px 20px;
-        border-radius: 16px;
-        background: rgba(15,23,42,0.82);
-        border: 1px solid rgba(148,163,184,0.18);
-        margin-bottom: 10px;
-        color: #e5e7eb;
-    }
-
-    .insight-good { border-left: 4px solid #22c55e; }
-    .insight-risk { border-left: 4px solid #f59e0b; }
-    .insight-critical { border-left: 4px solid #ef4444; }
     </style>
     """, unsafe_allow_html=True)
-
-
-def metric_card(label, value, note=""):
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">{label}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-note">{note}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def insight_card(message, level="good"):
-    css_class = {
-        "good": "insight-good",
-        "risk": "insight-risk",
-        "critical": "insight-critical",
-    }.get(level, "insight-good")
-
-    st.markdown(f"""
-    <div class="insight-card {css_class}">
-        {message}
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def style_plotly(fig):
-    fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#e5e7eb"),
-        title_font=dict(size=18, color="#ffffff"),
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#e5e7eb")
-        ),
-        margin=dict(l=20, r=20, t=55, b=25),
-    )
-    fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
-    fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
-    return fig
 
 
 inject_page_css()
@@ -180,10 +99,7 @@ if "batch_id" not in df.columns:
     df["batch_id"] = "N/A"
 
 if "order_quantity" not in df.columns:
-    if "quantity_sold" in df.columns:
-        df["order_quantity"] = df["quantity_sold"]
-    else:
-        df["order_quantity"] = 0
+    df["order_quantity"] = df["quantity_sold"] if "quantity_sold" in df.columns else 0
 
 df["order_quantity"] = pd.to_numeric(df["order_quantity"], errors="coerce").fillna(0)
 
@@ -215,14 +131,14 @@ st.markdown(f"""
 # -----------------------------
 # ROLE MESSAGE
 # -----------------------------
-st.markdown('<div class="section-title">🧭 Role-Based Planning View</div>', unsafe_allow_html=True)
+section_title("🧭 Role-Based Planning View")
 
 if role == "Operations":
-    insight_card("Operations view: full access to planning controls, shift balancing, and machine optimization.")
+    insight_card("Operations view: full access to planning controls, shift balancing, and machine optimization.", level="good")
 elif role == "Manager":
-    insight_card("Manager view: strategic review of production capacity, workload balance, and scheduling risks.")
+    insight_card("Manager view: strategic review of production capacity, workload balance, and scheduling risks.", level="good")
 else:
-    insight_card("Admin view: full ERP planning and optimization control.")
+    insight_card("Admin view: full ERP planning and optimization control.", level="good")
 
 # -----------------------------
 # SIDEBAR SETTINGS
@@ -397,29 +313,62 @@ for _, row in orders.iterrows():
 opt_df = pd.DataFrame(scheduled)
 
 # -----------------------------
+# COPILOT CONTEXT
+# -----------------------------
+set_copilot_context(f"""
+Page: ERP Production Planner
+
+Role: {role}
+
+Planner Configuration:
+- Buste per Collo: {buste_per_collo}
+- Grams per Busta: {grams_per_busta}
+- Waste/Machine Loss %: {waste_percent}
+- Colli per Pedana: {colli_per_pallet}
+- Kg per Incoming Case: {kg_per_incoming_case}
+- Orders Optimized: {len(opt_df)}
+- Selected Machines: {selected_machines}
+- Shift Balance Priority: {balance_weight}
+
+Optimization Results:
+- Late Orders: {(opt_df['status'] == 'Late').sum()}
+- At Risk Orders: {(opt_df['status'] == 'At Risk').sum()}
+- Urgent Orders: {(opt_df['status'] == 'Urgent').sum()}
+- Incoming Cases Needed: {opt_df['incoming_cases_needed'].sum()}
+- Pedane Needed: {opt_df['pedane_needed'].sum()}
+
+This page optimizes ERP/MES-style production planning, machine assignment, workload balancing, production timing, raw material needs, and logistics units.
+""")
+
+# -----------------------------
 # KPIs
 # -----------------------------
-st.markdown('<div class="section-title">📌 Optimization Summary</div>', unsafe_allow_html=True)
+section_title("📌 Optimization Summary")
 
 k1, k2, k3, k4, k5, k6 = st.columns(6)
 
 with k1:
     metric_card("Orders Optimized", f"{len(opt_df)}", "Selected workload")
+
 with k2:
     metric_card("Late Orders", f"{(opt_df['status'] == 'Late').sum()}", "Critical risk")
+
 with k3:
     metric_card("At Risk", f"{(opt_df['status'] == 'At Risk').sum()}", "≤ 60 min slack")
+
 with k4:
     metric_card("Urgent", f"{(opt_df['status'] == 'Urgent').sum()}", "≤ 180 min slack")
+
 with k5:
     metric_card("Incoming Cases", f"{opt_df['incoming_cases_needed'].sum():,}", "Raw material need")
+
 with k6:
     metric_card("Pedane Needed", f"{opt_df['pedane_needed'].sum():,}", "Logistics units")
 
 # -----------------------------
 # PLANNING INTELLIGENCE
 # -----------------------------
-st.markdown('<div class="section-title">🧠 Planning Intelligence</div>', unsafe_allow_html=True)
+section_title("🧠 Planning Intelligence")
 
 late_orders = (opt_df["status"] == "Late").sum()
 risk_orders = (opt_df["status"] == "At Risk").sum()
@@ -432,12 +381,12 @@ elif risk_orders > 0:
 elif urgent_orders > 0:
     insight_card(f"🟠 {urgent_orders} urgent orders should be monitored closely.", level="risk")
 else:
-    insight_card("✅ Production plan is currently feasible and on time.")
+    insight_card("✅ Production plan is currently feasible and on time.", level="good")
 
 # -----------------------------
 # SHIFT BALANCE
 # -----------------------------
-st.markdown('<div class="section-title">⚖️ Shift Workload Balance</div>', unsafe_allow_html=True)
+section_title("⚖️ Shift Workload Balance")
 
 shift_summary = (
     opt_df.groupby("shift")
@@ -459,8 +408,8 @@ fig_shift = px.bar(
     text="hours",
     title="Optimized Workload by Shift"
 )
-fig_shift = style_plotly(fig_shift)
-st.plotly_chart(fig_shift, use_container_width=True)
+
+st.plotly_chart(style_plotly(fig_shift), use_container_width=True)
 
 for _, row in shift_summary.iterrows():
     min_hours = shifts[row["shift"]]["min_hours"]
@@ -471,14 +420,17 @@ for _, row in shift_summary.iterrows():
             level="risk"
         )
     else:
-        insight_card(f"✅ {row['shift']} meets minimum workload: {row['hours']:.2f} hours.")
+        insight_card(
+            f"✅ {row['shift']} meets minimum workload: {row['hours']:.2f} hours.",
+            level="good"
+        )
 
 st.dataframe(shift_summary, use_container_width=True)
 
 # -----------------------------
 # MACHINE WORKLOAD
 # -----------------------------
-st.markdown('<div class="section-title">⚙️ Machine Workload Distribution</div>', unsafe_allow_html=True)
+section_title("⚙️ Machine Workload Distribution")
 
 machine_summary = (
     opt_df.groupby(["shift", "machine"])
@@ -501,15 +453,15 @@ fig_machine = px.bar(
     barmode="group",
     title="Machine Workload by Shift"
 )
-fig_machine = style_plotly(fig_machine)
-st.plotly_chart(fig_machine, use_container_width=True)
+
+st.plotly_chart(style_plotly(fig_machine), use_container_width=True)
 
 st.dataframe(machine_summary, use_container_width=True)
 
 # -----------------------------
 # TIMELINE
 # -----------------------------
-st.markdown('<div class="section-title">🗓️ Optimized Production Timeline</div>', unsafe_allow_html=True)
+section_title("🗓️ Optimized Production Timeline")
 
 timeline_df = opt_df.copy()
 timeline_df["task"] = (
@@ -541,13 +493,13 @@ fig_timeline = px.timeline(
 )
 
 fig_timeline.update_yaxes(autorange="reversed")
-fig_timeline = style_plotly(fig_timeline)
-st.plotly_chart(fig_timeline, use_container_width=True)
+
+st.plotly_chart(style_plotly(fig_timeline), use_container_width=True)
 
 # -----------------------------
 # TABLE
 # -----------------------------
-st.markdown('<div class="section-title">📋 Detailed Optimized Production Plan</div>', unsafe_allow_html=True)
+section_title("📋 Detailed Optimized Production Plan")
 
 display_cols = [
     "client",
@@ -571,6 +523,37 @@ st.dataframe(
     use_container_width=True
 )
 
+# -----------------------------
+# AI QUICK ACTIONS
+# -----------------------------
+section_title("🤖 Planner AI Quick Actions")
+
+qa1, qa2, qa3 = st.columns(3)
+
+with qa1:
+    if st.button("🏭 Explain Production Plan", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Explain this production plan, workload balance, and schedule feasibility.")
+        )
+        st.rerun()
+
+with qa2:
+    if st.button("⚠️ Detect Scheduling Risks", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Detect scheduling risks, late orders, machine bottlenecks, and shift workload issues.")
+        )
+        st.rerun()
+
+with qa3:
+    if st.button("🎯 Recommend Replanning Actions", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Recommend replanning actions to improve machine allocation, reduce lateness, and balance shifts.")
+        )
+        st.rerun()
+
+# -----------------------------
+# DOWNLOAD
+# -----------------------------
 if role in ["Admin", "Operations"]:
     st.download_button(
         "Download Optimized Production Plan",
@@ -579,4 +562,12 @@ if role in ["Admin", "Operations"]:
         "text/csv"
     )
 else:
-    insight_card("Manager view is read-only. Download access is limited to Admin and Operations roles.", level="risk")
+    insight_card(
+        "Manager view is read-only. Download access is limited to Admin and Operations roles.",
+        level="risk"
+    )
+
+# -----------------------------
+# GLOBAL AI COPILOT
+# -----------------------------
+render_global_copilot(generate_ai_response_cached)
