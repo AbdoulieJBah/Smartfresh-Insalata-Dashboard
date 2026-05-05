@@ -4,26 +4,28 @@ import plotly.express as px
 
 from data_utils import load_data, calculate_kpis
 from auth_utils import require_role, get_current_user
-from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
+from ai_utils import generate_ai_response_cached
+from utils import (
+    setup_page,
+    metric_card,
+    insight_card,
+    section_title,
+    style_plotly,
+    set_copilot_context,
+    render_global_copilot,
+)
 
 require_role(["Admin", "Manager"])
 
-setup_page("Executive Dashboard")
+setup_page("Executive Dashboard", icon="📊")
 
 
 # -----------------------------
-# PREMIUM UI HELPERS
+# PAGE CSS
 # -----------------------------
 def inject_page_css():
     st.markdown("""
     <style>
-    .section-title {
-        font-size: 1.25rem;
-        font-weight: 850;
-        color: #ffffff;
-        margin: 1.5rem 0 0.8rem 0;
-    }
-
     .hero-dashboard {
         padding: 28px;
         border-radius: 24px;
@@ -48,100 +50,8 @@ def inject_page_css():
         line-height: 1.65;
         margin: 0;
     }
-
-    .metric-card {
-        padding: 20px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.88);
-        border: 1px solid rgba(34,197,94,0.24);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-        min-height: 125px;
-    }
-
-    .metric-label {
-        color: #9ca3af;
-        font-size: 0.86rem;
-        font-weight: 700;
-        letter-spacing: 0.02em;
-    }
-
-    .metric-value {
-        color: #ffffff;
-        font-size: 1.85rem;
-        font-weight: 900;
-        margin-top: 10px;
-    }
-
-    .metric-note {
-        color: #86efac;
-        font-size: 0.82rem;
-        margin-top: 8px;
-        font-weight: 650;
-    }
-
-    .insight-card {
-        padding: 18px 20px;
-        border-radius: 16px;
-        background: rgba(15,23,42,0.82);
-        border: 1px solid rgba(148,163,184,0.18);
-        margin-bottom: 10px;
-        color: #e5e7eb;
-    }
-
-    .insight-good {
-        border-left: 4px solid #22c55e;
-    }
-
-    .insight-risk {
-        border-left: 4px solid #f59e0b;
-    }
-
-    .chart-card {
-        padding: 14px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.72);
-        border: 1px solid rgba(34,197,94,0.16);
-        box-shadow: 0 10px 26px rgba(0,0,0,0.24);
-    }
     </style>
     """, unsafe_allow_html=True)
-
-
-def metric_card(label, value, note=""):
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-label">{label}</div>
-        <div class="metric-value">{value}</div>
-        <div class="metric-note">{note}</div>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def insight_card(message, risk=False):
-    css_class = "insight-risk" if risk else "insight-good"
-    st.markdown(f"""
-    <div class="insight-card {css_class}">
-        {message}
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def style_plotly(fig):
-    fig.update_layout(
-        template="plotly_dark",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#e5e7eb"),
-        title_font=dict(size=18, color="#ffffff"),
-        legend=dict(
-            bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#e5e7eb")
-        ),
-        margin=dict(l=20, r=20, t=55, b=25),
-    )
-    fig.update_xaxes(gridcolor="rgba(148,163,184,0.15)")
-    fig.update_yaxes(gridcolor="rgba(148,163,184,0.15)")
-    return fig
 
 
 def ensure_columns(data):
@@ -188,6 +98,30 @@ df = ensure_columns(df)
 kpis = calculate_kpis(df)
 
 # -----------------------------
+# COPILOT CONTEXT
+# -----------------------------
+set_copilot_context(f"""
+Page: Executive Dashboard
+
+This page gives leadership a strategic overview of production, sales, waste, defects, revenue, inventory, supplier performance, and logistics.
+
+Executive KPIs:
+- Total Production: {kpis['total_production']}
+- Total Sales: {kpis['total_sales']}
+- Waste Rate: {kpis['waste_rate']:.2f}%
+- Revenue: €{kpis['revenue']:,.2f}
+- Stock Remaining: {kpis['stock_remaining']}
+- Total Waste: {kpis['total_waste']}
+- Defect Rate: {kpis['defect_rate']:.2f}%
+- Delayed Deliveries: {kpis['delayed']}
+
+Leadership interpretation:
+- Waste above 8% should be treated as operational/quality risk.
+- Defect rate above 2% should trigger supplier or production review.
+- Any delayed deliveries require logistics monitoring.
+""")
+
+# -----------------------------
 # HEADER
 # -----------------------------
 st.markdown(f"""
@@ -203,52 +137,69 @@ st.markdown(f"""
 # -----------------------------
 # EXECUTIVE KPIs
 # -----------------------------
-st.markdown('<div class="section-title">📌 Executive KPIs</div>', unsafe_allow_html=True)
+section_title("📌 Executive KPIs")
 
 c1, c2, c3, c4 = st.columns(4)
+
 with c1:
     metric_card("Total Production", f"{kpis['total_production']:,}", "Production volume monitored")
+
 with c2:
     metric_card("Total Sales", f"{kpis['total_sales']:,}", "Units sold")
+
 with c3:
     metric_card("Waste Rate", f"{kpis['waste_rate']:.2f}%", "Target threshold: 8%")
+
 with c4:
     metric_card("Revenue", f"€{kpis['revenue']:,.2f}", "Total commercial value")
 
 c5, c6, c7, c8 = st.columns(4)
+
 with c5:
     metric_card("Stock Remaining", f"{kpis['stock_remaining']:,}", "Available inventory")
+
 with c6:
     metric_card("Total Waste", f"{kpis['total_waste']:,}", "Waste quantity")
+
 with c7:
     metric_card("Defect Rate", f"{kpis['defect_rate']:.2f}%", "Target threshold: 2%")
+
 with c8:
     metric_card("Delayed Deliveries", f"{kpis['delayed']}", "Logistics exceptions")
 
 # -----------------------------
 # EXECUTIVE STATUS SUMMARY
 # -----------------------------
-st.markdown('<div class="section-title">🧠 Executive Status Summary</div>', unsafe_allow_html=True)
+section_title("🧠 Executive Status Summary")
 
 s1, s2, s3 = st.columns(3)
 
 with s1:
     if kpis["waste_rate"] > 8:
-        insight_card("⚠️ Waste rate is above target. Operations and Quality should review high-waste products.", risk=True)
+        insight_card(
+            "⚠️ Waste rate is above target. Operations and Quality should review high-waste products.",
+            level="risk"
+        )
     else:
-        insight_card("✅ Waste rate appears under control.")
+        insight_card("✅ Waste rate appears under control.", level="good")
 
 with s2:
     if kpis["defect_rate"] > 2:
-        insight_card("⚠️ Defect rate is elevated. Supplier quality or production line issues may exist.", risk=True)
+        insight_card(
+            "⚠️ Defect rate is elevated. Supplier quality or production line issues may exist.",
+            level="risk"
+        )
     else:
-        insight_card("✅ Defect rate appears acceptable.")
+        insight_card("✅ Defect rate appears acceptable.", level="good")
 
 with s3:
     if kpis["delayed"] > 0:
-        insight_card("⚠️ Delivery delays detected. Logistics performance should be monitored.", risk=True)
+        insight_card(
+            "⚠️ Delivery delays detected. Logistics performance should be monitored.",
+            level="risk"
+        )
     else:
-        insight_card("✅ No major delivery delay issue detected.")
+        insight_card("✅ No major delivery delay issue detected.", level="good")
 
 # -----------------------------
 # DATA SUMMARIES
@@ -273,7 +224,7 @@ supplier_summary["supplier_risk_score"] = (
 # -----------------------------
 # CHARTS
 # -----------------------------
-st.markdown('<div class="section-title">🏭 Production, Waste & Supplier Performance</div>', unsafe_allow_html=True)
+section_title("🏭 Production, Waste & Supplier Performance")
 
 chart1, chart2 = st.columns(2)
 
@@ -285,8 +236,7 @@ with chart1:
         barmode="group",
         title="Production vs Sales by Product"
     )
-    fig = style_plotly(fig)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(style_plotly(fig), use_container_width=True)
 
 with chart2:
     fig_waste = px.bar(
@@ -295,8 +245,7 @@ with chart2:
         y="waste_quantity",
         title="Waste Quantity by Product"
     )
-    fig_waste = style_plotly(fig_waste)
-    st.plotly_chart(fig_waste, use_container_width=True)
+    st.plotly_chart(style_plotly(fig_waste), use_container_width=True)
 
 chart3, chart4 = st.columns(2)
 
@@ -308,13 +257,13 @@ with chart3:
         barmode="group",
         title="Supplier Waste and Defects"
     )
-    fig_supplier = style_plotly(fig_supplier)
-    st.plotly_chart(fig_supplier, use_container_width=True)
+    st.plotly_chart(style_plotly(fig_supplier), use_container_width=True)
 
 with chart4:
     if "date" in df.columns and "revenue" in df.columns:
         revenue_df = df.copy()
         revenue_df["date"] = pd.to_datetime(revenue_df["date"], errors="coerce")
+
         revenue_trend = (
             revenue_df.dropna(subset=["date"])
             .groupby("date")["revenue"]
@@ -331,17 +280,16 @@ with chart4:
                 title="Revenue Trend Over Time",
                 markers=True
             )
-            fig_revenue = style_plotly(fig_revenue)
-            st.plotly_chart(fig_revenue, use_container_width=True)
+            st.plotly_chart(style_plotly(fig_revenue), use_container_width=True)
         else:
-            insight_card("No valid date values available for revenue trend.", risk=True)
+            insight_card("No valid date values available for revenue trend.", level="risk")
     else:
-        insight_card("Revenue trend requires date and revenue columns.", risk=True)
+        insight_card("Revenue trend requires date and revenue columns.", level="risk")
 
 # -----------------------------
 # KEY INSIGHTS
 # -----------------------------
-st.markdown('<div class="section-title">🔎 Key Executive Insights</div>', unsafe_allow_html=True)
+section_title("🔎 Key Executive Insights")
 
 i1, i2 = st.columns(2)
 
@@ -351,7 +299,7 @@ with i1:
         insight_card(
             f"♻️ Highest waste product: <b>{top_waste_product['product_name']}</b> "
             f"with <b>{top_waste_product['waste_quantity']:,.0f}</b> waste units.",
-            risk=True
+            level="risk"
         )
 
 with i2:
@@ -360,13 +308,41 @@ with i2:
         insight_card(
             f"🏭 Supplier requiring attention: <b>{top_supplier_risk['supplier']}</b> "
             f"has the highest combined waste/defect risk.",
-            risk=True
+            level="risk"
         )
+
+# -----------------------------
+# EXECUTIVE AI QUICK ACTIONS
+# -----------------------------
+section_title("🤖 Executive AI Quick Actions")
+
+ai1, ai2, ai3 = st.columns(3)
+
+with ai1:
+    if st.button("💡 Explain Executive KPIs", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Explain the executive KPIs and highlight the biggest risks.")
+        )
+        st.rerun()
+
+with ai2:
+    if st.button("⚠️ Identify Strategic Risks", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Identify the biggest strategic risks from this dashboard.")
+        )
+        st.rerun()
+
+with ai3:
+    if st.button("🎯 Recommend Management Actions", use_container_width=True):
+        st.session_state.global_copilot_history.append(
+            ("user", "Recommend the top management actions based on this dashboard.")
+        )
+        st.rerun()
 
 # -----------------------------
 # EXECUTIVE RECOMMENDATIONS
 # -----------------------------
-st.markdown('<div class="section-title">🎯 Executive Recommendations</div>', unsafe_allow_html=True)
+section_title("🎯 Executive Recommendations")
 
 recommendations = []
 
@@ -383,4 +359,9 @@ if not recommendations:
     recommendations.append("Continue monitoring operations. Current performance appears stable.")
 
 for rec in recommendations:
-    insight_card(f"✅ {rec}", risk=False)
+    insight_card(f"✅ {rec}", level="good")
+
+# -----------------------------
+# GLOBAL COPILOT
+# -----------------------------
+render_global_copilot(generate_ai_response_cached)
