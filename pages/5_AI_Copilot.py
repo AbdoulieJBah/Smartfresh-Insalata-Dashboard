@@ -14,6 +14,7 @@ from utils import (
     insight_card,
     section_title,
     style_plotly,
+    stream_text,
 )
 
 require_role(["Admin", "Manager", "Operations", "Quality"])
@@ -265,11 +266,6 @@ def run_tool(question, data):
     }
 
 
-def stream_text(text):
-    words = text.split(" ")
-    for word in words:
-        yield word + " "
-        time.sleep(0.015)
 
 
 # -----------------------------
