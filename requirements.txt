@@ -11,3 +11,6 @@ google-generativeai
 python-multipart
 scikit-learn
 xgboost
+matplotlib
+joblib
+scipy
