@@ -122,7 +122,7 @@ section[data-testid="stSidebarNav"] { display: none; }
 }
 
 .hero-subtitle {
-    max-width: 920px;
+    max-width: 980px;
     font-size: 18px;
     color: #d1d5db;
     line-height: 1.75;
@@ -253,7 +253,7 @@ if not st.session_state.authenticated:
     st.markdown("""
     <div class="login-card">
         <div class="login-title">🥬 SmartFresh <span>AI</span></div>
-        <div class="login-subtitle">Operations Intelligence Platform</div>
+        <div class="login-subtitle">Industry 4.0 Operations Intelligence Platform</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -266,7 +266,6 @@ if not st.session_state.authenticated:
         password = st.text_input("Password", type="password", placeholder="Enter password")
 
         if st.button("Login", use_container_width=True):
-            # Case-insensitive email login
             clean_email = email.strip().lower()
             user = authenticate_user(clean_email, password)
 
@@ -332,6 +331,13 @@ if user_role in ["Admin", "Manager", "Operations"]:
     <div class="sidebar-item">🏭 ERP Production Planner</div>
     """, unsafe_allow_html=True)
 
+if user_role in ["Admin", "Manager", "Operations", "Quality", "Logistics"]:
+    st.sidebar.markdown("""
+    <div class="sidebar-section">Industry 4.0 Layer</div>
+    <div class="sidebar-item">🏭 Machine Digital Twin</div>
+    <div class="sidebar-item">🧠 AI Control Room</div>
+    """, unsafe_allow_html=True)
+
 if user_role in ["Admin", "Manager", "Operations", "Quality"]:
     st.sidebar.markdown("""
     <div class="sidebar-section">AI Assistant Layer</div>
@@ -357,9 +363,10 @@ st.markdown("""
 <div class="hero-card">
     <div class="hero-title">🥬 SmartFresh <span>AI</span></div>
     <div class="hero-subtitle">
-        AI-powered operations intelligence platform combining business intelligence,
-        ML-driven risk prediction, autonomous AI agents, FastAPI backend scoring,
-        Slack/email notifications, and real-time streaming simulation.
+        AI-powered Industry 4.0 operations intelligence platform combining business intelligence,
+        ERP/MES-inspired workflows, machine digital twin simulation, ML-driven risk prediction,
+        autonomous AI agents, FastAPI backend scoring, Slack/email notifications, and real-time
+        production control-room intelligence.
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -385,7 +392,8 @@ with u3:
 st.info(
     "Use the sidebar to access the modules available for your role. "
     "SmartFresh AI supports business intelligence, operations control, ERP planning, "
-    "AI copilot assistance, autonomous agent monitoring, and task tracking."
+    "AI copilot assistance, machine digital twin simulation, AI control-room monitoring, "
+    "autonomous agent monitoring, and task tracking."
 )
 
 # -----------------------------
@@ -423,15 +431,18 @@ st.subheader("🚀 Platform Overview")
 
 st.markdown("""
 <div class="premium-card">
-<b>SmartFresh AI</b> is a full-stack operations intelligence system that monitors production,
-inventory, quality, logistics, and revenue performance.
+<b>SmartFresh AI</b> is a full-stack AI operations intelligence system inspired by real fresh-produce
+production workflows, ERP/MES environments, and shop-floor machine data.
 <br><br>
-It detects operational risks using rules and Machine Learning, predicts batch-level risk,
-converts insights into trackable actions, sends Slack/email alerts, and simulates
-Kafka-style live event streaming for real-time monitoring.
+It monitors production, inventory, quality, logistics, revenue performance, machine health,
+operator workflows, and simulated real-time factory signals.
+<br><br>
+The platform detects operational risks using rules and Machine Learning, predicts batch-level
+and machine-level risk, converts insights into trackable actions, sends Slack/email alerts,
+and simulates Kafka-style live event streaming for real-time monitoring.
 <br><br>
 <span style="color:#86efac;font-weight:800;">
-This transforms dashboards into AI-driven decision systems.
+This transforms dashboards into an AI-driven Industry 4.0 decision system.
 </span>
 </div>
 """, unsafe_allow_html=True)
@@ -441,10 +452,10 @@ st.markdown("")
 f1, f2, f3, f4 = st.columns(4)
 
 with f1:
-    premium_metric("AI-Driven Decisions", "ML + Agents", "Risk prediction & actions")
+    premium_metric("AI Decisions", "ML + Agents", "Risk prediction & actions")
 
 with f2:
-    premium_metric("Real-Time Intelligence", "Live Events", "Streaming simulation")
+    premium_metric("Industry 4.0", "MES + Machines", "Digital twin simulation")
 
 with f3:
     premium_metric("Automation", "Slack + Email", "Critical alerts")
