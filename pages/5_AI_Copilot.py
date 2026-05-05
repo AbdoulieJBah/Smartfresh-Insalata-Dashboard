@@ -63,7 +63,7 @@ premium_hero(
     "ChatGPT-style autonomous decision assistant for revenue, operations, suppliers, logistics, quality risks, and executive recommendations.",
     badge="Autonomous AI Decision Assistant"
 )
-
+inject_page_css()
 # -----------------------------
 # LOAD DATA
 # -----------------------------
