@@ -228,9 +228,9 @@ c5, c6, c7, c8 = st.columns(4)
 
 with c5:
     metric_card(
-        "Total Defects",
-        f"{kpis['total_defects']:,}",
-        "Quality exceptions"
+        "Negative Feedback",
+        f"{negative_count}",
+        "Sentiment risk"
     )
 
 with c6:
