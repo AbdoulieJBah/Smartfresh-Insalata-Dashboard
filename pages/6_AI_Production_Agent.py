@@ -7,12 +7,18 @@ import time
 import plotly.express as px
 
 from auth_utils import require_role
-from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
-require_role(["Admin", "Manager"])
-
 from data_utils import load_data
 from ai_utils import generate_ai_response_cached
-from machine_simulator import generate_machine_snapshot, summarize_machine_health
+
+from utils import (
+    setup_page,
+    metric_card,
+    insight_card,
+    section_title,
+    style_plotly,
+    set_copilot_context,
+    render_global_copilot,
+)
 
 from database import (
     save_agent_action,
@@ -22,18 +28,21 @@ from database import (
     save_stream_event,
     load_stream_events,
     calculate_priority,
-    assign_team
+    assign_team,
 )
 
 from notifications import notify_critical_alert
 from ml_risk_model import train_risk_model, predict_ml_risk, get_feature_importance
 from multi_agent import multi_agent_decision
 
-setup_page("AI Production Agent")
+
+require_role(["Admin", "Manager"])
+
+setup_page("AI Production Agent", icon="🧠")
 
 
 # -----------------------------
-# PREMIUM UI HELPERS
+# PAGE CSS
 # -----------------------------
 def inject_page_css():
     st.markdown("""
@@ -62,67 +71,9 @@ def inject_page_css():
         line-height: 1.65;
         margin: 0;
     }
-
-    .section-title {
-        font-size: 1.22rem;
-        font-weight: 850;
-        color: #ffffff;
-        margin: 1.5rem 0 0.8rem 0;
-    }
-
-    .metric-card {
-        padding: 18px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.88);
-        border: 1px solid rgba(34,197,94,0.24);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.28);
-        min-height: 115px;
-    }
-
-    .metric-label {
-        color: #9ca3af;
-        font-size: 0.82rem;
-        font-weight: 700;
-    }
-
-    .metric-value {
-        color: #ffffff;
-        font-size: 1.55rem;
-        font-weight: 900;
-        margin-top: 10px;
-    }
-
-    .metric-note {
-        color: #86efac;
-        font-size: 0.8rem;
-        margin-top: 8px;
-        font-weight: 650;
-    }
-
-    .insight-card {
-        padding: 18px 20px;
-        border-radius: 16px;
-        background: rgba(15,23,42,0.82);
-        border: 1px solid rgba(148,163,184,0.18);
-        margin-bottom: 10px;
-        color: #e5e7eb;
-    }
-
-    .insight-good { border-left: 4px solid #22c55e; }
-    .insight-risk { border-left: 4px solid #f59e0b; }
-    .insight-critical { border-left: 4px solid #ef4444; }
-
-    .agent-panel {
-        padding: 20px;
-        border-radius: 18px;
-        background: rgba(15,23,42,0.84);
-        border: 1px solid rgba(34,197,94,0.22);
-        box-shadow: 0 10px 28px rgba(0,0,0,0.26);
-        color: #e5e7eb;
-        margin-bottom: 10px;
-    }
     </style>
     """, unsafe_allow_html=True)
+
 
 inject_page_css()
 
@@ -134,16 +85,17 @@ st.markdown("""
 <div class="agent-hero">
     <h1>🧠 SmartFresh AI Production Agent</h1>
     <p>
-        Autonomous AI agent for operational risk detection, ML-based prediction, multi-agent planning,
+        Autonomous AI agent for operational risk detection, ML prediction, multi-agent planning,
         FastAPI backend scoring, Slack/email notifications, and real-time streaming simulation.
     </p>
 </div>
 """, unsafe_allow_html=True)
 
+
 # -----------------------------
 # CONTROL MODES
 # -----------------------------
-st.markdown('<div class="section-title">⚙️ Agent Control Modes</div>', unsafe_allow_html=True)
+section_title("⚙️ Agent Control Modes")
 
 c1, c2, c3 = st.columns(3)
 
@@ -157,9 +109,10 @@ with c3:
     streaming_mode = st.toggle("📡 Real-Time Streaming", value=True)
 
 insight_card(
-    "Auto Monitoring saves alerts. Autonomous Actions convert alerts into tasks. "
-    "Real-Time Streaming simulates Kafka-style operational events."
+    "Auto Monitoring saves alerts. Autonomous Actions convert alerts into tasks. Real-Time Streaming simulates Kafka-style operational events.",
+    level="good",
 )
+
 
 # -----------------------------
 # LOAD DATA
@@ -167,15 +120,31 @@ insight_card(
 df = load_data()
 df.columns = df.columns.str.strip().str.lower()
 
-API_URL = "https://smartfresh-api.onrender.com/risk-score"
+try:
+    API_URL = st.secrets.get(
+        "FASTAPI_URL",
+        "https://smartfresh-api.onrender.com/risk-score"
+    )
+except Exception:
+    API_URL = "https://smartfresh-api.onrender.com/risk-score"
+
 
 # -----------------------------
-# TRAIN ML RISK MODEL
+# CACHED ML TRAINING
 # -----------------------------
-ml_model, ml_features, ml_metrics = train_risk_model(df)
+@st.cache_resource(show_spinner=False)
+def cached_train_model(data):
+    return train_risk_model(data)
+
+
+ml_model, ml_features, ml_metrics = cached_train_model(df)
 feature_importance_df = get_feature_importance(ml_model, ml_features)
 
-st.markdown('<div class="section-title">🧪 ML Risk Model Status</div>', unsafe_allow_html=True)
+
+# -----------------------------
+# ML MODEL STATUS
+# -----------------------------
+section_title("🧪 ML Risk Model Status")
 
 m1, m2, m3 = st.columns(3)
 
@@ -197,54 +166,8 @@ if not feature_importance_df.empty:
             orientation="h",
             title="ML Feature Importance"
         )
-        fig_importance = style_plotly(fig_importance)
-        st.plotly_chart(fig_importance, use_container_width=True)
+        st.plotly_chart(style_plotly(fig_importance), use_container_width=True)
         st.dataframe(feature_importance_df, use_container_width=True)
-
-
-# -----------------------------
-# INDUSTRY 4.0 MACHINE SNAPSHOT
-# -----------------------------
-section_title("🏭 Industry 4.0 Machine Snapshot")
-
-machine_df = generate_machine_snapshot()
-machine_summary = summarize_machine_health(machine_df)
-
-mc1, mc2, mc3, mc4, mc5 = st.columns(5)
-
-with mc1:
-    metric_card("Machines", machine_summary["machines"], "Connected assets")
-
-with mc2:
-    metric_card("Running", machine_summary["running"], "Active")
-
-with mc3:
-    metric_card("Warnings", machine_summary["warnings"], "Attention needed")
-
-with mc4:
-    metric_card("Stopped", machine_summary["stopped"], "Downtime risk")
-
-with mc5:
-    metric_card("Avg Risk", machine_summary["avg_risk_score"], "Machine risk")
-
-high_machine_risk = machine_df[machine_df["risk_level"].isin(["High", "Medium"])]
-
-if high_machine_risk.empty:
-    insight_card("✅ No major simulated machine risk detected.", level="good")
-else:
-    for _, row in high_machine_risk.iterrows():
-        level = "critical" if row["risk_level"] == "High" else "risk"
-        insight_card(
-            f"""
-            <b>{row['machine']}</b> — {row['line']}<br>
-            <b>Risk:</b> {row['risk_level']} ({row['risk_score']}/100)<br>
-            <b>Reason:</b> {row['risk_reasons']}
-            """,
-            level=level
-        )
-
-with st.expander("📋 View Simulated Machine Feed"):
-    st.dataframe(machine_df, use_container_width=True)
 
 
 # -----------------------------
@@ -278,7 +201,7 @@ def detect_agent_risks(data, ml_model=None, ml_features=None):
             "client": client,
             "product": product,
             "ml_risk_probability": ml_probability,
-            "ml_risk_level": ml_level
+            "ml_risk_level": ml_level,
         }
 
         if waste_rate > 8:
@@ -382,8 +305,12 @@ def detect_revenue_drop(data):
     rev_df = rev_df.dropna(subset=[date_col])
 
     required_cols = [
-        "batch_id", "quantity_sold", "waste_quantity",
-        "defect_count", "delivery_status", "temperature"
+        "batch_id",
+        "quantity_sold",
+        "waste_quantity",
+        "defect_count",
+        "delivery_status",
+        "temperature",
     ]
 
     for col in required_cols:
@@ -399,7 +326,7 @@ def detect_revenue_drop(data):
             waste=("waste_quantity", "sum"),
             defects=("defect_count", "sum"),
             delayed_deliveries=("delivery_status", lambda x: (x.astype(str).str.lower() == "delayed").sum()),
-            avg_temperature=("temperature", "mean")
+            avg_temperature=("temperature", "mean"),
         )
         .reset_index()
         .sort_values(date_col)
@@ -506,7 +433,7 @@ def predict_future_revenue_drop(daily_revenue):
         "predicted_revenue_drop_risk_percent": round(risk_percent, 2),
         "future_revenue_risk_score": operational_risk_score,
         "future_revenue_risk_level": risk_level,
-        "risk_reasons": risk_reasons if risk_reasons else ["No strong future revenue drop signal detected"]
+        "risk_reasons": risk_reasons if risk_reasons else ["No strong future revenue drop signal detected"],
     }
 
 
@@ -524,7 +451,7 @@ def simulate_stream_event(data):
         "Delivery Status Update",
         "Production Signal",
         "Quality Signal",
-        "Inventory Signal"
+        "Inventory Signal",
     ])
 
     batch_id = row.get("batch_id", "Unknown")
@@ -550,7 +477,7 @@ def simulate_stream_event(data):
         "batch_id": str(batch_id),
         "product": str(product),
         "client": str(client),
-        "event_type": event_type
+        "event_type": event_type,
     })
 
     save_stream_event(event_type, str(batch_id), severity, message, payload)
@@ -559,7 +486,7 @@ def simulate_stream_event(data):
         "event_type": event_type,
         "batch_id": batch_id,
         "severity": severity,
-        "message": message
+        "message": message,
     }
 
 
@@ -570,8 +497,38 @@ alerts_df = detect_agent_risks(df, ml_model, ml_features)
 revenue_alert, daily_revenue = detect_revenue_drop(df)
 future_revenue_risk = predict_future_revenue_drop(daily_revenue)
 
+
 # -----------------------------
-# SAVE ALERTS + AUTO ACTIONS + NOTIFICATIONS
+# GLOBAL COPILOT CONTEXT
+# -----------------------------
+set_copilot_context(f"""
+Page: AI Production Agent
+
+This page monitors operational risk, ML prediction, autonomous alert creation, revenue drop detection, future revenue risk, FastAPI backend batch scoring, streaming events, and AI agent recommendations.
+
+System Modes:
+- Auto Monitoring: {auto_mode}
+- Autonomous Actions: {autonomous_mode}
+- Real-Time Streaming: {streaming_mode}
+
+ML Model:
+- Model Type: {ml_metrics['model_type']}
+- Balanced Accuracy: {ml_metrics['balanced_accuracy']}
+- F1 Score: {ml_metrics['f1_score']}
+
+Current Monitoring:
+- Records Monitored: {len(df)}
+- Agent Alerts Detected: {len(alerts_df)}
+- High Severity Alerts: {(alerts_df['severity'] == 'High').sum() if len(alerts_df) else 0}
+- Revenue Alert: {revenue_alert}
+- Future Revenue Risk: {future_revenue_risk}
+
+Use this context to explain operational risks, revenue risks, alert priorities, autonomous actions, and escalation recommendations.
+""")
+
+
+# -----------------------------
+# SAVE ALERTS + AUTO ACTIONS
 # -----------------------------
 if "alerts_saved" not in st.session_state:
     st.session_state.alerts_saved = False
@@ -610,7 +567,7 @@ if auto_mode and not st.session_state.alerts_saved:
             "product": "Revenue",
             "severity": "High",
             "issue": f"Revenue dropped by {revenue_alert['drop_percent']}%",
-            "recommended_action": "Review client orders, product mix, waste, defects, and delivery delays."
+            "recommended_action": "Review client orders, product mix, waste, defects, and delivery delays.",
         }
 
         revenue_dict["priority_score"] = calculate_priority(revenue_dict)
@@ -639,7 +596,7 @@ if auto_mode and not st.session_state.alerts_saved:
             "product": "Revenue Forecast",
             "severity": future_revenue_risk["future_revenue_risk_level"],
             "issue": f"Future revenue drop risk is {future_revenue_risk['future_revenue_risk_level']}",
-            "recommended_action": "Prioritize high-value orders and reduce waste, defects, delays, and operational bottlenecks."
+            "recommended_action": "Prioritize high-value orders and reduce waste, defects, delays, and operational bottlenecks.",
         }
 
         future_dict["priority_score"] = calculate_priority(future_dict)
@@ -661,10 +618,11 @@ if auto_mode and not st.session_state.alerts_saved:
 
     st.session_state.alerts_saved = True
 
+
 # -----------------------------
-# REAL-TIME STREAMING CONTROL
+# REAL-TIME STREAMING
 # -----------------------------
-st.markdown('<div class="section-title">📡 Real-Time Streaming Control</div>', unsafe_allow_html=True)
+section_title("📡 Real-Time Streaming Control")
 
 stream_col1, stream_col2, stream_col3 = st.columns(3)
 
@@ -706,10 +664,11 @@ if streaming_mode and (stream_auto_run or st.session_state.streaming_active):
         elif event["severity"] == "Medium":
             insight_card(f"⚠️ {event['message']}", level="risk")
         else:
-            insight_card(f"ℹ️ {event['message']}")
+            insight_card(f"ℹ️ {event['message']}", level="good")
 
-    time.sleep(refresh_seconds)
-    st.rerun()
+    if stream_auto_run:
+        time.sleep(refresh_seconds)
+        st.rerun()
 
 if streaming_mode:
     if st.button("📡 Simulate Single Live Event", use_container_width=True):
@@ -721,23 +680,32 @@ if streaming_mode:
             elif event["severity"] == "Medium":
                 insight_card(f"⚠️ {event['message']}", level="risk")
             else:
-                insight_card(f"ℹ️ {event['message']}")
+                insight_card(f"ℹ️ {event['message']}", level="good")
+
 
 # -----------------------------
 # KPIs
 # -----------------------------
-st.markdown('<div class="section-title">📌 Agent KPIs</div>', unsafe_allow_html=True)
+section_title("📌 Agent KPIs")
 
 k1, k2, k3, k4, k5 = st.columns(5)
 
 with k1:
     metric_card("Records Monitored", f"{len(df)}", "Dataset records")
+
 with k2:
     metric_card("Agent Alerts", f"{len(alerts_df)}", "Detected risks")
+
 with k3:
-    metric_card("High Severity", f"{(alerts_df['severity'] == 'High').sum() if len(alerts_df) else 0}", "Critical risk layer")
+    metric_card(
+        "High Severity",
+        f"{(alerts_df['severity'] == 'High').sum() if len(alerts_df) else 0}",
+        "Critical risk layer"
+    )
+
 with k4:
     metric_card("Autonomous Mode", "ON" if autonomous_mode else "OFF", "Action automation")
+
 with k5:
     metric_card("ML Model", ml_metrics["model_type"], "Prediction engine")
 
@@ -745,60 +713,38 @@ if st.button("🔄 Save Latest Alerts Again", use_container_width=True):
     st.session_state.alerts_saved = False
     st.rerun()
 
+
 # -----------------------------
 # REVENUE DROP MONITOR
 # -----------------------------
-st.markdown('<div class="section-title">📉 Revenue Drop Monitor</div>', unsafe_allow_html=True)
+section_title("📉 Revenue Drop Monitor")
 
 if revenue_alert:
     insight_card(
         f"⚠️ Revenue dropped by <b>{revenue_alert['drop_percent']}%</b> on <b>{revenue_alert['date']}</b>.",
         level="critical"
     )
-
-    r1, r2, r3, r4 = st.columns(4)
-    with r1:
-        metric_card("Previous Revenue", f"€{revenue_alert['previous_revenue']:,.2f}", "Previous period")
-    with r2:
-        metric_card("Latest Revenue", f"€{revenue_alert['latest_revenue']:,.2f}", "Latest period")
-    with r3:
-        metric_card("Latest Orders", f"{revenue_alert['latest_orders']}", "Order count")
-    with r4:
-        metric_card("Latest Delays", f"{revenue_alert['latest_delays']}", "Logistics issue")
-
-    causes = []
-    if revenue_alert["latest_orders"] < revenue_alert["previous_orders"]:
-        causes.append("Lower order volume")
-    if revenue_alert["latest_quantity_sold"] < revenue_alert["previous_quantity_sold"]:
-        causes.append("Lower quantity sold")
-    if revenue_alert["latest_waste"] > revenue_alert["previous_waste"]:
-        causes.append("Waste increased")
-    if revenue_alert["latest_defects"] > revenue_alert["previous_defects"]:
-        causes.append("Defects increased")
-    if revenue_alert["latest_delays"] > revenue_alert["previous_delays"]:
-        causes.append("Delayed deliveries increased")
-    if revenue_alert["latest_avg_temperature"] > revenue_alert["previous_avg_temperature"]:
-        causes.append("Temperature risk increased")
-
-    for cause in causes:
-        insight_card(f"⚠️ Possible cause: {cause}", level="risk")
 else:
-    insight_card("✅ No major latest-period revenue drop detected.")
+    insight_card("✅ No major latest-period revenue drop detected.", level="good")
+
 
 # -----------------------------
 # FUTURE REVENUE RISK
 # -----------------------------
-st.markdown('<div class="section-title">🔮 Future Revenue Drop Prediction</div>', unsafe_allow_html=True)
+section_title("🔮 Future Revenue Drop Prediction")
 
 if future_revenue_risk:
     p1, p2, p3, p4 = st.columns(4)
 
     with p1:
         metric_card("3-Day Avg Revenue", f"€{future_revenue_risk['rolling_3_day_revenue']:,.2f}", "Short-term trend")
+
     with p2:
         metric_card("7-Day Avg Revenue", f"€{future_revenue_risk['rolling_7_day_revenue']:,.2f}", "Normal level")
+
     with p3:
         metric_card("Drop Risk %", f"{future_revenue_risk['predicted_revenue_drop_risk_percent']:.2f}%", "Forecast risk")
+
     with p4:
         metric_card("Risk Level", future_revenue_risk["future_revenue_risk_level"], "Future revenue signal")
 
@@ -807,23 +753,31 @@ if future_revenue_risk:
 else:
     insight_card("Not enough revenue history to predict future revenue drop.", level="risk")
 
+
 # -----------------------------
 # AGENT ALERTS
 # -----------------------------
-st.markdown('<div class="section-title">🚨 Agent Risk Alerts</div>', unsafe_allow_html=True)
+section_title("🚨 Agent Risk Alerts")
 
 if len(alerts_df) > 0:
     display_cols = [
-        "risk_type", "batch_id", "severity", "ml_risk_probability",
-        "ml_risk_level", "priority_score", "assigned_team",
-        "planner_recommendation", "execution_action", "execution_status"
+        "risk_type",
+        "batch_id",
+        "severity",
+        "ml_risk_probability",
+        "ml_risk_level",
+        "priority_score",
+        "assigned_team",
+        "planner_recommendation",
+        "execution_action",
+        "execution_status",
     ]
 
     available_cols = [col for col in display_cols if col in alerts_df.columns]
 
     st.dataframe(alerts_df[available_cols], use_container_width=True)
 
-    st.markdown('<div class="section-title">⚙️ Manual Action Creation</div>', unsafe_allow_html=True)
+    section_title("⚙️ Manual Action Creation")
 
     for i, alert in alerts_df.head(25).iterrows():
         with st.expander(
@@ -839,7 +793,7 @@ if len(alerts_df) > 0:
                 "Operations Team",
                 "Quality Team",
                 "Logistics Team",
-                "Management Team"
+                "Management Team",
             ]
 
             default_index = (
@@ -859,12 +813,13 @@ if len(alerts_df) > 0:
                 save_agent_action(alert.to_dict(), assigned_team=team)
                 st.success("✅ Action saved to system")
 else:
-    insight_card("✅ No major operational risks detected.")
+    insight_card("✅ No major operational risks detected.", level="good")
+
 
 # -----------------------------
-# BACKEND RISK ANALYSIS + ML RISK
+# BACKEND RISK ANALYSIS
 # -----------------------------
-st.markdown('<div class="section-title">🔎 Batch Traceability, Backend Risk & ML Risk Analysis</div>', unsafe_allow_html=True)
+section_title("🔎 Batch Traceability, Backend Risk & ML Risk Analysis")
 
 if "batch_id" in df.columns:
     selected_batch = st.selectbox(
@@ -878,18 +833,24 @@ if "batch_id" in df.columns:
         row = batch_info.iloc[0]
 
         b1, b2, b3 = st.columns(3)
+
         with b1:
             metric_card("Product", row.get("product_name", "N/A"), "Batch product")
+
         with b2:
             metric_card("Supplier", row.get("supplier", "N/A"), "Source supplier")
+
         with b3:
             metric_card("Client", row.get("client", row.get("customer", "N/A")), "Customer")
 
         b4, b5, b6 = st.columns(3)
+
         with b4:
             metric_card("Delivery Status", row.get("delivery_status", "N/A"), "Logistics")
+
         with b5:
             metric_card("Temperature", f"{float(row.get('temperature', 0)):.1f}°C", "Cold-chain")
+
         with b6:
             metric_card("Defects", row.get("defect_count", 0), "Quality signal")
 
@@ -903,7 +864,7 @@ if "batch_id" in df.columns:
             "defect_count": int(row.get("defect_count", 0)),
             "temperature": float(row.get("temperature", 0)),
             "delivery_status": str(row.get("delivery_status", "")),
-            "delivery_delay_days": int(row.get("delivery_delay_days", 0))
+            "delivery_delay_days": int(row.get("delivery_delay_days", 0)),
         }
 
         if st.button("🔍 Analyze Batch Risk", use_container_width=True):
@@ -915,15 +876,17 @@ if "batch_id" in df.columns:
                     result = response.json()
 
                     r1, r2 = st.columns(2)
+
                     with r1:
                         metric_card("Backend Risk Score", result.get("risk_score", "N/A"), "FastAPI scoring")
+
                     with r2:
                         metric_card("Backend Risk Category", result.get("risk_category", "N/A"), "Risk class")
 
                     for reason in result.get("risk_reasons", []):
                         insight_card(f"⚠️ {reason}", level="risk")
 
-                    insight_card("✅ Backend API connected successfully.")
+                    insight_card("✅ Backend API connected successfully.", level="good")
 
                 else:
                     insight_card(f"Backend API failed with status code: {response.status_code}", level="critical")
@@ -939,17 +902,20 @@ if "batch_id" in df.columns:
             ml_result = predict_ml_risk(ml_model, ml_features, row)
 
             m1, m2 = st.columns(2)
+
             with m1:
                 metric_card("ML Risk Probability", f"{ml_result['ml_risk_probability']}%", "Model prediction")
+
             with m2:
                 metric_card("ML Risk Level", ml_result["ml_risk_level"], "ML risk class")
 else:
     insight_card("Dataset does not contain batch_id column.", level="risk")
 
+
 # -----------------------------
 # AI AGENT SUMMARY
 # -----------------------------
-st.markdown('<div class="section-title">🧠 Agent Decision Summary</div>', unsafe_allow_html=True)
+section_title("🧠 Agent Decision Summary")
 
 run_agent = st.button("Run AI Agent Analysis", use_container_width=True)
 
@@ -992,10 +958,11 @@ Highlight critical issues with ⚠️.
         response = generate_ai_response_cached(prompt)
         st.markdown(response)
 
+
 # -----------------------------
 # STREAM FEED
 # -----------------------------
-st.markdown('<div class="section-title">📡 Kafka-Style Streaming Feed</div>', unsafe_allow_html=True)
+section_title("📡 Kafka-Style Streaming Feed")
 
 stream_events = load_stream_events(limit=20)
 
@@ -1004,10 +971,17 @@ if stream_events.empty:
 else:
     st.dataframe(stream_events, use_container_width=True)
 
+
+# -----------------------------
+# GLOBAL AI COPILOT
+# -----------------------------
+render_global_copilot(generate_ai_response_cached)
+
+
 # -----------------------------
 # ALERTS FEED
 # -----------------------------
-st.markdown('<div class="section-title">📡 Live Alerts Feed</div>', unsafe_allow_html=True)
+section_title("📡 Live Alerts Feed")
 
 if st.button("🔄 Refresh Alerts Feed", use_container_width=True):
     st.rerun()
