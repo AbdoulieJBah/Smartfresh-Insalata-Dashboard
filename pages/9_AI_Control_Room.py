@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from textwrap import dedent
 
 import streamlit as st
 import plotly.express as px
@@ -7,6 +8,7 @@ import plotly.graph_objects as go
 
 from auth_utils import require_role
 from utils import setup_page, premium_hero, metric_card, section_title, style_plotly
+
 from machine_simulator import (
     generate_operator_session,
     generate_industry_40_events,
@@ -18,10 +20,18 @@ require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 setup_page("AI Control Room", icon="🧠")
 
-# -----------------------------
+
+# =========================================================
+# HTML HELPER
+# =========================================================
+def html(content):
+    st.markdown(dedent(content).strip(), unsafe_allow_html=True)
+
+
+# =========================================================
 # PAGE CSS
-# -----------------------------
-st.markdown("""
+# =========================================================
+html("""
 <style>
 .control-room-card,
 .machine-tile {
@@ -120,12 +130,39 @@ st.markdown("""
     margin-bottom: 14px;
     color: #f8fafc;
 }
-</style>
-""", unsafe_allow_html=True)
 
-# -----------------------------
+.operator-panel {
+    padding: 24px;
+    border-radius: 22px;
+    background: rgba(15,23,42,0.86);
+    border: 1px solid rgba(34,197,94,0.28);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.35);
+    margin-bottom: 18px;
+    color: #e5e7eb;
+}
+
+.operator-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 18px;
+    margin-top: 12px;
+}
+
+.operator-row {
+    color: #e5e7eb;
+    line-height: 1.55;
+}
+
+.operator-row strong {
+    color: #ffffff;
+}
+</style>
+""")
+
+
+# =========================================================
 # HEADER
-# -----------------------------
+# =========================================================
 premium_hero(
     "🧠 AI Control Room",
     "Real-time Industry 4.0 command center for MES workflow, machine health, anomaly detection, OEE monitoring, and AI decision support.",
@@ -134,9 +171,10 @@ premium_hero(
 
 st.caption(f"Last refresh: {datetime.now().strftime('%H:%M:%S')}")
 
-# -----------------------------
+
+# =========================================================
 # CONTROLS
-# -----------------------------
+# =========================================================
 section_title("⚙️ Control Room Settings")
 
 c1, c2, c3, c4 = st.columns(4)
@@ -153,9 +191,10 @@ with c3:
 with c4:
     alert_threshold = st.slider("Alert Threshold", 40, 90, 60)
 
-# -----------------------------
+
+# =========================================================
 # DATA
-# -----------------------------
+# =========================================================
 session = generate_operator_session()
 machine_df = generate_industry_40_events()
 
@@ -166,12 +205,20 @@ machine_df["ai_recommendation"] = machine_df.apply(
 
 summary = generate_control_room_summary(machine_df, session)
 
-# -----------------------------
-# OEE LAYER
-# -----------------------------
+
+# =========================================================
+# OEE
+# =========================================================
 machine_df["availability"] = (100 - machine_df["downtime_minutes"].clip(0, 100)).clip(0, 100)
-machine_df["performance"] = ((machine_df["speed"] / machine_df["target_speed"]) * 100).clip(0, 120)
-machine_df["quality"] = (100 - machine_df["reject_rate"]).clip(0, 100)
+
+machine_df["performance"] = (
+    (machine_df["speed"] / machine_df["target_speed"]) * 100
+).clip(0, 120)
+
+machine_df["quality"] = (
+    100 - machine_df["reject_rate"]
+).clip(0, 100)
+
 machine_df["oee"] = (
     machine_df["availability"] *
     machine_df["performance"] *
@@ -186,37 +233,43 @@ avg_quality = machine_df["quality"].mean()
 high_risk_df = machine_df[machine_df["risk_score"] >= alert_threshold]
 critical_df = machine_df[machine_df["risk_level"] == "High"]
 
-production_progress = session["produced_qty"] / session["ordered_qty"]
+production_progress = (
+    session["produced_qty"] / session["ordered_qty"]
+)
 
-# -----------------------------
-# AI ESCALATION BANNER
-# -----------------------------
+
+# =========================================================
+# ESCALATION
+# =========================================================
 if not critical_df.empty:
-    worst = critical_df.sort_values("risk_score", ascending=False).iloc[0]
+    worst = critical_df.sort_values(
+        "risk_score",
+        ascending=False
+    ).iloc[0]
 
-    st.markdown(f"""
-    <div class="escalation-banner">
-        🚨 <strong>AI ESCALATION:</strong> Critical machine risk detected on <strong>{worst['machine']}</strong> — {worst['line']}
-        <div class="info-row"><strong>Risk Score:</strong> {worst['risk_score']}/100</div>
-        <div class="info-row"><strong>Main Cause:</strong> {worst['risk_reasons']}</div>
-        <div class="info-row"><strong>AI Action:</strong> {worst['ai_recommendation']}</div>
+    html(f"""
+<div class="escalation-banner">
+    🚨 <strong>AI ESCALATION:</strong> Critical machine risk detected on
+    <strong>{worst['machine']}</strong> — {worst['line']}
+
+    <div class="info-row">
+        <strong>Risk Score:</strong> {worst['risk_score']}/100
     </div>
-    """, unsafe_allow_html=True)
 
-elif not high_risk_df.empty:
-    worst = high_risk_df.sort_values("risk_score", ascending=False).iloc[0]
-
-    st.markdown(f"""
-    <div class="warning-banner">
-        ⚠️ <strong>AI WARNING:</strong> Machine risk above threshold on <strong>{worst['machine']}</strong>
-        <div class="info-row"><strong>Risk Score:</strong> {worst['risk_score']}/100</div>
-        <div class="info-row"><strong>Recommended Action:</strong> {worst['ai_recommendation']}</div>
+    <div class="info-row">
+        <strong>Main Cause:</strong> {worst['risk_reasons']}
     </div>
-    """, unsafe_allow_html=True)
 
-# -----------------------------
-# TOP STATUS BAR
-# -----------------------------
+    <div class="info-row">
+        <strong>AI Action:</strong> {worst['ai_recommendation']}
+    </div>
+</div>
+""")
+
+
+# =========================================================
+# FACTORY STATUS
+# =========================================================
 section_title("🏭 Factory Line Status")
 
 k1, k2, k3, k4, k5, k6 = st.columns(6)
@@ -239,9 +292,10 @@ with k5:
 with k6:
     metric_card("Avg Risk", summary["avg_risk_score"], "Control-room score")
 
-# -----------------------------
+
+# =========================================================
 # OEE STATUS
-# -----------------------------
+# =========================================================
 section_title("🏭 OEE Control Layer")
 
 o1, o2, o3, o4 = st.columns(4)
@@ -258,6 +312,7 @@ with o3:
 with o4:
     metric_card("Quality", f"{avg_quality:.1f}%", "Accepted output")
 
+
 fig_oee = go.Figure(go.Indicator(
     mode="gauge+number",
     value=avg_oee,
@@ -272,107 +327,128 @@ fig_oee = go.Figure(go.Indicator(
         ],
     }
 ))
+
 fig_oee.update_layout(
     paper_bgcolor="rgba(0,0,0,0)",
     font={"color": "#e5e7eb"},
     height=320,
 )
+
 st.plotly_chart(fig_oee, use_container_width=True)
 
-# -----------------------------
-# MES OPERATOR COMMAND PANEL
-# -----------------------------
+
+# =========================================================
+# OPERATOR PANEL
+# =========================================================
 section_title("👷 MES Operator Command Panel")
 
-left, right = st.columns([2, 1])
+html(f"""
+<div class="operator-panel">
 
-with left:
-    st.markdown(f"""
-    <div class="control-room-card">
-        <div class="small-label">Current MES Work Order</div>
-        <div class="big-status">{session['product']} — {session['phase']}</div>
-
-        <div class="info-row"><strong>Client:</strong> {session['client']}</div>
-        <div class="info-row"><strong>Destination:</strong> {session['destination']}</div>
-        <div class="info-row"><strong>Operator:</strong> {session['operator']} | <strong>Shift:</strong> {session['shift']} | <strong>Start:</strong> {session['start_time']}</div>
-        <div class="info-row"><strong>Status:</strong> {session['status']}</div>
-        <div class="info-row"><strong>Notes:</strong> {session['notes']}</div>
+    <div class="big-status">
+        {session['product']} — {session['phase']}
     </div>
-    """, unsafe_allow_html=True)
 
-with right:
-    metric_card("Produced", f"{session['produced_qty']:,}", "MES output")
-    metric_card("Remaining", f"{session['remaining']:,}", "Open quantity")
+    <div class="operator-grid">
+        <div class="operator-row"><strong>Operator:</strong> {session['operator']}</div>
+        <div class="operator-row"><strong>Shift:</strong> {session['shift']}</div>
+        <div class="operator-row"><strong>Line:</strong> {session['line']}</div>
+        <div class="operator-row"><strong>Status:</strong> {session['status']}</div>
+        <div class="operator-row"><strong>Client:</strong> {session['client']}</div>
+        <div class="operator-row"><strong>Destination:</strong> {session['destination']}</div>
+        <div class="operator-row"><strong>Product:</strong> {session['product']}</div>
+        <div class="operator-row"><strong>Phase:</strong> {session['phase']}</div>
+        <div class="operator-row"><strong>Start Time:</strong> {session['start_time']}</div>
+        <div class="operator-row"><strong>Notes:</strong> {session['notes']}</div>
+    </div>
+
+</div>
+""")
 
 st.progress(production_progress)
 
-# -----------------------------
+
+# =========================================================
 # MACHINE WALL
-# -----------------------------
+# =========================================================
 section_title("🖥️ Machine Wall — Live Industrial Assets")
 
 cols = st.columns(2)
 
 for i, row in machine_df.iterrows():
+
     status_class = "machine-running"
     dot_class = "dot-green"
 
     if row["risk_level"] == "High":
         status_class = "machine-critical"
         dot_class = "dot-red"
+
     elif row["risk_level"] == "Medium":
         status_class = "machine-warning"
         dot_class = "dot-yellow"
 
     with cols[i % 2]:
-        st.markdown(f"""
-        <div class="machine-tile {status_class}">
-            <div class="small-label">{row['line']} • {row['machine_type']}</div>
 
-            <div class="big-status">
-                <span class="status-dot {dot_class}"></span>
-                {row['machine']}
-            </div>
+        html(f"""
+<div class="machine-tile {status_class}">
 
-            <div class="info-row"><strong>Status:</strong> {row['status']} | <strong>Risk:</strong> {row['risk_level']} ({row['risk_score']}/100)</div>
-            <div class="info-row"><strong>Speed:</strong> {row['speed']} / {row['target_speed']} | <strong>Temp:</strong> {row['temperature']}°C</div>
-            <div class="info-row"><strong>Reject:</strong> {row['reject_rate']}% | <strong>Downtime:</strong> {row['downtime_minutes']} min | <strong>Vibration:</strong> {row['vibration']}</div>
-
-            <div class="info-row" style="margin-top:12px;"><strong>OEE:</strong> {row['oee']:.1f}% | <strong>Availability:</strong> {row['availability']:.1f}%</div>
-            <div class="info-row"><strong>Performance:</strong> {row['performance']:.1f}% | <strong>Quality:</strong> {row['quality']:.1f}%</div>
-
-            <div class="info-row" style="margin-top:12px;"><strong>Reason:</strong> {row['risk_reasons']}</div>
-            <div class="info-row"><strong>AI Action:</strong> {row['ai_recommendation']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-# -----------------------------
-# CONTROL ROOM ALERTS
-# -----------------------------
-section_title("🚨 Real-Time AI Alerts")
-
-if high_risk_df.empty:
-    st.markdown("""
-    <div class="control-room-card">
-        <div class="info-row">✅ No machines above the selected alert threshold.</div>
+    <div class="small-label">
+        {row['line']} • {row['machine_type']}
     </div>
-    """, unsafe_allow_html=True)
-else:
-    for _, row in high_risk_df.sort_values("risk_score", ascending=False).iterrows():
-        css_class = "machine-critical" if row["risk_level"] == "High" else "machine-warning"
 
-        st.markdown(f"""
-        <div class="machine-tile {css_class}">
-            <div class="big-status">{row['machine']} requires attention</div>
-            <div class="info-row"><strong>Risk Score:</strong> {row['risk_score']}/100</div>
-            <div class="info-row"><strong>Cause:</strong> {row['risk_reasons']}</div>
-            <div class="info-row"><strong>Recommended Action:</strong> {row['ai_recommendation']}</div>
-        </div>
-        """, unsafe_allow_html=True)
+    <div class="big-status">
+        <span class="status-dot {dot_class}"></span>
+        {row['machine']}
+    </div>
 
-# -----------------------------
-# ANALYTICS WALL
-# -----------------------------
+    <div class="info-row">
+        <strong>Status:</strong> {row['status']}
+    </div>
+
+    <div class="info-row">
+        <strong>Risk:</strong> {row['risk_level']} ({row['risk_score']}/100)
+    </div>
+
+    <div class="info-row">
+        <strong>Speed:</strong> {row['speed']} / {row['target_speed']}
+    </div>
+
+    <div class="info-row">
+        <strong>Temperature:</strong> {row['temperature']}°C
+    </div>
+
+    <div class="info-row">
+        <strong>Reject Rate:</strong> {row['reject_rate']}%
+    </div>
+
+    <div class="info-row">
+        <strong>Downtime:</strong> {row['downtime_minutes']} min
+    </div>
+
+    <div class="info-row">
+        <strong>Vibration:</strong> {row['vibration']}
+    </div>
+
+    <div class="info-row">
+        <strong>OEE:</strong> {row['oee']:.1f}%
+    </div>
+
+    <div class="info-row">
+        <strong>Reason:</strong> {row['risk_reasons']}
+    </div>
+
+    <div class="info-row">
+        <strong>AI Action:</strong> {row['ai_recommendation']}
+    </div>
+
+</div>
+""")
+
+
+# =========================================================
+# ANALYTICS
+# =========================================================
 section_title("📊 Control Room Analytics Wall")
 
 a1, a2 = st.columns(2)
@@ -385,33 +461,10 @@ with a1:
         color="risk_level",
         title="Machine Risk Ranking"
     )
+
     st.plotly_chart(style_plotly(fig), use_container_width=True)
 
 with a2:
-    fig = px.scatter(
-        machine_df,
-        x="temperature",
-        y="reject_rate",
-        size="risk_score",
-        color="risk_level",
-        hover_name="machine",
-        title="Temperature vs Reject Rate"
-    )
-    st.plotly_chart(style_plotly(fig), use_container_width=True)
-
-a3, a4 = st.columns(2)
-
-with a3:
-    fig = px.bar(
-        machine_df,
-        x="machine",
-        y=["speed", "target_speed"],
-        barmode="group",
-        title="Speed vs Target Speed"
-    )
-    st.plotly_chart(style_plotly(fig), use_container_width=True)
-
-with a4:
     fig = px.bar(
         machine_df,
         x="machine",
@@ -419,27 +472,41 @@ with a4:
         color="risk_level",
         title="OEE by Machine"
     )
+
     st.plotly_chart(style_plotly(fig), use_container_width=True)
 
-# -----------------------------
+
+# =========================================================
 # AI COMMAND CENTER
-# -----------------------------
+# =========================================================
 section_title("🤖 AI Command Center")
 
-st.markdown("""
+html("""
 <div class="ai-command-box">
-    <div class="info-row"><strong>Ask the control room AI:</strong></div>
-    <div class="info-row">Examples: Which machine should we check first? What is the biggest risk right now? Should production continue? What should the operator do next?</div>
+    <div class="info-row">
+        <strong>Ask the control room AI</strong>
+    </div>
+
+    <div class="info-row">
+        Examples:
+        Which machine should we check first?
+        What is the biggest risk right now?
+        Should production continue?
+    </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 question = st.text_input(
     "Ask AI Control Room",
-    placeholder="Example: Which machine should we check first?"
+    placeholder="Which machine should we check first?"
 )
 
 if question:
-    worst = machine_df.sort_values("risk_score", ascending=False).iloc[0]
+
+    worst = machine_df.sort_values(
+        "risk_score",
+        ascending=False
+    ).iloc[0]
 
     decision = (
         "Escalate immediately before continuing normal production."
@@ -447,32 +514,55 @@ if question:
         else "Continue monitoring while the operator reviews the issue."
     )
 
-    st.markdown(f"""
-    <div class="control-room-card">
-        <div class="small-label">AI Operator Answer</div>
-        <div class="big-status">{worst['machine']}</div>
+    html(f"""
+<div class="control-room-card">
 
-        <div class="info-row">
-            The first machine to check is <strong>{worst['machine']}</strong> because it currently has the highest
-            risk score: <strong>{worst['risk_score']}/100</strong>.
-        </div>
-
-        <div class="info-row"><strong>Main issue:</strong> {worst['risk_reasons']}</div>
-        <div class="info-row"><strong>Recommended action:</strong> {worst['ai_recommendation']}</div>
-        <div class="info-row"><strong>Production decision:</strong> {decision}</div>
+    <div class="small-label">
+        AI Operator Answer
     </div>
-    """, unsafe_allow_html=True)
 
-# -----------------------------
+    <div class="big-status">
+        {worst['machine']}
+    </div>
+
+    <div class="info-row">
+        The first machine to check is
+        <strong>{worst['machine']}</strong>
+        because it currently has the highest
+        risk score:
+        <strong>{worst['risk_score']}/100</strong>.
+    </div>
+
+    <div class="info-row">
+        <strong>Main issue:</strong>
+        {worst['risk_reasons']}
+    </div>
+
+    <div class="info-row">
+        <strong>Recommended action:</strong>
+        {worst['ai_recommendation']}
+    </div>
+
+    <div class="info-row">
+        <strong>Production decision:</strong>
+        {decision}
+    </div>
+
+</div>
+""")
+
+
+# =========================================================
 # RAW FEED
-# -----------------------------
+# =========================================================
 if show_raw:
     section_title("📋 Raw Machine Event Feed")
     st.dataframe(machine_df, use_container_width=True)
 
-# -----------------------------
+
+# =========================================================
 # DOWNLOAD
-# -----------------------------
+# =========================================================
 st.download_button(
     "Download Control Room Machine Feed",
     machine_df.to_csv(index=False),
@@ -481,9 +571,10 @@ st.download_button(
     use_container_width=True
 )
 
-# -----------------------------
+
+# =========================================================
 # LIVE REFRESH
-# -----------------------------
+# =========================================================
 if live_mode:
     time.sleep(refresh_seconds)
     st.rerun()
