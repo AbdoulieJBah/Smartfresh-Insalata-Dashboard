@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+
 from data_utils import generate_sample_data
 from database import init_db, authenticate_user
 
@@ -26,17 +27,21 @@ st.markdown("""
 section[data-testid="stSidebarNav"] { display: none; }
 
 .stApp {
-    background: radial-gradient(circle at top left, #123524 0%, #050807 35%, #020403 100%);
+    background:
+        radial-gradient(circle at top left, rgba(34,197,94,0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(59,130,246,0.10), transparent 25%),
+        linear-gradient(135deg, #020403 0%, #050807 45%, #07130c 100%);
     color: #e5e7eb;
 }
 
 .block-container {
     padding-top: 2rem;
     padding-bottom: 3rem;
+    max-width: 1400px;
 }
 
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #06120d 0%, #081b12 100%);
+    background: linear-gradient(180deg, #06120d 0%, #081b12 65%, #020403 100%);
     border-right: 1px solid rgba(34,197,94,0.25);
 }
 
@@ -101,20 +106,35 @@ section[data-testid="stSidebarNav"] { display: none; }
 }
 
 .hero-card {
-    padding: 42px;
-    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+    padding: 48px;
+    border-radius: 32px;
     background:
-        linear-gradient(135deg, rgba(15,23,42,0.96), rgba(6,78,59,0.78)),
-        radial-gradient(circle at top right, rgba(34,197,94,0.25), transparent 35%);
-    border: 1px solid rgba(34,197,94,0.42);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+        linear-gradient(135deg, rgba(15,23,42,0.98), rgba(6,78,59,0.82)),
+        radial-gradient(circle at top right, rgba(34,197,94,0.32), transparent 38%);
+    border: 1px solid rgba(34,197,94,0.45);
+    box-shadow: 0 26px 70px rgba(0,0,0,0.48);
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(34,197,94,0.16);
+    color: #86efac;
+    border: 1px solid rgba(34,197,94,0.35);
+    font-weight: 850;
+    font-size: 0.78rem;
+    margin-bottom: 14px;
 }
 
 .hero-title {
-    font-size: 48px;
+    font-size: 52px;
     font-weight: 950;
     color: #ffffff;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
 }
 
 .hero-title span {
@@ -122,38 +142,89 @@ section[data-testid="stSidebarNav"] { display: none; }
 }
 
 .hero-subtitle {
-    max-width: 980px;
+    max-width: 1050px;
     font-size: 18px;
     color: #d1d5db;
     line-height: 1.75;
-    margin-top: 14px;
+    margin-top: 16px;
+}
+
+.section-title {
+    font-size: 1.35rem;
+    font-weight: 950;
+    color: #ffffff;
+    margin: 2rem 0 1rem 0;
 }
 
 .premium-card {
-    padding: 22px;
-    border-radius: 18px;
+    padding: 24px;
+    border-radius: 20px;
     background: rgba(15,23,42,0.86);
     border: 1px solid rgba(34,197,94,0.25);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.28);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.30);
+    min-height: 150px;
+}
+
+.premium-card:hover {
+    border-color: rgba(34,197,94,0.55);
+    box-shadow: 0 0 26px rgba(34,197,94,0.12);
 }
 
 .card-label {
     color: #9ca3af;
-    font-size: 0.9rem;
-    font-weight: 650;
+    font-size: 0.82rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
 .card-value {
     color: #ffffff;
-    font-size: 2rem;
-    font-weight: 850;
-    margin-top: 8px;
+    font-size: 1.75rem;
+    font-weight: 900;
+    margin-top: 10px;
 }
 
 .card-delta {
     color: #86efac;
-    font-size: 0.85rem;
-    margin-top: 6px;
+    font-size: 0.86rem;
+    margin-top: 8px;
+    line-height: 1.55;
+}
+
+.module-card {
+    padding: 22px;
+    border-radius: 20px;
+    background: rgba(15,23,42,0.84);
+    border: 1px solid rgba(34,197,94,0.22);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.30);
+    min-height: 180px;
+    margin-bottom: 14px;
+}
+
+.module-title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.module-text {
+    color: #d1d5db;
+    font-size: 0.92rem;
+    line-height: 1.65;
+}
+
+.stack-pill {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(34,197,94,0.13);
+    color: #bbf7d0;
+    border: 1px solid rgba(34,197,94,0.28);
+    margin: 5px 4px;
+    font-weight: 750;
+    font-size: 0.82rem;
 }
 
 .login-card {
@@ -187,14 +258,6 @@ h1, h2, h3 {
     color: #ffffff !important;
 }
 
-div[data-testid="stMetric"] {
-    background: rgba(15,23,42,0.85);
-    border: 1px solid rgba(34,197,94,0.22);
-    padding: 18px;
-    border-radius: 16px;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.25);
-}
-
 .stButton > button {
     border-radius: 12px;
     border: 1px solid rgba(34,197,94,0.5);
@@ -226,6 +289,23 @@ def premium_metric(label, value, delta=""):
     </div>
     """, unsafe_allow_html=True)
 
+
+def section_title(title):
+    st.markdown(f'<div class="section-title">{title}</div>', unsafe_allow_html=True)
+
+
+def module_card(title, text):
+    st.markdown(f"""
+    <div class="module-card">
+        <div class="module-title">{title}</div>
+        <div class="module-text">{text}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def stack_pills(items):
+    html = "".join([f'<span class="stack-pill">{item}</span>' for item in items])
+    st.markdown(html, unsafe_allow_html=True)
 
 # -----------------------------
 # SESSION DEFAULTS
@@ -361,12 +441,13 @@ if user_role in ["Admin", "Manager", "Operations", "Quality", "Logistics"]:
 # -----------------------------
 st.markdown("""
 <div class="hero-card">
+    <div class="hero-badge">AI-Powered Industry 4.0 Platform</div>
     <div class="hero-title">🥬 SmartFresh <span>AI</span></div>
     <div class="hero-subtitle">
-        AI-powered Industry 4.0 operations intelligence platform combining business intelligence,
-        ERP/MES-inspired workflows, machine digital twin simulation, ML-driven risk prediction,
-        autonomous AI agents, FastAPI backend scoring, Slack/email notifications, and real-time
-        production control-room intelligence.
+        A full-stack operations intelligence platform for fresh-produce manufacturing.
+        SmartFresh AI combines Business Intelligence, ERP/MES-inspired production planning,
+        machine digital twin simulation, ML-driven risk prediction, autonomous AI agents,
+        FastAPI backend scoring, Slack/email notifications, and real-time AI control-room monitoring.
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -376,7 +457,7 @@ st.markdown("---")
 # -----------------------------
 # USER ACCESS SUMMARY
 # -----------------------------
-st.subheader("👤 User Workspace")
+section_title("👤 User Workspace")
 
 u1, u2, u3 = st.columns(3)
 
@@ -390,17 +471,16 @@ with u3:
     premium_metric("Account Status", current_user["status"], "Active workspace")
 
 st.info(
-    "Use the sidebar to access the modules available for your role. "
-    "SmartFresh AI supports business intelligence, operations control, ERP planning, "
-    "AI copilot assistance, machine digital twin simulation, AI control-room monitoring, "
-    "autonomous agent monitoring, and task tracking."
+    "Use the sidebar to access modules available for your role. The system supports BI, ERP planning, "
+    "MES-style operator workflow, Digital Twin simulation, AI Copilot assistance, autonomous agent monitoring, "
+    "FastAPI backend risk scoring, and action tracking."
 )
 
 # -----------------------------
 # DATA LAYER
 # -----------------------------
 st.markdown("---")
-st.subheader("📁 Data Layer")
+section_title("📁 Data Layer")
 
 uploaded_file = st.file_uploader(
     "Upload dataset",
@@ -427,48 +507,193 @@ elif "smartfresh_df" not in st.session_state:
 # PLATFORM OVERVIEW
 # -----------------------------
 st.markdown("---")
-st.subheader("🚀 Platform Overview")
+section_title("🚀 Platform Overview")
 
 st.markdown("""
 <div class="premium-card">
-<b>SmartFresh AI</b> is a full-stack AI operations intelligence system inspired by real fresh-produce
-production workflows, ERP/MES environments, and shop-floor machine data.
+<b>SmartFresh AI</b> is not just a dashboard. It is an AI-driven manufacturing intelligence system
+inspired by real fresh-produce operations, ERP/MES environments, machine operator dashboards,
+and Industry 4.0 control-room workflows.
 <br><br>
 It monitors production, inventory, quality, logistics, revenue performance, machine health,
-operator workflows, and simulated real-time factory signals.
-<br><br>
-The platform detects operational risks using rules and Machine Learning, predicts batch-level
-and machine-level risk, converts insights into trackable actions, sends Slack/email alerts,
-and simulates Kafka-style live event streaming for real-time monitoring.
+operator activity, and simulated real-time factory signals. It detects risks using rules and
+machine learning, converts alerts into actions, supports AI decision-making, and gives leadership
+a complete view of operational health.
 <br><br>
 <span style="color:#86efac;font-weight:800;">
-This transforms dashboards into an AI-driven Industry 4.0 decision system.
+This transforms raw operational data into autonomous business and factory decisions.
 </span>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown("")
-
 f1, f2, f3, f4 = st.columns(4)
 
 with f1:
-    premium_metric("AI Decisions", "ML + Agents", "Risk prediction & actions")
+    premium_metric("AI Decisions", "ML + Agents", "Predict risks and recommend actions")
 
 with f2:
-    premium_metric("Industry 4.0", "MES + Machines", "Digital twin simulation")
+    premium_metric("Industry 4.0", "MES + Machines", "Digital twin and control-room logic")
 
 with f3:
-    premium_metric("Automation", "Slack + Email", "Critical alerts")
+    premium_metric("Automation", "Alerts + Tasks", "Slack/email and action tracking")
 
 with f4:
-    premium_metric("Architecture", "Streamlit + FastAPI", "Production-ready layers")
+    premium_metric("Architecture", "Streamlit + FastAPI", "Frontend, API, ML and database layers")
+
+# -----------------------------
+# ARCHITECTURE
+# -----------------------------
+section_title("🏗️ System Architecture")
+
+a1, a2, a3 = st.columns(3)
+
+with a1:
+    module_card(
+        "📊 Intelligence Layer",
+        "Executive dashboards, BI analytics, revenue trends, supplier performance, quality monitoring, and role-based insights."
+    )
+
+with a2:
+    module_card(
+        "🏭 ERP/MES Layer",
+        "Production planning, shift optimization, machine allocation, work order logic, operator workflow, and packaging calculations."
+    )
+
+with a3:
+    module_card(
+        "🧠 AI Agent Layer",
+        "Autonomous production agent, multi-agent planning, AI recommendations, critical risk escalation, and decision summaries."
+    )
+
+a4, a5, a6 = st.columns(3)
+
+with a4:
+    module_card(
+        "⚙️ Machine Layer",
+        "Digital twin simulation, live machine signals, risk score, OEE, speed, downtime, vibration, reject rate, and alarms."
+    )
+
+with a5:
+    module_card(
+        "🌐 Backend API Layer",
+        "FastAPI backend risk scoring, alert retrieval, action updates, stream event feed, and service health endpoints."
+    )
+
+with a6:
+    module_card(
+        "📡 Streaming Layer",
+        "Kafka-style simulated production events for temperature, logistics, inventory, quality, and live operational monitoring."
+    )
+
+# -----------------------------
+# AI AGENTS
+# -----------------------------
+section_title("🤖 AI Agent Capabilities")
+
+g1, g2, g3, g4 = st.columns(4)
+
+with g1:
+    module_card(
+        "BI Agent",
+        "Explains revenue, client contribution, product trends, and business performance."
+    )
+
+with g2:
+    module_card(
+        "Operations Agent",
+        "Detects production, waste, cold-chain, delivery, and inventory risks."
+    )
+
+with g3:
+    module_card(
+        "Quality Agent",
+        "Flags defects, supplier quality issues, temperature breaches, and high-waste products."
+    )
+
+with g4:
+    module_card(
+        "Executive Agent",
+        "Summarizes strategic risk and recommends escalation priorities for management."
+    )
+
+# -----------------------------
+# INDUSTRY 4.0 FEATURES
+# -----------------------------
+section_title("🏭 Industry 4.0 Features")
+
+i1, i2, i3 = st.columns(3)
+
+with i1:
+    premium_metric("OEE Monitoring", "Availability + Performance + Quality", "Manufacturing performance intelligence")
+
+with i2:
+    premium_metric("Digital Twin", "Simulated Factory Assets", "Machine risk and operator workflow simulation")
+
+with i3:
+    premium_metric("AI Control Room", "Real-Time Decisions", "Machine wall, risk alerts, and escalation banners")
+
+# -----------------------------
+# TECH STACK
+# -----------------------------
+section_title("🧰 Technology Stack")
+
+stack_pills([
+    "Python",
+    "Streamlit",
+    "Pandas",
+    "NumPy",
+    "Plotly",
+    "Scikit-learn",
+    "XGBoost",
+    "FastAPI",
+    "Uvicorn",
+    "Pydantic",
+    "SQLite",
+    "Requests",
+    "Google Generative AI",
+    "Machine Learning",
+    "Digital Twin Simulation",
+    "ERP/MES Logic",
+    "Industry 4.0",
+])
+
+# -----------------------------
+# VALUE PROPOSITION
+# -----------------------------
+section_title("🎯 Project Value Proposition")
+
+v1, v2 = st.columns(2)
+
+with v1:
+    st.markdown("""
+    <div class="premium-card">
+    <b style="color:#ffffff;font-size:1.15rem;">For Manufacturing Operations</b>
+    <br><br>
+    SmartFresh AI helps operations teams monitor production, inventory, expiry risk,
+    machine health, delivery delays, and quality issues from one unified control system.
+    <br><br>
+    It supports faster decisions, earlier risk detection, and better operational coordination.
+    </div>
+    """, unsafe_allow_html=True)
+
+with v2:
+    st.markdown("""
+    <div class="premium-card">
+    <b style="color:#ffffff;font-size:1.15rem;">For AI / Data Portfolio</b>
+    <br><br>
+    This project demonstrates full-stack AI product development: analytics, machine learning,
+    backend API design, database integration, role-based access, AI agents, and Industry 4.0 simulation.
+    <br><br>
+    It is positioned for AI Engineer, Data Scientist, BI Developer, and Digital Transformation roles.
+    </div>
+    """, unsafe_allow_html=True)
 
 # -----------------------------
 # FOOTER
 # -----------------------------
 st.markdown("---")
 st.markdown("### 🥬 SmartFresh AI • Built by Abdoulie J Bah")
-st.caption("AI Engineer • Data Scientist • Business Intelligence Developer")
+st.caption("AI Engineer • Data Scientist • Business Intelligence Developer • Industry 4.0 AI Systems")
 
 c1, c2, c3 = st.columns([1, 2, 1])
 
