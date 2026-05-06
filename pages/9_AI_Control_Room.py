@@ -1,9 +1,12 @@
 import time
+from datetime import datetime
+
 import streamlit as st
 import plotly.express as px
+import plotly.graph_objects as go
 
 from auth_utils import require_role
-from utils import setup_page, premium_hero, metric_card, insight_card, section_title, style_plotly
+from utils import setup_page, premium_hero, metric_card, section_title, style_plotly
 from machine_simulator import (
     generate_operator_session,
     generate_industry_40_events,
@@ -15,13 +18,8 @@ require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 setup_page("AI Control Room", icon="🧠")
 
-premium_hero(
-    "🧠 AI Control Room",
-    "Real-time Industry 4.0 command center for MES workflow, machine health, anomaly detection, and AI decision support."
-)
-
 # -----------------------------
-# CONTROL ROOM CSS
+# PAGE CSS
 # -----------------------------
 st.markdown("""
 <style>
@@ -32,27 +30,22 @@ st.markdown("""
     padding: 18px;
     box-shadow: 0 18px 45px rgba(0,0,0,0.35);
     margin-bottom: 14px;
+    color: #e5e7eb;
 }
 
 .machine-tile {
     background: rgba(15,23,42,0.85);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 18px;
     border: 1px solid rgba(34,197,94,0.25);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+    box-shadow: 0 14px 34px rgba(0,0,0,0.28);
+    color: #e5e7eb;
 }
 
-.machine-running {
-    border-left: 5px solid #22c55e;
-}
-
-.machine-warning {
-    border-left: 5px solid #f59e0b;
-}
-
-.machine-critical {
-    border-left: 5px solid #ef4444;
-}
+.machine-running { border-left: 5px solid #22c55e; }
+.machine-warning { border-left: 5px solid #f59e0b; }
+.machine-critical { border-left: 5px solid #ef4444; }
 
 .big-status {
     font-size: 1.45rem;
@@ -67,14 +60,65 @@ st.markdown("""
     text-transform: uppercase;
 }
 
+.status-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse 1.5s infinite;
+}
+
+.dot-green { background:#22c55e; box-shadow:0 0 12px #22c55e; }
+.dot-yellow { background:#f59e0b; box-shadow:0 0 12px #f59e0b; }
+.dot-red { background:#ef4444; box-shadow:0 0 12px #ef4444; }
+
+@keyframes pulse {
+    0% { opacity: 0.45; transform: scale(0.95); }
+    50% { opacity: 1; transform: scale(1.15); }
+    100% { opacity: 0.45; transform: scale(0.95); }
+}
+
 .ai-command-box {
     background: linear-gradient(135deg, rgba(34,197,94,0.14), rgba(15,23,42,0.86));
     border: 1px solid rgba(34,197,94,0.35);
     border-radius: 20px;
     padding: 18px;
+    color: #e5e7eb;
+    margin-bottom: 18px;
+}
+
+.escalation-banner {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(239,68,68,0.20), rgba(15,23,42,0.92));
+    border: 1px solid rgba(239,68,68,0.50);
+    box-shadow: 0 16px 40px rgba(239,68,68,0.16);
+    margin-bottom: 18px;
+    color: #f8fafc;
+}
+
+.warning-banner {
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(245,158,11,0.16), rgba(15,23,42,0.90));
+    border: 1px solid rgba(245,158,11,0.42);
+    margin-bottom: 14px;
+    color: #f8fafc;
 }
 </style>
 """, unsafe_allow_html=True)
+
+# -----------------------------
+# HEADER
+# -----------------------------
+premium_hero(
+    "🧠 AI Control Room",
+    "Real-time Industry 4.0 command center for MES workflow, machine health, anomaly detection, OEE monitoring, and AI decision support.",
+    badge="Industry 4.0 Command Center"
+)
+
+st.caption(f"Last refresh: {datetime.now().strftime('%H:%M:%S')}")
 
 # -----------------------------
 # CONTROLS
@@ -108,10 +152,52 @@ machine_df["ai_recommendation"] = machine_df.apply(
 
 summary = generate_control_room_summary(machine_df, session)
 
+# -----------------------------
+# OEE LAYER
+# -----------------------------
+machine_df["availability"] = (100 - machine_df["downtime_minutes"].clip(0, 100)).clip(0, 100)
+machine_df["performance"] = ((machine_df["speed"] / machine_df["target_speed"]) * 100).clip(0, 120)
+machine_df["quality"] = (100 - machine_df["reject_rate"]).clip(0, 100)
+machine_df["oee"] = (
+    machine_df["availability"] *
+    machine_df["performance"] *
+    machine_df["quality"]
+) / 10000
+
+avg_oee = machine_df["oee"].mean()
+avg_availability = machine_df["availability"].mean()
+avg_performance = machine_df["performance"].mean()
+avg_quality = machine_df["quality"].mean()
+
 high_risk_df = machine_df[machine_df["risk_score"] >= alert_threshold]
 critical_df = machine_df[machine_df["risk_level"] == "High"]
 
 production_progress = session["produced_qty"] / session["ordered_qty"]
+
+# -----------------------------
+# AI ESCALATION BANNER
+# -----------------------------
+if not critical_df.empty:
+    worst = critical_df.sort_values("risk_score", ascending=False).iloc[0]
+
+    st.markdown(f"""
+    <div class="escalation-banner">
+        🚨 <b>AI ESCALATION:</b> Critical machine risk detected on <b>{worst['machine']}</b> — {worst['line']}<br>
+        <b>Risk Score:</b> {worst['risk_score']}/100<br>
+        <b>Main Cause:</b> {worst['risk_reasons']}<br>
+        <b>AI Action:</b> {worst['ai_recommendation']}
+    </div>
+    """, unsafe_allow_html=True)
+elif not high_risk_df.empty:
+    worst = high_risk_df.sort_values("risk_score", ascending=False).iloc[0]
+
+    st.markdown(f"""
+    <div class="warning-banner">
+        ⚠️ <b>AI WARNING:</b> Machine risk above threshold on <b>{worst['machine']}</b><br>
+        <b>Risk Score:</b> {worst['risk_score']}/100<br>
+        <b>Recommended Action:</b> {worst['ai_recommendation']}
+    </div>
+    """, unsafe_allow_html=True)
 
 # -----------------------------
 # TOP STATUS BAR
@@ -137,6 +223,48 @@ with k5:
 
 with k6:
     metric_card("Avg Risk", summary["avg_risk_score"], "Control-room score")
+
+# -----------------------------
+# OEE STATUS
+# -----------------------------
+section_title("🏭 OEE Control Layer")
+
+o1, o2, o3, o4 = st.columns(4)
+
+with o1:
+    metric_card("OEE", f"{avg_oee:.1f}%", "Overall effectiveness")
+
+with o2:
+    metric_card("Availability", f"{avg_availability:.1f}%", "Downtime impact")
+
+with o3:
+    metric_card("Performance", f"{avg_performance:.1f}%", "Speed vs target")
+
+with o4:
+    metric_card("Quality", f"{avg_quality:.1f}%", "Accepted output")
+
+fig_oee = go.Figure(go.Indicator(
+    mode="gauge+number",
+    value=avg_oee,
+    title={"text": "Control Room OEE %"},
+    gauge={
+        "axis": {"range": [0, 100]},
+        "bar": {"color": "#22c55e"},
+        "steps": [
+            {"range": [0, 50], "color": "rgba(239,68,68,0.25)"},
+            {"range": [50, 75], "color": "rgba(245,158,11,0.25)"},
+            {"range": [75, 100], "color": "rgba(34,197,94,0.25)"},
+        ],
+    }
+))
+
+fig_oee.update_layout(
+    paper_bgcolor="rgba(0,0,0,0)",
+    font={"color": "#e5e7eb"},
+    height=320,
+)
+
+st.plotly_chart(fig_oee, use_container_width=True)
 
 # -----------------------------
 # MES OPERATOR COMMAND PANEL
@@ -176,26 +304,39 @@ cols = st.columns(2)
 
 for i, row in machine_df.iterrows():
     status_class = "machine-running"
+    dot_class = "dot-green"
 
     if row["risk_level"] == "High":
         status_class = "machine-critical"
+        dot_class = "dot-red"
     elif row["risk_level"] == "Medium":
         status_class = "machine-warning"
+        dot_class = "dot-yellow"
 
     with cols[i % 2]:
         st.markdown(f"""
         <div class="machine-tile {status_class}">
             <div class="small-label">{row['line']} • {row['machine_type']}</div>
-            <div class="big-status">{row['machine']}</div>
+            <div class="big-status">
+                <span class="status-dot {dot_class}"></span>
+                {row['machine']}
+            </div>
             <br>
             <b>Status:</b> {row['status']} |
             <b>Risk:</b> {row['risk_level']} ({row['risk_score']}/100)<br>
-            <b>Speed:</b> {row['speed']} |
-            <b>Target:</b> {row['target_speed']} |
+
+            <b>Speed:</b> {row['speed']} / {row['target_speed']} |
             <b>Temp:</b> {row['temperature']}°C<br>
+
             <b>Reject:</b> {row['reject_rate']}% |
             <b>Downtime:</b> {row['downtime_minutes']} min |
-            <b>Vibration:</b> {row['vibration']}<br><br>
+            <b>Vibration:</b> {row['vibration']}<br>
+
+            <b>OEE:</b> {row['oee']:.1f}% |
+            <b>Availability:</b> {row['availability']:.1f}% |
+            <b>Performance:</b> {row['performance']:.1f}% |
+            <b>Quality:</b> {row['quality']:.1f}%<br><br>
+
             <b>Reason:</b> {row['risk_reasons']}<br>
             <b>AI Action:</b> {row['ai_recommendation']}
         </div>
@@ -207,20 +348,23 @@ for i, row in machine_df.iterrows():
 section_title("🚨 Real-Time AI Alerts")
 
 if high_risk_df.empty:
-    insight_card("✅ No machines above the selected alert threshold.", level="good")
+    st.markdown("""
+    <div class="control-room-card">
+        ✅ No machines above the selected alert threshold.
+    </div>
+    """, unsafe_allow_html=True)
 else:
     for _, row in high_risk_df.sort_values("risk_score", ascending=False).iterrows():
-        level = "critical" if row["risk_level"] == "High" else "risk"
+        css_class = "machine-critical" if row["risk_level"] == "High" else "machine-warning"
 
-        insight_card(
-            f"""
+        st.markdown(f"""
+        <div class="machine-tile {css_class}">
             <b>{row['machine']}</b> requires attention.<br>
             <b>Risk Score:</b> {row['risk_score']}/100<br>
             <b>Cause:</b> {row['risk_reasons']}<br>
             <b>Recommended Action:</b> {row['ai_recommendation']}
-            """,
-            level=level
-        )
+        </div>
+        """, unsafe_allow_html=True)
 
 # -----------------------------
 # ANALYTICS WALL
@@ -257,9 +401,9 @@ with a3:
     fig = px.bar(
         machine_df,
         x="machine",
-        y=["speed", "downtime_minutes"],
+        y=["speed", "target_speed"],
         barmode="group",
-        title="Speed vs Downtime"
+        title="Speed vs Target Speed"
     )
     st.plotly_chart(style_plotly(fig), use_container_width=True)
 
@@ -267,9 +411,9 @@ with a4:
     fig = px.bar(
         machine_df,
         x="machine",
-        y="vibration",
+        y="oee",
         color="risk_level",
-        title="Vibration Signal by Machine"
+        title="OEE by Machine"
     )
     st.plotly_chart(style_plotly(fig), use_container_width=True)
 
