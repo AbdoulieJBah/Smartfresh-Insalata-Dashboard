@@ -1,5 +1,6 @@
 import time
 from datetime import datetime
+from textwrap import dedent
 
 import streamlit as st
 import plotly.express as px
@@ -19,10 +20,18 @@ require_role(["Admin", "Manager", "Operations", "Quality", "Logistics"])
 
 setup_page("Machine Digital Twin", icon="🏭")
 
+
+# -----------------------------
+# HTML HELPER
+# -----------------------------
+def html(content):
+    st.markdown(dedent(content).strip(), unsafe_allow_html=True)
+
+
 # -----------------------------
 # PAGE CSS
 # -----------------------------
-st.markdown("""
+html("""
 <style>
 .status-dot {
     height: 12px;
@@ -126,7 +135,8 @@ st.markdown("""
     color: #ffffff;
 }
 </style>
-""", unsafe_allow_html=True)
+""")
+
 
 # -----------------------------
 # HEADER
@@ -138,6 +148,7 @@ premium_hero(
 )
 
 st.caption(f"Last refresh: {datetime.now().strftime('%H:%M:%S')}")
+
 
 # -----------------------------
 # CONTROLS
@@ -155,6 +166,7 @@ with c2:
 with c3:
     history_cycles = st.slider("History cycles", 10, 100, 40)
 
+
 # -----------------------------
 # DATA
 # -----------------------------
@@ -163,12 +175,14 @@ machine_df = generate_machine_snapshot()
 history_df = generate_machine_history(cycles=history_cycles)
 summary = summarize_machine_health(machine_df)
 
+
 # -----------------------------
 # OEE CALCULATION
 # -----------------------------
 machine_df["availability"] = (100 - machine_df["downtime_minutes"].clip(0, 100)).clip(0, 100)
 machine_df["performance"] = ((machine_df["speed"] / machine_df["target_speed"]) * 100).clip(0, 120)
 machine_df["quality"] = (100 - machine_df["reject_rate"]).clip(0, 100)
+
 machine_df["oee"] = (
     machine_df["availability"] *
     machine_df["performance"] *
@@ -180,6 +194,7 @@ avg_availability = machine_df["availability"].mean()
 avg_performance = machine_df["performance"].mean()
 avg_quality = machine_df["quality"].mean()
 
+
 # -----------------------------
 # AI ESCALATION
 # -----------------------------
@@ -187,14 +202,15 @@ critical_df = machine_df[machine_df["risk_level"] == "High"]
 
 if not critical_df.empty:
     worst = critical_df.sort_values("risk_score", ascending=False).iloc[0]
-    st.markdown(f"""
-    <div class="escalation-banner">
-        🚨 <strong>AI ESCALATION:</strong> {worst['machine_name']} on {worst['line']} requires immediate attention.
-        <div class="machine-row"><strong>Risk Score:</strong> {worst['risk_score']}/100</div>
-        <div class="machine-row"><strong>Reason:</strong> {worst['risk_reasons']}</div>
-        <div class="machine-row"><strong>Recommended Action:</strong> {generate_ai_operator_recommendation(worst)}</div>
-    </div>
-    """, unsafe_allow_html=True)
+    html(f"""
+<div class="escalation-banner">
+    🚨 <strong>AI ESCALATION:</strong> {worst['machine_name']} on {worst['line']} requires immediate attention.
+    <div class="machine-row"><strong>Risk Score:</strong> {worst['risk_score']}/100</div>
+    <div class="machine-row"><strong>Reason:</strong> {worst['risk_reasons']}</div>
+    <div class="machine-row"><strong>Recommended Action:</strong> {generate_ai_operator_recommendation(worst)}</div>
+</div>
+""")
+
 
 # -----------------------------
 # MES OPERATOR PANEL
@@ -203,7 +219,7 @@ section_title("👷 MES Operator Panel")
 
 progress = session["produced_qty"] / session["ordered_qty"]
 
-st.markdown(f"""
+html(f"""
 <div class="operator-panel">
     <div class="machine-title">Work Order: {session['work_order']}</div>
 
@@ -220,7 +236,7 @@ st.markdown(f"""
         <div class="operator-row"><strong>Notes:</strong> {session['notes']}</div>
     </div>
 </div>
-""", unsafe_allow_html=True)
+""")
 
 q1, q2, q3, q4 = st.columns(4)
 
@@ -237,6 +253,7 @@ with q4:
     metric_card("Remaining", f"{session['remaining']:,}", "Open quantity")
 
 st.progress(progress)
+
 
 # -----------------------------
 # MACHINE HEALTH
@@ -262,6 +279,7 @@ with k5:
 
 with k6:
     metric_card("Avg Risk", summary["avg_risk_score"], "Risk score")
+
 
 # -----------------------------
 # OEE METRICS
@@ -296,12 +314,15 @@ fig_oee = go.Figure(go.Indicator(
         ],
     }
 ))
+
 fig_oee.update_layout(
     paper_bgcolor="rgba(0,0,0,0)",
     font={"color": "#e5e7eb"},
     height=320,
 )
+
 st.plotly_chart(fig_oee, use_container_width=True)
+
 
 # -----------------------------
 # LIVE MACHINE STATUS
@@ -321,43 +342,44 @@ for _, row in machine_df.iterrows():
 
     recommendation = generate_ai_operator_recommendation(row)
 
-    st.markdown(f"""
-    <div class="machine-card {card_class}">
-        <div class="machine-title">
-            <span class="status-dot {dot_class}"></span>
-            {row['machine_name']} — {row['line']}
-        </div>
-
-        <div class="machine-small">{row['machine_type']} • {row['product']}</div>
-
-        <div class="machine-row">
-            <strong>Status:</strong> {row['status']} |
-            <strong>Risk:</strong> {row['risk_level']} ({row['risk_score']}/100) |
-            <strong>Alarm:</strong> {row['alarm']}
-        </div>
-
-        <div class="machine-row">
-            <strong>Speed:</strong> {row['speed']} / {row['target_speed']} |
-            <strong>Temperature:</strong> {row['temperature']}°C |
-            <strong>Reject Rate:</strong> {row['reject_rate']}%
-        </div>
-
-        <div class="machine-row">
-            <strong>OEE:</strong> {row['oee']:.1f}% |
-            <strong>Availability:</strong> {row['availability']:.1f}% |
-            <strong>Performance:</strong> {row['performance']:.1f}% |
-            <strong>Quality:</strong> {row['quality']:.1f}%
-        </div>
-
-        <div class="machine-row" style="margin-top:14px;">
-            <strong>Reason:</strong> {row['risk_reasons']}
-        </div>
-
-        <div class="machine-row">
-            <strong>AI Recommendation:</strong> {recommendation}
-        </div>
+    html(f"""
+<div class="machine-card {card_class}">
+    <div class="machine-title">
+        <span class="status-dot {dot_class}"></span>
+        {row['machine_name']} — {row['line']}
     </div>
-    """, unsafe_allow_html=True)
+
+    <div class="machine-small">{row['machine_type']} • {row['product']}</div>
+
+    <div class="machine-row">
+        <strong>Status:</strong> {row['status']} |
+        <strong>Risk:</strong> {row['risk_level']} ({row['risk_score']}/100) |
+        <strong>Alarm:</strong> {row['alarm']}
+    </div>
+
+    <div class="machine-row">
+        <strong>Speed:</strong> {row['speed']} / {row['target_speed']} |
+        <strong>Temperature:</strong> {row['temperature']}°C |
+        <strong>Reject Rate:</strong> {row['reject_rate']}%
+    </div>
+
+    <div class="machine-row">
+        <strong>OEE:</strong> {row['oee']:.1f}% |
+        <strong>Availability:</strong> {row['availability']:.1f}% |
+        <strong>Performance:</strong> {row['performance']:.1f}% |
+        <strong>Quality:</strong> {row['quality']:.1f}%
+    </div>
+
+    <div class="machine-row" style="margin-top:14px;">
+        <strong>Reason:</strong> {row['risk_reasons']}
+    </div>
+
+    <div class="machine-row">
+        <strong>AI Recommendation:</strong> {recommendation}
+    </div>
+</div>
+""")
+
 
 # -----------------------------
 # MACHINE DATA FEED
@@ -392,6 +414,7 @@ display_cols = [
 ]
 
 st.dataframe(machine_df[display_cols], use_container_width=True)
+
 
 # -----------------------------
 # CHARTS
@@ -442,6 +465,7 @@ with chart4:
     )
     st.plotly_chart(style_plotly(fig_weight), use_container_width=True)
 
+
 # -----------------------------
 # HISTORY ANALYTICS
 # -----------------------------
@@ -454,6 +478,7 @@ fig_history = px.line(
     color="machine_name",
     title="Machine Risk Trend Over Simulated Time"
 )
+
 st.plotly_chart(style_plotly(fig_history), use_container_width=True)
 
 fig_temp = px.line(
@@ -463,7 +488,9 @@ fig_temp = px.line(
     color="machine_name",
     title="Temperature Trend by Machine"
 )
+
 st.plotly_chart(style_plotly(fig_temp), use_container_width=True)
+
 
 # -----------------------------
 # AI RECOMMENDATIONS
@@ -473,20 +500,21 @@ section_title("🤖 AI Machine Recommendations")
 high_risk_df = machine_df[machine_df["risk_level"].isin(["High", "Medium"])]
 
 if high_risk_df.empty:
-    st.markdown("""
-    <div class="machine-card machine-good">
-        <div class="machine-row">✅ All machines are operating within acceptable simulated limits.</div>
-    </div>
-    """, unsafe_allow_html=True)
+    html("""
+<div class="machine-card machine-good">
+    <div class="machine-row">✅ All machines are operating within acceptable simulated limits.</div>
+</div>
+""")
 else:
     for _, row in high_risk_df.iterrows():
-        st.markdown(f"""
-        <div class="machine-card machine-risk">
-            <div class="machine-title">{row['machine_name']}</div>
-            <div class="machine-row">⚠️ <strong>Risk detected:</strong> {row['risk_reasons']}</div>
-            <div class="machine-row">✅ <strong>Recommended action:</strong> {generate_ai_operator_recommendation(row)}</div>
-        </div>
-        """, unsafe_allow_html=True)
+        html(f"""
+<div class="machine-card machine-risk">
+    <div class="machine-title">{row['machine_name']}</div>
+    <div class="machine-row">⚠️ <strong>Risk detected:</strong> {row['risk_reasons']}</div>
+    <div class="machine-row">✅ <strong>Recommended action:</strong> {generate_ai_operator_recommendation(row)}</div>
+</div>
+""")
+
 
 # -----------------------------
 # DOWNLOAD
@@ -498,6 +526,7 @@ st.download_button(
     "text/csv",
     use_container_width=True
 )
+
 
 # -----------------------------
 # LIVE REFRESH
