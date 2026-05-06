@@ -77,19 +77,41 @@ def setup_page(title, icon="🥬"):
 # =========================================================
 # HERO
 # =========================================================
-def premium_hero(title, subtitle):
+def premium_hero(title, subtitle, badge="AI Operations Intelligence"):
     st.markdown(f"""
     <div style="
-        padding:30px;
-        border-radius:25px;
-        background: linear-gradient(135deg,#0f172a,#065f46);
-        margin-bottom:20px;
+        position: relative;
+        overflow: hidden;
+        padding: 34px 38px;
+        border-radius: 28px;
+        background:
+            linear-gradient(135deg, rgba(15,23,42,0.98), rgba(6,78,59,0.82)),
+            radial-gradient(circle at top right, rgba(34,197,94,0.32), transparent 38%);
+        border: 1px solid rgba(34,197,94,0.42);
+        box-shadow: 0 24px 65px rgba(0,0,0,0.45);
+        margin-bottom: 26px;
     ">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <div style="
+            display:inline-block;
+            padding:7px 13px;
+            border-radius:999px;
+            background:rgba(34,197,94,0.16);
+            color:#86efac;
+            border:1px solid rgba(34,197,94,0.35);
+            font-weight:850;
+            font-size:0.78rem;
+            margin-bottom:12px;
+        ">
+            {badge}
+        </div>
+        <h1 style="font-size:2.45rem;font-weight:950;margin-bottom:10px;color:#fff;">
+            {title}
+        </h1>
+        <p style="color:#d1d5db;font-size:1.03rem;line-height:1.7;max-width:1050px;">
+            {subtitle}
+        </p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # =========================================================
 # METRICS
@@ -103,6 +125,29 @@ def metric_card(label, value, note=""):
     </div>
     """, unsafe_allow_html=True)
 
+def agent_card(title, body):
+    st.markdown(f"""
+    <div style="
+        padding:20px;
+        min-height:155px;
+        border-radius:20px;
+        background:rgba(15,23,42,0.82);
+        border:1px solid rgba(34,197,94,0.24);
+        box-shadow:0 18px 45px rgba(0,0,0,0.32);
+        color:#e5e7eb;
+        margin-bottom:12px;
+    ">
+        <div style="
+            color:#86efac;
+            font-size:1rem;
+            font-weight:900;
+            margin-bottom:10px;
+        ">
+            {title}
+        </div>
+        <div>{body}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # =========================================================
 # INSIGHTS
