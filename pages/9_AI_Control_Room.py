@@ -25,7 +25,7 @@ setup_page("AI Control Room", icon="🧠")
 # HTML HELPER
 # =========================================================
 def html(content):
-    st.markdown(dedent(content).strip(), unsafe_allow_html=True)
+    st.html(dedent(content).strip())
 
 
 # =========================================================
