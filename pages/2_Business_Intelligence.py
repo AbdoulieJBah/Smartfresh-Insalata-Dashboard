@@ -105,6 +105,52 @@ date_col = "date" if "date" in df.columns else "order_date"
 kpis = calculate_kpis(df)
 
 # -----------------------------
+# SENTIMENT ANALYSIS SETUP
+# -----------------------------
+positive_words = [
+    "good", "fresh", "excellent", "clean", "fast", "satisfied",
+    "great", "quality", "acceptable", "reliable", "ok", "perfect"
+]
+
+negative_words = [
+    "bad", "late", "damaged", "poor", "spoiled", "dirty",
+    "complaint", "smell", "defect", "delay", "problem", "broken"
+]
+
+
+def analyze_sentiment(text):
+    text = str(text).lower()
+
+    positive_score = sum(word in text for word in positive_words)
+    negative_score = sum(word in text for word in negative_words)
+
+    if positive_score > negative_score:
+        return "Positive"
+    elif negative_score > positive_score:
+        return "Negative"
+    else:
+        return "Neutral"
+
+
+def sentiment_score(sentiment):
+    if sentiment == "Positive":
+        return 1
+    elif sentiment == "Negative":
+        return -1
+    return 0
+
+
+if "feedback_text" not in df.columns:
+    df["feedback_text"] = ""
+
+df["sentiment"] = df["feedback_text"].apply(analyze_sentiment)
+df["sentiment_score"] = df["sentiment"].apply(sentiment_score)
+
+positive_count = (df["sentiment"] == "Positive").sum()
+neutral_count = (df["sentiment"] == "Neutral").sum()
+negative_count = (df["sentiment"] == "Negative").sum()
+
+# -----------------------------
 # COPILOT CONTEXT
 # -----------------------------
 set_copilot_context(f"""
@@ -387,6 +433,89 @@ else:
         "✅ No temperature risk records detected.",
         level="good"
     )
+
+# -----------------------------
+# SENTIMENT ANALYSIS
+# -----------------------------
+section_title("💬 Feedback Sentiment Analysis")
+
+s1, s2, s3 = st.columns(3)
+
+with s1:
+    metric_card("Positive Feedback", f"{positive_count}", "Good quality signals")
+
+with s2:
+    metric_card("Neutral Feedback", f"{neutral_count}", "Neutral records")
+
+with s3:
+    metric_card("Negative Feedback", f"{negative_count}", "Potential risk signals")
+
+sentiment_counts = df["sentiment"].value_counts().reset_index()
+sentiment_counts.columns = ["Sentiment", "Count"]
+
+c1, c2 = st.columns(2)
+
+with c1:
+    fig_sentiment = px.pie(
+        sentiment_counts,
+        names="Sentiment",
+        values="Count",
+        title="Feedback Sentiment Distribution",
+        hole=0.45
+    )
+
+    st.plotly_chart(
+        style_plotly(fig_sentiment),
+        use_container_width=True
+    )
+
+with c2:
+    supplier_sentiment = (
+        df.groupby("supplier")
+        .agg(
+            avg_sentiment_score=("sentiment_score", "mean"),
+            negative_feedback=("sentiment", lambda x: (x == "Negative").sum()),
+            total_feedback=("sentiment", "count")
+        )
+        .reset_index()
+        .sort_values("avg_sentiment_score")
+    )
+
+    fig_supplier_sentiment = px.bar(
+        supplier_sentiment,
+        x="supplier",
+        y="avg_sentiment_score",
+        title="Average Sentiment Score by Supplier"
+    )
+
+    st.plotly_chart(
+        style_plotly(fig_supplier_sentiment),
+        use_container_width=True
+    )
+
+section_title("⚠️ Negative Feedback Records")
+
+negative_df = df[df["sentiment"] == "Negative"]
+
+if len(negative_df) > 0:
+    sentiment_cols = [
+        "date",
+        "order_date",
+        "supplier",
+        "product_name",
+        "feedback_text",
+        "rating",
+        "sentiment"
+    ]
+
+    sentiment_cols = [c for c in sentiment_cols if c in negative_df.columns]
+
+    st.dataframe(
+        negative_df[sentiment_cols],
+        use_container_width=True
+    )
+else:
+    insight_card("✅ No negative feedback detected.", level="good")
 
 # -----------------------------
 # BUSINESS TRENDS
