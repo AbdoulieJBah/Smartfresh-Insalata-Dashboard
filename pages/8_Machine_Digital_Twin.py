@@ -44,13 +44,20 @@ st.markdown("""
 }
 
 .machine-card {
-    padding: 20px;
-    border-radius: 20px;
-    background: rgba(15,23,42,0.82);
+    padding: 22px;
+    border-radius: 22px;
+    background: rgba(15,23,42,0.84);
     border: 1px solid rgba(34,197,94,0.22);
     box-shadow: 0 14px 34px rgba(0,0,0,0.30);
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     color: #e5e7eb;
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    white-space: normal !important;
+}
+
+.machine-card * {
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    white-space: normal !important;
 }
 
 .machine-good { border-left: 5px solid #22c55e; }
@@ -67,7 +74,20 @@ st.markdown("""
 .machine-small {
     color: #9ca3af;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 750;
+    margin-bottom: 14px;
+}
+
+.machine-row {
+    margin-bottom: 7px;
+    color: #e5e7eb;
+    font-size: 0.95rem;
+    line-height: 1.55;
+}
+
+.machine-row strong {
+    color: #ffffff;
+    font-weight: 900;
 }
 
 .escalation-banner {
@@ -87,6 +107,23 @@ st.markdown("""
     border: 1px solid rgba(34,197,94,0.28);
     box-shadow: 0 18px 45px rgba(0,0,0,0.35);
     margin-bottom: 18px;
+    color: #e5e7eb;
+}
+
+.operator-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 18px;
+    margin-top: 12px;
+}
+
+.operator-row {
+    color: #e5e7eb;
+    line-height: 1.55;
+}
+
+.operator-row strong {
+    color: #ffffff;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -152,10 +189,10 @@ if not critical_df.empty:
     worst = critical_df.sort_values("risk_score", ascending=False).iloc[0]
     st.markdown(f"""
     <div class="escalation-banner">
-        🚨 <b>AI ESCALATION:</b> {worst['machine_name']} on {worst['line']} requires immediate attention.<br>
-        <b>Risk Score:</b> {worst['risk_score']}/100<br>
-        <b>Reason:</b> {worst['risk_reasons']}<br>
-        <b>Recommended Action:</b> {generate_ai_operator_recommendation(worst)}
+        🚨 <strong>AI ESCALATION:</strong> {worst['machine_name']} on {worst['line']} requires immediate attention.
+        <div class="machine-row"><strong>Risk Score:</strong> {worst['risk_score']}/100</div>
+        <div class="machine-row"><strong>Reason:</strong> {worst['risk_reasons']}</div>
+        <div class="machine-row"><strong>Recommended Action:</strong> {generate_ai_operator_recommendation(worst)}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -169,20 +206,19 @@ progress = session["produced_qty"] / session["ordered_qty"]
 st.markdown(f"""
 <div class="operator-panel">
     <div class="machine-title">Work Order: {session['work_order']}</div>
-    <b>Operator:</b> {session['operator']} |
-    <b>Shift:</b> {session['shift']} |
-    <b>Line:</b> {session['line']}<br><br>
 
-    <b>Client:</b> {session['client']} |
-    <b>Destination:</b> {session['destination']}<br>
-
-    <b>Product:</b> {session['product']} |
-    <b>Phase:</b> {session['phase']}<br><br>
-
-    <b>Status:</b> {session['status']} |
-    <b>Start Time:</b> {session['start_time']}<br>
-
-    <b>Notes:</b> {session['notes']}
+    <div class="operator-grid">
+        <div class="operator-row"><strong>Operator:</strong> {session['operator']}</div>
+        <div class="operator-row"><strong>Shift:</strong> {session['shift']}</div>
+        <div class="operator-row"><strong>Line:</strong> {session['line']}</div>
+        <div class="operator-row"><strong>Status:</strong> {session['status']}</div>
+        <div class="operator-row"><strong>Client:</strong> {session['client']}</div>
+        <div class="operator-row"><strong>Destination:</strong> {session['destination']}</div>
+        <div class="operator-row"><strong>Product:</strong> {session['product']}</div>
+        <div class="operator-row"><strong>Phase:</strong> {session['phase']}</div>
+        <div class="operator-row"><strong>Start Time:</strong> {session['start_time']}</div>
+        <div class="operator-row"><strong>Notes:</strong> {session['notes']}</div>
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -291,23 +327,35 @@ for _, row in machine_df.iterrows():
             <span class="status-dot {dot_class}"></span>
             {row['machine_name']} — {row['line']}
         </div>
-        <div class="machine-small">{row['machine_type']} • {row['product']}</div><br>
 
-        <b>Status:</b> {row['status']} |
-        <b>Risk:</b> {row['risk_level']} ({row['risk_score']}/100) |
-        <b>Alarm:</b> {row['alarm']}<br>
+        <div class="machine-small">{row['machine_type']} • {row['product']}</div>
 
-        <b>Speed:</b> {row['speed']} / {row['target_speed']} |
-        <b>Temperature:</b> {row['temperature']}°C |
-        <b>Reject Rate:</b> {row['reject_rate']}%<br>
+        <div class="machine-row">
+            <strong>Status:</strong> {row['status']} |
+            <strong>Risk:</strong> {row['risk_level']} ({row['risk_score']}/100) |
+            <strong>Alarm:</strong> {row['alarm']}
+        </div>
 
-        <b>OEE:</b> {row['oee']:.1f}% |
-        <b>Availability:</b> {row['availability']:.1f}% |
-        <b>Performance:</b> {row['performance']:.1f}% |
-        <b>Quality:</b> {row['quality']:.1f}%<br><br>
+        <div class="machine-row">
+            <strong>Speed:</strong> {row['speed']} / {row['target_speed']} |
+            <strong>Temperature:</strong> {row['temperature']}°C |
+            <strong>Reject Rate:</strong> {row['reject_rate']}%
+        </div>
 
-        <b>Reason:</b> {row['risk_reasons']}<br>
-        <b>AI Recommendation:</b> {recommendation}
+        <div class="machine-row">
+            <strong>OEE:</strong> {row['oee']:.1f}% |
+            <strong>Availability:</strong> {row['availability']:.1f}% |
+            <strong>Performance:</strong> {row['performance']:.1f}% |
+            <strong>Quality:</strong> {row['quality']:.1f}%
+        </div>
+
+        <div class="machine-row" style="margin-top:14px;">
+            <strong>Reason:</strong> {row['risk_reasons']}
+        </div>
+
+        <div class="machine-row">
+            <strong>AI Recommendation:</strong> {recommendation}
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -427,16 +475,16 @@ high_risk_df = machine_df[machine_df["risk_level"].isin(["High", "Medium"])]
 if high_risk_df.empty:
     st.markdown("""
     <div class="machine-card machine-good">
-        ✅ All machines are operating within acceptable simulated limits.
+        <div class="machine-row">✅ All machines are operating within acceptable simulated limits.</div>
     </div>
     """, unsafe_allow_html=True)
 else:
     for _, row in high_risk_df.iterrows():
         st.markdown(f"""
         <div class="machine-card machine-risk">
-            <b>{row['machine_name']}</b><br>
-            ⚠️ <b>Risk detected:</b> {row['risk_reasons']}<br>
-            ✅ <b>Recommended action:</b> {generate_ai_operator_recommendation(row)}
+            <div class="machine-title">{row['machine_name']}</div>
+            <div class="machine-row">⚠️ <strong>Risk detected:</strong> {row['risk_reasons']}</div>
+            <div class="machine-row">✅ <strong>Recommended action:</strong> {generate_ai_operator_recommendation(row)}</div>
         </div>
         """, unsafe_allow_html=True)
 
